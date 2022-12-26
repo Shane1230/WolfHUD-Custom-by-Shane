@@ -4,6 +4,9 @@ https://github.com/Kamikaze94/WolfHUD
 <br><br><br>
 ## Changelog
 
+### 1.1
+- Restore "double-right-click" to equip secondary deployable
+---
 ### 1.0
 - Fix crashes
 - Renewal the TabScreen

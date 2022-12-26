@@ -312,8 +312,59 @@ elseif string.lower(RequiredScript) == "lib/managers/menu/blackmarketgui" then
 		end
 	end
 
+	-- restore old BlackMarketGui for right click
+	function BlackMarketGui:old_mouse_clicked(o, button, x, y)
+		if not self._enabled then
+			return
+		end
+
+		self._mouse_click_index = ((self._mouse_click_index or 0) + 1) % 2
+		self._mouse_click = self._mouse_click or {}
+		self._mouse_click[self._mouse_click_index] = {
+			button = button,
+			x = x,
+			y = y,
+			selected_slot = self._selected_slot
+		}
+	end
+
+	function BlackMarketGui:old_mouse_double_click(o, button, x, y)
+		if not self._enabled then
+			return
+		end
+
+		if not self._mouse_click or not self._mouse_click[0] or not self._mouse_click[1] then
+			return
+		end
+
+		if not self._slot_data or self._mouse_click[0].selected_slot ~= self._mouse_click[1].selected_slot then
+			return
+		end
+
+		if button == Idstring("0") then
+			if not self._selected_slot._panel:inside(x, y) then
+				return
+			end
+
+			if managers.system_menu and managers.system_menu:is_active() and not managers.system_menu:is_closing() then
+				return
+			end
+
+			self:press_first_btn(button)
+		elseif button == Idstring("1") then
+			if not self._selected_slot._panel:inside(x, y) then
+				return
+			end
+
+			if managers.system_menu and managers.system_menu:is_active() and not managers.system_menu:is_closing() then
+				return
+			end
+
+			self:press_second_btn(Idstring("0"))
+		end
+	end
 	-- Input Dialog on double click selected tab
-	local BlackMarketGui_mouse_clicked_original = BlackMarketGui.mouse_clicked
+	local BlackMarketGui_mouse_clicked_original = BlackMarketGui.old_mouse_clicked
 	function BlackMarketGui:mouse_clicked(...)
 		BlackMarketGui_mouse_clicked_original(self, ...)
 
@@ -325,7 +376,7 @@ elseif string.lower(RequiredScript) == "lib/managers/menu/blackmarketgui" then
 		self._mouse_click[self._mouse_click_index].selected_tab = self._selected
 	end
 
-	local BlackMarketGui_mouse_double_click_original = BlackMarketGui.mouse_double_click
+	local BlackMarketGui_mouse_double_click_original = BlackMarketGui.old_mouse_double_click
 	function BlackMarketGui:mouse_double_click(o, button, x, y)
 		if self._enabled and not self._data.is_loadout and self._renameable_tabs then
 			if self._mouse_click and self._mouse_click[0] and self._mouse_click[1] then
