@@ -849,11 +849,7 @@ if string.lower(RequiredScript) == "lib/managers/hud/newhudstatsscreen" then
 		clock_panel:set_y(self._rightpos[2])
 		
 		
-		--LPI style crew skills
-		
-		--If you have real LPI, disable LPI's crew skills
-		LobbyPlayerInfo.settings.show_skills_in_stats_screen = false
-		
+		--LPI style crew skills		
 		_G.LobbyPlayerInfo = _G.LobbyPlayerInfo or {}
 		LobbyPlayerInfo.skills_layouts = {
 			'%s:%02u  %s:%02u  %s:%02u  %s:%02u  %s:%02u',
