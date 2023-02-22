@@ -664,7 +664,7 @@ elseif string.lower(RequiredScript) == "lib/managers/hud/newhudstatsscreen" then
 					self._peer_loadout[peer_id] = LoadoutPanel:new(parent_panel, self, peer_id, parent_panel:w() - 3, parent_panel:h() - 505 , {
 						component_layout = WolfHUD:getTweakEntry("TAB_LOADOUT_LAYOUT", "table",
 							{
-								{ "name", "character", "playtime" },
+								{ "name", "character" },
 								{ "primary", "secondary", "melee_weapon", "armor" },
 							}),
 						name = 		{ font_size = tweak_data.menu.pd2_medium_font_size * 1.00, height = tweak_data.menu.pd2_medium_font_size * 1.00,  align = "center", margin = 1, use_peer_color = true },
@@ -694,7 +694,7 @@ elseif string.lower(RequiredScript) == "lib/managers/hud/newhudstatsscreen" then
 
 	function HUDStatsScreen:arrange_loadout_panels(parent_panel)
 		if parent_panel then
-			local y = parent_panel:h() - 168 -- 마이너스 값이 내려갈수록 내려감
+			local y = parent_panel:h() - 168
 			local height = math.floor(parent_panel:h() * 0.17)
 			for peer_id = 4, 1, -1 do
 				local panel = self._peer_loadout[peer_id]

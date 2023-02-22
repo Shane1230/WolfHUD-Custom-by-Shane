@@ -24,7 +24,7 @@ if not _G.WolfHUD then
 		WolfHUD.settings = {
 			LANGUAGE 								= default_lang,
 			CustomHUD = {
-				ENABLED 							= true,
+				ENABLED 							= false,
 				PLAYER = {
 					POSITION						= 2,		-- left (1), center (2) or right (3)
 					SCALE 							= 1,		--Size of local Player HUD Panel
@@ -101,15 +101,16 @@ if not _G.WolfHUD then
 						SHOW_BOT_KILLS 				= true,
 					},
 				},
+				RESTORE_PLAYER_DOT					= true,
 				USE_REAL_AMMO 						= true,
 			},
 			HUDChat = {
 				CHAT_WAIT_TIME							= 10,		--Time before chat fades out, 0 = never
-				LINE_HEIGHT								= 15,		--Chat font Size
-				WIDTH									= 380,		--Width of the chat window
-				MAX_OUTPUT_LINES						= 8,		--Chat Output lines
+				LINE_HEIGHT								= 20,		--Chat font Size
+				WIDTH									= 350,		--Width of the chat window
+				MAX_OUTPUT_LINES						= 10,		--Chat Output lines
 				MAX_INPUT_LINES							= 5,		--Number of lines of text you can type
-				COLORED_BG								= true,		--Colorize the line bg based on the message source
+				COLORED_BG								= false,	--Colorize the line bg based on the message source
 				SCROLLBAR_ALIGN							= 2,		--Alignment of the scroll bar (1 = left, 2 = right)
 				SPAM_FILTER								= true,		--Filter PocoHud and NGBTO Chat Spam messages.
 			},
@@ -313,6 +314,9 @@ if not _G.WolfHUD then
 						sociopath_debuff					= true,
 						tag_team 							= true,
 						yakuza								= false,
+						copr_ability						= true,
+						copycat_health_invul				= true,
+						copycat_health_shot					= true,
 					},
 					GAGE_BOOSTS = {
 						invulnerable_buff					= true,

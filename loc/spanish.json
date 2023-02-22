@@ -1003,9 +1003,19 @@
 	"wolfhud_hudlist_loot_tea" : "Tea",
     "wolfhud_hudlist_loot_dragon" : "Dragon",
 	"wolfhud_hudlist_loot_scyayo" : "Yayo",
-	"wolfhud_hudlist_loot_plates" : "plate",
+	"wolfhud_hudlist_loot_plates" : "Plate",
+	"wolfhud_hudlist_loot_papers" : "Documents",
+	"wolfhud_hudlist_loot_prototype" : "Prototype",
 
 	"wolfhud_enemy_marshal_marksman" : "Maskman",
 	"wolfhud_enemy_marshal_shield" : "Marshal Shield",
-	"wolfhud_enemy_marshal_shield_break" : "Marshal Special"
+	"wolfhud_enemy_marshal_shield_break" : "Marshal Special",
+	
+	"wolfhud_hudlist_copycat_health_invul_buff_title" : "Health Invulnerability (Copycat)",
+	"wolfhud_hudlist_copycat_health_invul_buff_desc" : "",
+	"wolfhud_hudlist_copycat_health_shot_buff_title" : "Headshot Health Regen (Copycat)",
+	"wolfhud_hudlist_copycat_health_shot_buff_desc" : "Show headshot health regen cooldown (2 sec)",
+	
+	"wolfhud_restore_player_dot_title" : "Restore old Player dot",
+	"wolfhud_restore_player_dot_desc" : "Restoration player dot indicator with down counter",
 }

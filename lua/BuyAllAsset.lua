@@ -7,7 +7,7 @@ if string.lower(RequiredScript) == "lib/managers/missionassetsmanager" then
 			end
 		end
 	end
-
+	
 	function MissionAssetsManager:asset_is_buyable(asset)
 		return self:asset_is_locked(asset) and (Network:is_server() and asset.can_unlock or Network:is_client() and self:get_asset_can_unlock_by_id(asset.id))
 	end

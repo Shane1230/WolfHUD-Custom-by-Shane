@@ -218,6 +218,14 @@ if string.lower(RequiredScript) == "lib/setups/setup" then
 			press_take_folder = 				"_special_equipment_interaction_handler",
 			take_jfr_briefcase = 				"_special_equipment_interaction_handler",
 			take_confidential_folder_icc = 		"_special_equipment_interaction_handler",
+			pex_medal =							"_special_equipment_interaction_handler",	-- Tijuana medals
+			mex_pickup_murky_uniforms =			"_special_equipment_interaction_handler",	-- border Crossing uniforms
+			hold_take_vault_blueprint =			"_special_equipment_interaction_handler",	-- Border Crossing blueprint
+			ranc_press_pickup_horseshoe = 		"_special_equipment_interaction_handler",	-- Midland Ranch horseshoe
+			ranc_hold_take_stock = 				"_special_equipment_interaction_handler",	-- Midland Ranch weapon stock
+			ranc_hold_take_receiver = 			"_special_equipment_interaction_handler",	-- Midland Ranch weapon receiver
+			ranc_hold_take_barrel = 			"_special_equipment_interaction_handler",	-- Midland Ranch weapon barrel
+			take_pardons = 						"_special_equipment_interaction_handler",	-- White House Paradons
 			firstaid_box =						"_deployable_interaction_handler",
 			ammo_bag =							"_deployable_interaction_handler",
 			doctor_bag =						"_deployable_interaction_handler",
@@ -585,6 +593,8 @@ lounge		100421		100448			102049
 			single_shot_fast_reload = "aggressive_reload_aced",
             unseen_strike = "unseen_strike",
 			pocket_ecm_kill_dodge =	"pocket_ecm_kill_dodge",
+			copr_ability = "copr_ability",
+			mrwi_health_invulnerable = { "copycat_health_invul", "copycat_health_invul_passive" },
 
 			--"properties"
 			bloodthirst_reload_speed = "bloodthirst_aced",
@@ -2828,6 +2838,9 @@ if string.lower(RequiredScript) == "lib/managers/playermanager" then
 	local speed_up_grenade_cooldown_original = PlayerManager.speed_up_grenade_cooldown
 	local start_custom_cooldown_original = PlayerManager.start_custom_cooldown
 	local _set_body_bags_amount_original = PlayerManager._set_body_bags_amount
+	local add_copr_risen_cooldown_original = PlayerManager.add_copr_risen_cooldown
+	local remove_copr_risen_cooldown_original = PlayerManager.remove_copr_risen_cooldown
+	local force_end_copr_ability_original = PlayerManager.force_end_copr_ability
 
 	local PLAYER_HAS_SPAWNED = false
 	function PlayerManager:spawned_player(id, ...)
@@ -2862,6 +2875,14 @@ if string.lower(RequiredScript) == "lib/managers/playermanager" then
 				end
 
 				self._message_system:register(Message.OnHeadShot, "bullseye_debuff_listener", on_headshot)
+			end
+			
+			if self:has_category_upgrade("player", "headshot_regen_health_bonus") then
+				local function on_headshot()
+					managers.gameinfo:event("timed_buff", "activate", "copycat_health_shot_debuff", { duration = tweak_data.upgrades.on_headshot_dealt_cooldown or 0 })
+				end
+
+				self._message_system:register(Message.OnHeadShot, "copycat_health_shot_debuff_listener", on_headshot)
 			end
 
 			self._is_sociopath = self:has_category_upgrade("player", "killshot_regen_armor_bonus") or
@@ -2988,6 +3009,12 @@ if string.lower(RequiredScript) == "lib/managers/playermanager" then
 		if gain_throwable_per_kill > 0 then
 			managers.gameinfo:event("buff", "set_stack_count", "crew_throwable_regen", { stack_count = (gain_throwable_per_kill - (self._throw_regen_kills or 0)) })
 		end
+		
+		--cpcp
+		local primary_kills = self:get_property("primary_reload_secondary_kills", 0) + 1
+		if self._has_primary_reload_secondary then
+		managers.gameinfo:event("buff", "set_stack_count", "copycat_primary_kill", {stack_count = primary_kills})
+		end
 
 		return result
 	end
@@ -3029,6 +3056,9 @@ if string.lower(RequiredScript) == "lib/managers/playermanager" then
 		if (self._on_headshot_dealt_t or 0) <= t and self:has_category_upgrade("player", "headshot_regen_armor_bonus") then
 			managers.gameinfo:event("timed_buff", "activate", "bullseye_debuff", { t = t, duration = tweak_data.upgrades.on_headshot_dealt_cooldown or 0 })
 		end
+		if (self._on_headshot_dealt_t or 0) <= t and self:has_category_upgrade("player", "headshot_regen_health_bonus") then
+			managers.gameinfo:event("timed_buff", "activate", "copycat_health_shot_debuff", { t = t, duration = tweak_data.upgrades.on_headshot_dealt_cooldown or 0 })
+		end
 
 		return on_headshot_dealt_original(self, ...)
 	end
@@ -3067,6 +3097,10 @@ if string.lower(RequiredScript) == "lib/managers/playermanager" then
 			managers.gameinfo:event("buff", "activate", "combat_medic_passive")
 			managers.gameinfo:event("buff", "set_value", "combat_medic_passive", { value = value })
 		end
+		if name == "mrwi_health_invulnerable" then
+			managers.gameinfo:event("buff", "activate", "copycat_health_invul_passive")
+			managers.gameinfo:event("buff", "set_value", "copycat_health_invul_passive", { value = value })
+		end
 	end
 
 	function PlayerManager:remove_property(name, ...)
@@ -3074,6 +3108,9 @@ if string.lower(RequiredScript) == "lib/managers/playermanager" then
 
 		if name == "revive_damage_reduction" then
 			managers.gameinfo:event("buff", "deactivate", "combat_medic_passive")
+		end
+		if name == "mrwi_health_invulnerable" then
+			managers.gameinfo:event("buff", "deactivate", "copycat_health_invul_passive")
 		end
 	end
 
@@ -3223,6 +3260,22 @@ if string.lower(RequiredScript) == "lib/managers/playermanager" then
 		return tweak_data.blackmarket.projectiles[equipped_grenade].ability
 	end
 
+	function PlayerManager:add_copr_risen_cooldown(...)
+		add_copr_risen_cooldown_original(self, ...)
+		managers.gameinfo:event("buff", "activate", "copr_ability")
+		managers.gameinfo:event("buff", "set_duration", "copr_ability", { duration = tweak_data.upgrades.copr_risen_cooldown_add})
+	end
+
+	function PlayerManager:remove_copr_risen_cooldown(...)
+		managers.gameinfo:event("buff", "deactivate", "copr_ability")
+		remove_copr_risen_cooldown_original(self, ...)
+	end
+
+	
+	function PlayerManager:force_end_copr_ability(...)
+		force_end_copr_ability_original(self, ...)
+		managers.gameinfo:event("buff", "deactivate", "copr_ability")
+	end
 end
 
 if string.lower(RequiredScript) == "lib/managers/player/smokescreeneffect" then

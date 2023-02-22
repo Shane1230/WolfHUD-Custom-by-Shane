@@ -115,7 +115,9 @@
 	"wolfhud_hudlist_loot_tea" : "Tea",
     "wolfhud_hudlist_loot_dragon" : "Dragon",
 	"wolfhud_hudlist_loot_scyayo" : "Yayo",
-	"wolfhud_hudlist_loot_plates" : "plate",
+	"wolfhud_hudlist_loot_plates" : "Plate",
+	"wolfhud_hudlist_loot_papers" : "Documents",
+	"wolfhud_hudlist_loot_prototype" : "Prototype",
 
 	"wolfhud_hudlist_buff_basic" : "Basic",
 	"wolfhud_hudlist_buff_aced" : "Aced",
@@ -1005,5 +1007,16 @@
 	"wolfhud_skipit_options_name" : "Skip-It Options",
 	"wolfhud_skipit_options_help" : "Options to skip unnecessary menus automatically to save your time.",
 	"wolfhud_assaultbanner_options_name" : "Assault Banner Options",
-	"wolfhud_assaultbanner_options_help" : "Options to change the Assault Banner."
+	"wolfhud_assaultbanner_options_help" : "Options to change the Assault Banner.",
+	
+	"wolfhud_hudlist_copr_buff_title" : "Ampule (Leech)",
+	"wolfhud_hudlist_copr_buff_desc" : "",
+	
+	"wolfhud_hudlist_copycat_health_invul_buff_title" : "Health Invulnerability (Copycat)",
+	"wolfhud_hudlist_copycat_health_invul_buff_desc" : "",
+	"wolfhud_hudlist_copycat_health_shot_buff_title" : "Headshot Health Regen (Copycat)",
+	"wolfhud_hudlist_copycat_health_shot_buff_desc" : "Show headshot health regen cooldown (2 sec)",
+	
+	"wolfhud_restore_player_dot_title" : "Restore old Player dot",
+	"wolfhud_restore_player_dot_desc" : "Restoration player dot indicator with down counter",
 }

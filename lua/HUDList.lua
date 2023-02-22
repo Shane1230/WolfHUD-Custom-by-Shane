@@ -399,12 +399,29 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		press_pick_up =						"secret_item",
 		hold_pick_up_turtle = 				"secret_item",
 		diamond_single_pickup_axis = 		"secret_item",
+		federali_medal = 					"secret_item",
+		fex_take_churros =					"secret_item",
+		mex_pickup_murky_uniforms =			"uniform",
+		pex_medal =							"medal",
+		xm20_int_mask =						"secret_item",
+		ranc_press_pickup_horseshoe = 		"horseshoe",
+		sheriff_star =						"secret_item",
 		ring_band = 						"rings",
 		glc_hold_take_handcuffs = 			"handcuffs",
 		hold_take_missing_animal_poster = 	"poster",
 		press_take_folder = 				"poster",
+		hold_take_vault_blueprint = 		"blueprint",
 		--take_confidential_folder_icc = 		"poster",
 		take_jfr_briefcase = 				"briefcase",
+		ranc_hold_take_stock = 				"weapon_stock",
+        ranc_hold_take_receiver = 			"weapon_receiver",
+        ranc_hold_take_barrel = 			"weapon_barrel",
+		take_pardons = 						"pardons",
+		pda9_collective_1 =					"secret_item",
+		pda9_collective_2 =					"secret_item",
+		pda9_collective_3 =					"secret_item",
+		pda9_collective_4 =					"secret_item",
+		trai_usb_key = 						"secret_item",
 	}
 
 	HUDListManager.LOOT_TYPES = {
@@ -478,6 +495,9 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		yayo = 						"scyayo",
 		ranc_weapon = 				"weapon",
 		trai_printing_plates = 		"plates",
+		corp_papers = 				"papers",
+		corp_prototype = 			"prototype",
+		
 	}
 
 	HUDListManager.POTENTIAL_LOOT_TYPES = {
@@ -530,6 +550,10 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		frenzy = { "frenzy", "damage_reduction" },
 		hostage_situation = { "hostage_situation", "damage_reduction" },
 		hostage_taker = { "hostage_taker", "passive_health_regen" },
+		copr_ability = { "copr_ability" },
+		copycat_health_invul = { "copycat_health_invul", "damage_reduction" },
+		copycat_health_invul_passive = { "copycat_health_invul_passive", "damage_reduction" },
+		copycat_health_shot = { "copycat_health_shot" },
 		maniac = { "maniac", "damage_reduction" },
 		melee_stack_damage = { "melee_stack_damage", "melee_damage_increase" },
 		movement_dodge = { "total_dodge_chance" },
@@ -565,6 +589,9 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 			armor_break_invulnerable_debuff = "armor_break_invulnerable",
 			grinder_debuff = "grinder",
 			chico_injector_debuff = "chico_injector",
+			copr_ability_debuff = "copr_ability",
+			copycat_health_shot_debuff = "copycat_health_shot",
+			copycat_health_invul_debuff = "copycat_health_invul",
 			delayed_damage_debuff = "delayed_damage",
 			maniac_debuff = "maniac",
 			pocket_ecm_jammer_debuff = "pocket_ecm_jammer",
@@ -3095,16 +3122,25 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		blowtorch = 				{ hudpickups = { 96, 192, 32, 32 }, 											priority = 1, category = "mission_pickups", ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "mission_pickups"}, true) 	},
 		thermite = 					{ hudpickups = { 64, 64, 32, 32 }, 												priority = 1, category = "mission_pickups", ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "mission_pickups"}, true) 	},
 		c4 = 						{ hudicons	 = { 36, 242, 32, 32 }, 											priority = 1, category = "mission_pickups", ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "mission_pickups"}, true) 	},
-		small_loot = 				{ hudpickups = { 32, 224, 32, 32}, 												priority = 3, category = "valuables", 		ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "valuables"}, true) 		},
+		small_loot = 				{ hudpickups = { 32, 224, 32, 32}, 												priority = 3, category = "valuables", 		ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "valuables"}, 		true) 		},
 		briefcase = 				{ hudpickups = { 96, 224, 32, 32}, 												priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
 		courier = 					{ texture = "guis/dlcs/gage_pack_jobs/textures/pd2/endscreen/gage_assignment", 	priority = 3, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
 		gage_case = 				{ skills 	 = { 1, 0 }, 														priority = 3, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
 		gage_key = 					{ hudpickups = { 32, 64, 32, 32 }, 												priority = 3, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
 		paycheck_masks = 			{ hudpickups = { 128, 32, 32, 32 }, 											priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
 		secret_item =				{ waypoints  = { 96, 64, 32, 32 }, 												priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
-		rings = 					{ texture = "guis/textures/pd2/level_ring_small", w_ratio = 0.5, h_ratio = 0.5, priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
 		poster = 					{ hudpickups = { 96, 96, 32, 32 }, 												priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
-		handcuffs = 				{ hud_icons  = {294,469, 40, 40 }, 												priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
+		handcuffs = 				{ hud_icons  = {294,469, 40, 40 },												priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
+		uniform = 					{ hud_icons  = {480,176, 32, 32 }, 												priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
+		pardons = 					{ hudpickups = { 96, 96, 32, 32 }, 												priority = 1, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
+		--rings = 					{ texture = "guis/textures/pd2/level_ring_small", w_ratio = 0.5, h_ratio = 0.5, priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
+		rings = 					{ texture = "guis/dlcs/trk/textures/pd2/achievements_atlas7",	texture_rect = {522, 87,85,85},		priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
+		medal = 					{ texture = "guis/dlcs/trk/atlases/achievement_atlas_pex",		texture_rect = {  2,  2,85,85},		priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
+		blueprint = 				{ texture = "guis/dlcs/mex/textures/pd2/hud_pickups_blueprint", texture_rect = {  0,  0,32,32},		priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
+		horseshoe = 				{ texture = "guis/dlcs/trk/atlases/achievement_atlas_ranc",		texture_rect = {263,350,85,85},		priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
+		weapon_stock = 				{ texture = "guis/dlcs/ranc/textures/pd2/equipment_stock",		texture_rect = {  0,  0,32,32},		priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
+		weapon_receiver = 			{ texture = "guis/dlcs/ranc/textures/pd2/equipment_receiver",	texture_rect = {  0,  0,32,32},		priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
+		weapon_barrel = 			{ texture = "guis/dlcs/ranc/textures/pd2/equipment_barrel",		texture_rect = {  0,  0,32,32},		priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
 	}
 
 	function HUDList.SpecialPickupItem:init(parent, name, id, members)
@@ -3188,11 +3224,13 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		xmas_present = 	{ text = "hud_carry_present", 				priority = 2, no_separate = true },	-- White Xmas
 		shopping_bag = 	{ text = "wolfhud_hudlist_loot_bag", 		priority = 2, no_separate = true },	-- White Xmas
 		showcase = 		{ text = "wolfhud_hudlist_showcase", 		priority = 2, no_separate = true },	-- Diamond heist + Diamond Museum
-		tea = 			{ text = "wolfhud_hudlist_loot_tea", 		priority = 1 },
-		dragon = 		{ text = "wolfhud_hudlist_loot_dragon", 	priority = 1 },
-		gnome = 		{ text = "wolfhud_hudlist_loot_gnome", 		priority = 1 },
-		scyayo = 		{ text = "wolfhud_hudlist_loot_scyayo", 	priority = 1 },
-		plates = 		{ text = "wolfhud_hudlist_loot_plates",	 	priority = 1 },
+		tea = 			{ text = "wolfhud_hudlist_loot_tea", 		priority = 1 }, -- City of Gold Teaset
+		dragon = 		{ text = "wolfhud_hudlist_loot_dragon", 	priority = 1 }, -- Dragon heist main loot
+		gnome = 		{ text = "wolfhud_hudlist_loot_gnome", 		priority = 1 }, -- Mountain Master Gnome
+		scyayo = 		{ text = "wolfhud_hudlist_loot_scyayo", 	priority = 1 }, -- Scarface Yayo
+		plates = 		{ text = "wolfhud_hudlist_loot_plates",	 	priority = 1 }, -- Lost in Transit
+		papers = 		{ text = "wolfhud_hudlist_loot_papers",	 	priority = 1 }, -- Hostile Takeover Reserch Documents
+		prototype = 	{ text = "wolfhud_hudlist_loot_prototype",	priority = 1 }, -- Hostile Takeover NEO-2
 	}
 	function HUDList.LootItem:init(parent, name, id, members)
 		local loot_data = HUDList.LootItem.MAP[id]
@@ -5036,6 +5074,30 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 			color = HUDList.BuffItemBase.ICON_COLOR.STANDARD,
 			ignore = not WolfHUD:getSetting({"HUDList", "BUFF_LIST", "MASTERMIND_BUFFS", "combat_medic_passive"}, false),
 		},
+		copr_ability = {
+			perks = {0, 0},
+			texture_bundle_folder = "copr",
+			class = "TimedBuffItem",
+			priority = 4,
+			color = HUDList.BuffItemBase.ICON_COLOR.STANDARD,
+			ignore = not WolfHUD:getSetting({"HUDList", "BUFF_LIST", "PERK_BUFFS", "copr_ability"}, true),
+		},
+		copycat_health_invul = {
+			perks = {3, 0},
+			texture_bundle_folder = "mrwi",
+			class = "TimedBuffItem",
+			priority = 4,
+			color = HUDList.BuffItemBase.ICON_COLOR.STANDARD,
+			ignore = not WolfHUD:getSetting({"HUDList", "BUFF_LIST", "PERK_BUFFS", "copycat_health_invul"}, true),
+		},
+		copycat_health_shot = {
+			perks = {1, 0},
+			texture_bundle_folder = "mrwi",
+			class = "TimedBuffItem",
+			priority = 4,
+			color = HUDList.BuffItemBase.ICON_COLOR.STANDARD,
+			ignore = not WolfHUD:getSetting({"HUDList", "BUFF_LIST", "PERK_BUFFS", "copycat_health_shot"}, true),
+		},
 		delayed_damage = {
 			perks = {3, 0},
 			texture_bundle_folder = "myh",
@@ -5339,6 +5401,30 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		chico_injector_debuff = {
 			perks = {0, 0},
 			texture_bundle_folder = "chico",
+			class = "TimedBuffItem",
+			priority = 8,
+			color = HUDList.BuffItemBase.ICON_COLOR.DEBUFF,
+			ignore = true,	--Composite debuff
+		},
+		copr_ability_debuff = {
+			perks = {0, 0},
+			texture_bundle_folder = "copr",
+			class = "TimedBuffItem",
+			priority = 8,
+			color = HUDList.BuffItemBase.ICON_COLOR.DEBUFF,
+			ignore = true,	--Composite debuff
+		},
+		copycat_health_invul_debuff = {
+			perks = {3, 0},
+			texture_bundle_folder = "mrwi",
+			class = "TimedBuffItem",
+			priority = 8,
+			color = HUDList.BuffItemBase.ICON_COLOR.DEBUFF,
+			ignore = true,	--Composite debuff
+		},
+		copycat_health_shot_debuff = {
+			perks = {1, 0},
+			texture_bundle_folder = "mrwi",
 			class = "TimedBuffItem",
 			priority = 8,
 			color = HUDList.BuffItemBase.ICON_COLOR.DEBUFF,

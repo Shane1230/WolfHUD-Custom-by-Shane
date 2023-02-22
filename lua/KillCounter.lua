@@ -376,10 +376,8 @@ elseif string.lower(RequiredScript) == "lib/managers/hud/hudteammate" then
 			self._accuracy_text:set_text(tostring(value) .. "%")
 			local _, _, w, _ = self._accuracy_text:text_rect()
 			self._accuracy_icon:set_right(self._accuracy_panel:w() - w - self._accuracy_icon:w() * 0.15)
-			if WolfHUD:getSetting({"CustomHUD", "PLAYER", "KILLCOUNTER", "HIDE"}, false) and WolfHUD:getSetting({"CustomHUD", "PLAYER", "SHOW_ACCURACY"}, true) then
-				self._max_name_panel_width = (self._accuracy_panel:x() + self._accuracy_icon:x() - 4)
-				self:_truncate_name()
-			end
+			self._max_name_panel_width = (self._accuracy_panel:x() + self._accuracy_icon:x() - 4)
+			self:_truncate_name()
 		end
 
 		HUDTeammate._truncate_name = HUDTeammate._truncate_name or function() end

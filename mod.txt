@@ -4,7 +4,7 @@
 	"author" : "Kamikaze94, Shane",
 	"contact" : "https://github.com/Kamikaze94/WolfHUD		   \n
 		   https://steamcommunity.com/id/Shane1230/",
-	"version" : "1.2",
+	"version" : "2.0",
 	"priority" : 1,
 	"blt_version" : 2,
 	"supermod_definition" : "supermod.xml",

@@ -1147,6 +1147,13 @@ if WolfHUD then
 					},
 					{
 						type = "toggle",
+						name_id = "wolfhud_restore_player_dot_title",
+						desc_id = "wolfhud_restore_player_dot_desc",
+						visible_reqs = {}, enabled_reqs = {},
+						value = {"CustomHUD", "RESTORE_PLAYER_DOT"},
+					},
+					{
+						type = "toggle",
 						name_id = "wolfhud_use_realammo_title",
 						desc_id = "wolfhud_use_realammo_desc",
 						visible_reqs = {}, enabled_reqs = {},
@@ -3130,6 +3137,39 @@ if WolfHUD then
 										name_id = "wolfhud_hudlist_yakuza_buff_title",
 										desc_id = "wolfhud_hudlist_yakuza_buff_desc",
 										value = {"HUDList", "BUFF_LIST", "PERK_BUFFS", "yakuza"},
+										visible_reqs = {},
+										enabled_reqs = {
+											{ setting = { "HUDList", "ENABLED" }, invert = false },
+											{ setting = {"HUDList", "BUFF_LIST", "show_buffs"}, invert = false },
+										},
+									},
+									{
+										type = "toggle",
+										name_id = "wolfhud_hudlist_copr_buff_title",
+										desc_id = "wolfhud_hudlist_copr_buff_desc",
+										value = {"HUDList", "BUFF_LIST", "PERK_BUFFS", "copr_ability"},
+										visible_reqs = {},
+										enabled_reqs = {
+											{ setting = { "HUDList", "ENABLED" }, invert = false },
+											{ setting = {"HUDList", "BUFF_LIST", "show_buffs"}, invert = false },
+										},
+									},
+									{
+										type = "toggle",
+										name_id = "wolfhud_hudlist_copycat_health_invul_buff_title",
+										desc_id = "wolfhud_hudlist_copycat_health_invul_buff_desc",
+										value = {"HUDList", "BUFF_LIST", "PERK_BUFFS", "copycat_health_invul"},
+										visible_reqs = {},
+										enabled_reqs = {
+											{ setting = { "HUDList", "ENABLED" }, invert = false },
+											{ setting = {"HUDList", "BUFF_LIST", "show_buffs"}, invert = false },
+										},
+									},
+									{
+										type = "toggle",
+										name_id = "wolfhud_hudlist_copycat_health_shot_buff_title",
+										desc_id = "wolfhud_hudlist_copycat_health_shot_buff_desc",
+										value = {"HUDList", "BUFF_LIST", "PERK_BUFFS", "copycat_health_shot"},
 										visible_reqs = {},
 										enabled_reqs = {
 											{ setting = { "HUDList", "ENABLED" }, invert = false },

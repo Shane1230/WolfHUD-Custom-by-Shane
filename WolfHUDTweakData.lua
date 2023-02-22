@@ -96,7 +96,7 @@ function WolfHUDTweakData:init()
 										{ "skills", "perk" },
 									}--]]							
 	self.TAB_LOADOUT_LAYOUT = 		{
-										{ "name", "character", },
+										{ "name", "character" },
 										{ "primary", "secondary", "melee_weapon", "armor" }
 									}
 

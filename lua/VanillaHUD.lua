@@ -34,12 +34,14 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 
 elseif RequiredScript == "lib/managers/hud/hudteammate" then
 
+
+
 	local init_original = HUDTeammate.init
 	local set_name_original = HUDTeammate.set_name
 	local set_condition_original = HUDTeammate.set_condition
 	local teammate_progress_original = HUDTeammate.teammate_progress
 	local update_original = HUDManager.update
-
+	
 	function HUDTeammate:init(...)
 		init_original(self, ...)
 
@@ -61,7 +63,61 @@ elseif RequiredScript == "lib/managers/hud/hudteammate" then
 			self:_create_ping_info()
 		end
 	end
-
+	
+	if WolfHUD:getSetting({"CustomHUD", "RESTORE_PLAYER_DOT"}, true) then
+		Hooks:PostHook(HUDTeammate, "init", "dot_with_down_counter", function(self)
+			local teammate_panel = self._player_panel
+			local name = self._panel:child("name")
+			local name_bg = self._panel:child("name_bg")
+			local RP = self._panel:child("player"):child("revive_panel")
+			local arrow = RP:child("revive_arrow")
+			local dot = self._panel:child("callsign")
+			
+			self._panel:child("callsign"):set_visible(true)
+			self._panel:child("callsign_bg"):set_visible(true)
+			
+			local _,_,_,h = name:text_rect()
+			
+			name:set_leftbottom(name:h() + 19, teammate_panel:h() - 70 - 2)
+			name_bg:set_x(name:x())
+			name_bg:set_h(h + 2)
+			
+			RP:set_h(name:h() + 1)
+			RP:set_left(self._panel:child("callsign"):right() + 3)
+			RP:child("revive_amount"):set_y(1)
+			RP:child("revive_amount"):set_font_size(17)
+			
+			arrow:set_visible(false)
+		end)
+		
+		Hooks:PostHook(HUDTeammate, "set_state", "only_for_teammate_dot", function(self, state)
+			local teammate_panel = self._panel
+			local is_player = state == "player"
+			local name = teammate_panel:child("name")
+			local name_bg = self._panel:child("name_bg")
+			
+			if not self._main_player then
+				if is_player then
+					name:set_x(48 + name:h() + 4 + 19)
+					name_bg:set_x(name:x())
+					name:set_bottom(teammate_panel:h() - 30)
+				else
+					name:set_x(48 + name:h() + 4)
+					name:set_bottom(teammate_panel:h())
+				end
+			end
+		end)
+		
+	else
+		Hooks:PostHook(HUDTeammate, "set_state", "restore_AI_dot", function(self, state)
+				local is_player = state == "player"
+				if not self._main_player then
+					self._panel:child("callsign"):set_visible(true)
+					self._panel:child("callsign_bg"):set_visible(true)
+				end
+		end)
+	end
+	
 	function HUDTeammate:set_name(name, ...)
 		if not self._ai then
 			if WolfHUD:getSetting({"CustomHUD", self._setting_prefix, "TRUNCATE_TAGS"}, true) then
@@ -100,7 +156,7 @@ elseif RequiredScript == "lib/managers/hud/hudteammate" then
 			_,_,w,h = name_panel:text_rect()
 		end
 		if not self._ai then
-			name_panel:set_range_color((self._color_pos or 0) + 1, name_panel:text():len() + 1, self._panel:child("callsign"):color():with_alpha(1))
+			--name_panel:set_range_color((self._color_pos or 0) + 1, name_panel:text():len() + 1, self._panel:child("callsign"):color():with_alpha(1))
 		else
 			name_panel:set_color(WolfHUD:getSetting({"CustomHUD", "TEAMMATE", "AI_COLOR", "USE"}, false) and WolfHUD:getColorSetting({"CustomHUD", "TEAMMATE", "AI_COLOR", "COLOR"}, "white") or tweak_data.chat_colors[5])
 		end
