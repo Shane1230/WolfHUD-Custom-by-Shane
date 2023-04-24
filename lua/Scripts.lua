@@ -125,7 +125,7 @@ elseif string.lower(RequiredScript) == "lib/managers/menu/menunodegui" then
 	if MenuNodeMainGui then
 		Hooks:PostHook( MenuNodeMainGui , "_add_version_string" , "MenuNodeMainGuiPostAddVersionString_WolfHUD" , function( self )
 			if alive(self._version_string) then
-				self._version_string:set_text("Payday 2 v" .. Application:version() .. " | WolfHUD v" .. WolfHUD:getVersion())
+				self._version_string:set_text("Payday 2 v" .. Application:version() .. " | WolfHUD-Custom-by-Shane v" .. WolfHUD:getVersion())
 			end
 		end)
 	end

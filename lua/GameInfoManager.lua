@@ -443,6 +443,16 @@ lounge		100421		100448			102049
 			},
 			mex_cooking = { -- Border Crystals (4x Roman Armor)
 				roman_armor = true,
+			},
+			pent = { -- Mountain Master (2x artifact)
+				[500608] = true,
+				[500849] = true,
+			},
+			election_day_3 = { -- Election Day: Breaking Ballot (1x keycard)
+				[103887] = true,
+			},
+			skm_big2 = { -- Big Bank Holdout (1x keycard)
+				[101499] = true,
 			}
 		},
 	}
@@ -594,7 +604,7 @@ lounge		100421		100448			102049
             unseen_strike = "unseen_strike",
 			pocket_ecm_kill_dodge =	"pocket_ecm_kill_dodge",
 			copr_ability = "copr_ability",
-			mrwi_health_invulnerable = { "copycat_health_invul", "copycat_health_invul_passive" },
+			mrwi_health_invulnerable = { "copycat_health_invul", "copycat_health_invul_passive", },
 
 			--"properties"
 			bloodthirst_reload_speed = "bloodthirst_aced",
@@ -3008,12 +3018,6 @@ if string.lower(RequiredScript) == "lib/managers/playermanager" then
 		local gain_throwable_per_kill = managers.player:upgrade_value("team", "crew_throwable_regen", 0)
 		if gain_throwable_per_kill > 0 then
 			managers.gameinfo:event("buff", "set_stack_count", "crew_throwable_regen", { stack_count = (gain_throwable_per_kill - (self._throw_regen_kills or 0)) })
-		end
-		
-		--cpcp
-		local primary_kills = self:get_property("primary_reload_secondary_kills", 0) + 1
-		if self._has_primary_reload_secondary then
-		managers.gameinfo:event("buff", "set_stack_count", "copycat_primary_kill", {stack_count = primary_kills})
 		end
 
 		return result

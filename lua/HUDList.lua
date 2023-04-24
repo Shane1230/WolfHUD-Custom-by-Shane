@@ -289,6 +289,7 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		bolivian_indoors_mex =		{ type_id = "security",		category = "enemies",	long_name = "wolfhud_enemy_bolivian_security_mex" 	},
 		bolivian =					{ type_id = "thug",			category = "enemies",	long_name = "wolfhud_enemy_bolivian_thug" 			},
 		gangster = 					{ type_id = "thug",			category = "enemies",	long_name = "wolfhud_enemy_gangster" 				},
+		triad = 					{ type_id = "thug",			category = "enemies",	long_name = "wolfhud_enemy_triad" 					},
 		mobster = 					{ type_id = "thug",			category = "enemies",	long_name = "wolfhud_enemy_mobster" 				},
 		biker = 					{ type_id = "thug",			category = "enemies",	long_name = "wolfhud_enemy_biker" 					},
 		biker_escape = 				{ type_id = "thug",			category = "enemies",	long_name = "wolfhud_enemy_biker" 					},
@@ -417,11 +418,8 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
         ranc_hold_take_receiver = 			"weapon_receiver",
         ranc_hold_take_barrel = 			"weapon_barrel",
 		take_pardons = 						"pardons",
-		pda9_collective_1 =					"secret_item",
-		pda9_collective_2 =					"secret_item",
-		pda9_collective_3 =					"secret_item",
-		pda9_collective_4 =					"secret_item",
 		trai_usb_key = 						"secret_item",
+		pick_up_item = 						"secret_item",
 	}
 
 	HUDListManager.LOOT_TYPES = {
@@ -496,7 +494,7 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		ranc_weapon = 				"weapon",
 		trai_printing_plates = 		"plates",
 		corp_papers = 				"papers",
-		corp_prototype = 			"prototype",
+		corp_prototype = 			"neo2",
 		
 	}
 
@@ -693,7 +691,7 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		local list_width = 500
 		local list_height = 450
 		local x = 0
-		local y = HUDListManager.ListOptions.left_list_height_offset or 40 --offset+50 or 40
+		local y = HUDListManager.ListOptions.left_list_height_offset or 40
 		local scale = HUDListManager.ListOptions.left_list_scale or 1
 		local list = self:register_list("left_side_list", HUDList.VerticalList, { align = "left", x = x, y = y, w = list_width, h = list_height, scale = scale, top_to_bottom = true, item_margin = 5 })
 
@@ -3138,9 +3136,9 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		medal = 					{ texture = "guis/dlcs/trk/atlases/achievement_atlas_pex",		texture_rect = {  2,  2,85,85},		priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
 		blueprint = 				{ texture = "guis/dlcs/mex/textures/pd2/hud_pickups_blueprint", texture_rect = {  0,  0,32,32},		priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
 		horseshoe = 				{ texture = "guis/dlcs/trk/atlases/achievement_atlas_ranc",		texture_rect = {263,350,85,85},		priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
-		weapon_stock = 				{ texture = "guis/dlcs/ranc/textures/pd2/equipment_stock",		texture_rect = {  0,  0,32,32},		priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
-		weapon_receiver = 			{ texture = "guis/dlcs/ranc/textures/pd2/equipment_receiver",	texture_rect = {  0,  0,32,32},		priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
-		weapon_barrel = 			{ texture = "guis/dlcs/ranc/textures/pd2/equipment_barrel",		texture_rect = {  0,  0,32,32},		priority = 4, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
+		weapon_stock = 				{ texture = "guis/dlcs/ranc/textures/pd2/equipment_stock",		texture_rect = {  0,  0,32,32},		priority = 5, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
+		weapon_receiver = 			{ texture = "guis/dlcs/ranc/textures/pd2/equipment_receiver",	texture_rect = {  0,  0,32,32},		priority = 6, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
+		weapon_barrel = 			{ texture = "guis/dlcs/ranc/textures/pd2/equipment_barrel",		texture_rect = {  0,  0,32,32},		priority = 7, category = "collectables", 	ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "collectables"}, true) 		},
 	}
 
 	function HUDList.SpecialPickupItem:init(parent, name, id, members)
@@ -3230,7 +3228,7 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		scyayo = 		{ text = "wolfhud_hudlist_loot_scyayo", 	priority = 1 }, -- Scarface Yayo
 		plates = 		{ text = "wolfhud_hudlist_loot_plates",	 	priority = 1 }, -- Lost in Transit
 		papers = 		{ text = "wolfhud_hudlist_loot_papers",	 	priority = 1 }, -- Hostile Takeover Reserch Documents
-		prototype = 	{ text = "wolfhud_hudlist_loot_prototype",	priority = 1 }, -- Hostile Takeover NEO-2
+		neo2 = 			{ text = "wolfhud_hudlist_loot_neo2",		priority = 1 }, -- Hostile Takeover NEO-2
 	}
 	function HUDList.LootItem:init(parent, name, id, members)
 		local loot_data = HUDList.LootItem.MAP[id]

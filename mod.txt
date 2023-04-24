@@ -4,7 +4,7 @@
 	"author" : "Kamikaze94, Shane",
 	"contact" : "https://github.com/Kamikaze94/WolfHUD		   \n
 		   https://steamcommunity.com/id/Shane1230/",
-	"version" : "2.0",
+	"version" : "3.0",
 	"priority" : 1,
 	"blt_version" : 2,
 	"supermod_definition" : "supermod.xml",
@@ -20,5 +20,34 @@
 				"meta" : "https://raw.githubusercontent.com/Shane1230/autoupdate/main/WHCS"
 			}
 		}
+	],
+	"keybinds" : [
+		{
+       			 "keybind_id" : "buy_all_asset_keybind",
+       			 "name" : "Buy All Assets",
+       			 "description" : "Set Buy-all-assets key",
+       			 "script_path" : "lua/KeyBind/BuyAllAsset.lua",
+      			 "run_in_menu" : false,
+       			 "run_in_game" : true,
+       			 "localized" : false
+    		},
+		{
+       			 "keybind_id" : "next_profile",
+       			 "name" : "Next Profile",
+       			 "description" : "Change profile to next",
+       			 "script_path" : "lua/KeyBind/NextProfile.lua",
+      			 "run_in_menu" : false,
+       			 "run_in_game" : true,
+       			 "localized" : false
+    		},
+		{
+       			 "keybind_id" : "prev_profile",
+       			 "name" : "Previous Profile",
+       			 "description" : "Change profile to previous",
+       			 "script_path" : "lua/KeyBind/PrevProfile.lua",
+      			 "run_in_menu" : false,
+       			 "run_in_game" : true,
+       			 "localized" : false
+    		}
 	]
 }

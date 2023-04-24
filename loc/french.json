@@ -391,6 +391,8 @@
 	"wolfhud_chat_colored_bg_desc" : "Change la couleur de la ligne d'un message en fonction de son auteur.",
 	"wolfhud_chat_scrollbar_align_title" : "Barre de défilement",
 	"wolfhud_chat_scrollbar_align_desc" : "Alignment vertical de la barre de défilement.",
+	"wolfhud_chat_changeline_title" : "Scrollable lines",
+	"wolfhud_chat_changeline_desc" : "Number of scrollable lines when you press UP or DOWN key",
 
 	"wolfhud_suspicion_options_name" : "Paramètres de détection",
 	"wolfhud_suspicion_options_help" : "Paramètres pour l'interface de détection.",
@@ -1003,11 +1005,12 @@
 	"wolfhud_hudlist_loot_scyayo" : "Yayo",
 	"wolfhud_hudlist_loot_plates" : "Plate",
 	"wolfhud_hudlist_loot_papers" : "Documents",
-	"wolfhud_hudlist_loot_prototype" : "Prototype",
+	"wolfhud_hudlist_loot_neo2" : "NEO-2",
 
 	"wolfhud_enemy_marshal_marksman" : "Maskman",
 	"wolfhud_enemy_marshal_shield" : "Marshal Shield",
 	"wolfhud_enemy_marshal_shield_break" : "Marshal Special",
+	"wolfhud_enemy_triad" : "Triads",
 	
 	"wolfhud_hudlist_copycat_health_invul_buff_title" : "Health Invulnerability (Copycat)",
 	"wolfhud_hudlist_copycat_health_invul_buff_desc" : "",
@@ -1016,4 +1019,7 @@
 	
 	"wolfhud_restore_player_dot_title" : "Restore old Player dot",
 	"wolfhud_restore_player_dot_desc" : "Restoration player dot indicator with down counter",
+	
+	"lpi_packet_loss" : "packet loss",
+	"menu_lpi_fake_deck" : "Fake deck",
 }

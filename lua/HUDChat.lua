@@ -17,6 +17,7 @@ if RequiredScript == "lib/managers/hud/hudchat" then
 	HUDChat.WIDTH = WolfHUD:getSetting({"HUDChat", "WIDTH"}, 380)						--Width of the chat window
 	HUDChat.MAX_OUTPUT_LINES = WolfHUD:getSetting({"HUDChat", "MAX_OUTPUT_LINES"}, 8)	--Number of chat lines to show
 	HUDChat.MAX_INPUT_LINES = WolfHUD:getSetting({"HUDChat", "MAX_INPUT_LINES"}, 5)		--Number of lines of text you can type
+	HUDChat.CHANGE_LINES = WolfHUD:getSetting({"HUDChat", "CHANGE_LINES"}, 3)			--Number of scrollable lines when you press UP or DOWN key
 	HUDChat.MOUSE_SUPPORT = false														--For scolling and stuff. Experimental, you have been warned
 	HUDChat.COLORED_BG = WolfHUD:getSetting({"HUDChat", "COLORED_BG"}, true)			--Colorize the line bg based on the message source
 	HUDChat.SCROLLBAR_ALIGN = WolfHUD:getSetting({"HUDChat", "SCROLLBAR_ALIGN"}, 2)		--Alignment of the scroll bar (1 = left, 2 = right)
@@ -488,9 +489,9 @@ if RequiredScript == "lib/managers/hud/hudchat" then
 					text:set_selection(s + 1, s + 1)
 				end
 			elseif self._key_pressed == Idstring("up") then
-				self:_change_line_offset(1)
+				self:_change_line_offset(HUDChat.CHANGE_LINES)
 			elseif self._key_pressed == Idstring("down") then
-				self:_change_line_offset(-1)
+				self:_change_line_offset(-HUDChat.CHANGE_LINES)
 			elseif self._key_pressed == Idstring("page up") then
 				self:_change_line_offset(HUDChat.MAX_OUTPUT_LINES - self._current_input_lines)
 			elseif self._key_pressed == Idstring("page down") then

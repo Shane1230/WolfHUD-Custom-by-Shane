@@ -121,8 +121,6 @@ elseif string.lower(RequiredScript) == "lib/managers/hud/hudteammate" and not HU
 		})
 
 		self:set_detection()
-		
-		self._downs_counter:set_visible(false)
 
 		if managers.gameinfo then
 			managers.gameinfo:register_listener("HealthRadial_whisper_mode_listener" .. tostring(self._id), "whisper_mode", "change", callback(self, self, "_whisper_mode_change"), nil, true)

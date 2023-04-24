@@ -1220,6 +1220,16 @@ if WolfHUD then
 								step_size = 1,
 							},
 							{
+								type = "slider",
+								name_id = "wolfhud_chat_changeline_title",
+								desc_id = "wolfhud_chat_changeline_desc",
+								visible_reqs = {}, enabled_reqs = {},
+								value = {"HUDChat", "CHANGE_LINES"},
+								min_value = 1,
+								max_value = 5,
+								step_size = 1,
+							},
+							{
 								type = "toggle",
 								name_id = "wolfhud_chat_colored_bg_title",
 								desc_id = "wolfhud_chat_colored_bg_desc",

@@ -209,6 +209,7 @@
 	"wolfhud_enemy_marshal_marksman" : "마스크맨",
 	"wolfhud_enemy_marshal_shield" : "마샬 쉴드",
 	"wolfhud_enemy_marshal_shield_break" : "마샬 쉴드",
+	"wolfhud_enemy_triad" : "Triads",
 
 	"wolfhud_enemy_boom" : "Grenadier",
 	"wolfhud_enemy_omnia_lpf" : "OMNIA L.P.F.",
@@ -400,8 +401,10 @@
 	"wolfhud_chat_inputlines_desc" : "Number of lines of text you can type",
 	"wolfhud_chat_colored_bg_title" : "색있는 채팅창",
 	"wolfhud_chat_colored_bg_desc" : "플레이어의 색을 바탕으로 채팅창 배경 색이 바뀝니다",
-	"wolfhud_chat_scrollbar_align_title" : "Scrollbar Align",
-	"wolfhud_chat_scrollbar_align_desc" : "Alignment of the scroll bar",
+	"wolfhud_chat_scrollbar_align_title" : "스크롤바 위치",
+	"wolfhud_chat_scrollbar_align_desc" : "스크롤바 위치를 설정합니다.",
+	"wolfhud_chat_changeline_title" : "스크롤 할 줄의 수",
+	"wolfhud_chat_changeline_desc" : "위 혹은 아래 방향키를 누를때 스클롤 될 줄의 수를 설정합니다.",
 
 	"wolfhud_suspicion_options_name" : "의심미터 옵션",
 	"wolfhud_suspicion_options_help" : "의심미터, 의심도 등을 설정합니다.",
@@ -1020,4 +1023,7 @@
 	
 	"wolfhud_restore_player_dot_title" : "이전버전의 팀원 도트 되돌리기",
 	"wolfhud_restore_player_dot_desc" : "다운횟수 표시와 함께 팀원 도트(dot)를 되돌립니다.",
+	
+	"lpi_packet_loss" : "packet loss",
+	"menu_lpi_fake_deck" : "Fake deck",
 }

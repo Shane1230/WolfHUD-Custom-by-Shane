@@ -117,7 +117,7 @@
 	"wolfhud_hudlist_loot_scyayo" : "Yayo",
 	"wolfhud_hudlist_loot_plates" : "Plate",
 	"wolfhud_hudlist_loot_papers" : "Documents",
-	"wolfhud_hudlist_loot_prototype" : "Prototype",
+	"wolfhud_hudlist_loot_neo2" : "NEO-2",
 
 	"wolfhud_hudlist_buff_basic" : "Basic",
 	"wolfhud_hudlist_buff_aced" : "Aced",
@@ -208,6 +208,7 @@
 	"wolfhud_enemy_marshal_marksman" : "Maskman",
 	"wolfhud_enemy_marshal_shield" : "Marshal Shield",
 	"wolfhud_enemy_marshal_shield_break" : "Marshal Special",
+	"wolfhud_enemy_triad" : "Triads",
 
 	"wolfhud_enemy_boom" : "Grenadier",
 	"wolfhud_enemy_omnia_lpf" : "OMNIA L.P.F.",
@@ -401,6 +402,8 @@
 	"wolfhud_chat_colored_bg_desc" : "Colorize the line bg based on the message source",
 	"wolfhud_chat_scrollbar_align_title" : "Scrollbar Align",
 	"wolfhud_chat_scrollbar_align_desc" : "Alignment of the scroll bar",
+	"wolfhud_chat_changeline_title" : "Scrollable lines",
+	"wolfhud_chat_changeline_desc" : "Number of scrollable lines when you press UP or DOWN key",
 
 	"wolfhud_suspicion_options_name" : "Suspicion options",
 	"wolfhud_suspicion_options_help" : "Options for the size of the suspicion panel, as well as its visible components.",
@@ -1019,4 +1022,7 @@
 	
 	"wolfhud_restore_player_dot_title" : "Restore old Player dot",
 	"wolfhud_restore_player_dot_desc" : "Restoration player dot indicator with down counter",
+	
+	"lpi_packet_loss" : "packet loss",
+	"menu_lpi_fake_deck" : "Fake deck",
 }

@@ -10,6 +10,7 @@ if RequiredScript == "lib/managers/platformmanager" then
 			local display = "#raw_status" --"#DisplayMe"
 			local group_key = ""
 			local group_count = ""
+			local group_max = ""
 
 			local game_state = "menu"
 			local game_mode = ""
@@ -29,6 +30,7 @@ if RequiredScript == "lib/managers/platformmanager" then
 
 						local session = managers.network:session()
 						group_count = tostring(session and #session:all_peers() or 1)
+						group_max = tostring(_G.tweak_data.max_players)
 					end
 
 					-- Determine game state
@@ -72,6 +74,7 @@ if RequiredScript == "lib/managers/platformmanager" then
 			Steam:set_rich_presence("steam_display", display)		-- Currently not usable, only Overkill can setup required localized strings here...
 			Steam:set_rich_presence("steam_player_group", group_key)
 			Steam:set_rich_presence("steam_player_group_size", group_count)
+			Steam:set_rich_presence("max_peers", group_count)
 
 			Steam:set_rich_presence("game:state", game_state)
 			Steam:set_rich_presence("game:mode", game_mode)
@@ -79,7 +82,7 @@ if RequiredScript == "lib/managers/platformmanager" then
 			Steam:set_rich_presence("game:heist_day", game_heistday)
 			Steam:set_rich_presence("game:difficulty", game_difficulty)
 
-			Steam:set_rich_presence("status", self:build_status_string(display, game_state, game_mode, game_heist, game_heistday, game_difficulty))
+			Steam:set_rich_presence("status", self:build_status_string(display, game_state, game_mode, game_heist, game_heistday, group_count, group_max, game_difficulty))
 		end
 	end
 
@@ -118,23 +121,23 @@ if RequiredScript == "lib/managers/platformmanager" then
 		return level_id or self:get_current_job_id()
 	end
 
-	function WinPlatformManager:build_status_string(display, state, mode, heist, day, difficulty)
+    function WinPlatformManager:build_status_string(display, state, mode, heist, day, peercount, maxpeer, difficulty)
 		local tokens = {
 			["#raw_status"] =				"{#State_%game:state%}",
 
 			-- Game states
 			["#State_menu"] =				"At the main menu",
 			["#State_private"] =			"In a private lobby",
-			["#State_lobby_no_job"] =		"In a lobby",
+			["#State_lobby_no_job"] =		"In a lobby %steam_player_group_size%/%max_peers%",
 			["#State_lobby"] =				"Lobby: {#Mode_%game:mode%}",
 			["#State_playing"] =			"Playing: {#Mode_%game:mode%}",
 			["#State_payday"] =				"Payday: {#Mode_%game:mode%}",
 
 			-- Game modes
-			["#Mode_crime_spree"] =			"[CS] {#Level_%game:heist%} (Lvl. %game:difficulty%)",
-			["#Mode_skirmish"] =			"[HO] {#Level_%game:heist%} (Wave %game:difficulty%)",
-			["#Mode_heist"] =				"{#Job_%game:heist%} ({#Difficulty_%game:difficulty%})",
-			["#Mode_heist_chain"] =			"{#Job_%game:heist%}, Day %game:heist_day% ({#Difficulty_%game:difficulty%})",
+			["#Mode_crime_spree"] =			"[CS] {#Level_%game:heist%} %steam_player_group_size%/%max_peers% (Lvl. %game:difficulty%)",
+			["#Mode_skirmish"] =			"[HO] {#Level_%game:heist%} %steam_player_group_size%/%max_peers% (Wave %game:difficulty%)",
+			["#Mode_heist"] =				"{#Job_%game:heist%} %steam_player_group_size%/%max_peers% ({#Difficulty_%game:difficulty%})",
+			["#Mode_heist_chain"] =			"{#Job_%game:heist%}, Day:%game:heist_day% %steam_player_group_size%/%max_peers% ({#Difficulty_%game:difficulty%})",
 
 			-- Difficulties
 			["#Difficulty_easy"] =			"EASY",
@@ -142,7 +145,7 @@ if RequiredScript == "lib/managers/platformmanager" then
 			["#Difficulty_hard"] =			"HARD",
 			["#Difficulty_overkill"] =		"VERY HARD",
 			["#Difficulty_overkill_145"] =	"OVERKILL",
-			["#Difficulty_easy_wish"] =		"MAYHAM",
+			["#Difficulty_easy_wish"] =		"MAYHEM",
 			["#Difficulty_overkill_290"] =	"DEATHWISH",
 			["#Difficulty_sm_wish"] =		"DEATH SENTENCE",
 
@@ -265,6 +268,7 @@ if RequiredScript == "lib/managers/platformmanager" then
 			["#Level_help"] = 				"Prison Nightmare",
 			["#Job_big"] = 					"The Big Bank",
 			["#Level_big"] = 				"The Big Bank",
+			["#Level_big2"] = 				"The Big Bank",
 			["#Job_cane"] = 				"Santa's Workshop",
 			["#Level_cane"] = 				"Santa's Workshop",
 			["#Job_spa"] = 					"Brooklyn 10-10",
@@ -281,6 +285,7 @@ if RequiredScript == "lib/managers/platformmanager" then
 			["#Level_pines"] = 				"White Xmas",
 			["#Job_kenaz"] = 				"Golden Grin Casino",
 			["#Level_kenaz"] = 				"Golden Grin Casino",
+			["#Level_cas"] = 				"Golden Grin Casino",
 			["#Job_shoutout_raid"] = 		"Meltdown",
 			["#Level_shoutout_raid"] = 		"Meltdown",
 			["#Job_mad"] = 					"Boiling Point",
@@ -324,6 +329,92 @@ if RequiredScript == "lib/managers/platformmanager" then
 			["#Level_mex"] = 				"Border Crossing",
 			["#Job_bex"] = 					"San Martín Bank",
 			["#Level_bex"] = 				"San Martín Bank",
+			["#Job_pex"] = 					"Breakfast in Tijuana",
+			["#Level_pex"] = 				"Breakfast in Tijuana",
+			["#Job_fex"] = 					"Buluc's Mansion",
+			["#Level_fex"] = 				"Buluc's Mansion",
+			["#Job_chas"] =					"Dragon Heist",
+			["#Level_chas"] =				"Dragon Heist",
+			["#Job_sand"] =					"Ukrainian Prisoner",
+			["#Level_sand"] =				"Ukrainian Prisoner",
+			["#Job_chca"] = 				"Black Cat",
+			["#Level_chca"] = 				"Black Cat",
+			["#Job_pent"] = 				"Mountain Master",
+			["#Level_pent"] =				"Mountain Master",
+			["#Job_ranc"] = 				"Midland Ranch",
+			["#Level_ranc"] = 				"Midland Ranch",
+			["#Job_trai"] = 				"Lost In Transit",
+			["#Level_trai"] = 				"Lost In Transit",
+			["#Job_corp"] = 				"Hostile Takeover",
+			["#Level_corp"] = 				"Hostile Takeover",
+
+			--Custom Heists
+			["#Job_zm_kino"] =					"Kino Der Minetoten",
+			["#Level_zm_kino"] =				"Kino Der Minetoten",
+			["#Job_zm_house"] =					"Zombie House",
+			["#Level_zm_hox_3"] =				"Zombie House",
+			["#Job_broken_arrow2"] =			"Broken Arrow",
+			["#Level_zm_broken_arrow"] =		"Broken Arrow",
+			["#Job_zm_the_forest"] =			"Wald Der Untoten",
+			["#Level_zm_the_forest"] =			"Wald Der Untoten",
+			["#Job_Hoxton Breakout Zombies"] =	"Zombie Breakout",
+			["#Level_hox_2_zombie"] =			"Zombie Breakout",
+			["#Job_zm_arena"] =					"Zombies Arena",
+			["#Level_zm_arena"] =				"Zombies Arena",
+			["#Job_zm_dah"] =					"Garnet Group Tower",
+			["#Level_zm_dah"] =					"Garnet Group Tower",
+			["#Job_not_expected"] =				"Stalk Fraud",
+			["#Level_thechase"] =				"Stalk Fraud",
+			["#Job_The Late Holiday Special"] = "The Late Holiday Special",
+			["#Level_santa_pain"] =				"The Late Holiday Special",
+			["#Job_Virtual"] =					"Ready Player None",
+			["#Level_Victor Romeo"] =			"Ready Player None",
+			["#Job_Assault"] =					"Bag Simulator: The Heist",
+			["#Level_endless_assault"] =		"Bag Simulator: The Heist",
+			["#Job_colosseum"] =				"Bag Simulator 2: The Rehashed Heist",
+			["#Level_bag_sim_2"] =				"Bag Simulator 2: The Rehashed Heist",
+			["#Job_shovelforge"] =				"Shovelforge Cook Off",
+			["#Level_mc_shovelforge"] =			"Shovelforge Cook Off",
+			["#Job_mc_jewlerystore"] =			"Jewelry Crafters",
+			["#Level_mc_jewlerystore_lvl"] =	"Jewelry Crafters",
+			["#Job_mcparkour"] =				"Simple Fun Platforming",
+			["#Level_mcparkour"] =				"Simple Fun Platofrming",
+			["#Job_eclipse"] =					"Project Eclipse",
+			["#Level_eclipse"] =				"Project Eclipse",
+			["#Job_eclipse_research_facility"] = "Project Eclipse: Eclipse Research Facility",
+			["#Level_the_factory"] =			"Project Eclipse: Eclipse Research Facility",
+			["#Job_ascension"] =				"Project Eclipse: Ascension",
+			["#Level_ascension_III"] =			"Project Eclipse: Ascension",
+			["#Job_infinitebank"] =				"First World Tower", 
+			["#Level_infinitebank_room"] =		"First World Tower",
+			["#Job_heist_runner"] =				"Diamond Runners",
+			["#Level_pk_hcm"] =					"Diamond Runners",
+			["#Job_AnotherFourStores"] =		"Four More Stores",
+			["#Level_lvl_fourmorestores"] =		"Four More Stores",
+			["#Job_daymare"] =					"Hells Nightmare",
+			["#Level_daymare"] =				"Hells Nightmare",
+			["#Job_YouAreNeverAloneInTheDark"] = "Cargoship Raid",
+			["#Level_Xanax"] =					"Cargoship Raid",
+			["#Job_Armsdeal Alleyway"] =		"Armsdeal: Alleyway", 
+			["#Level_amsdeal1"] =				"Armsdeal: Alleyway",
+			["#Job_modders_devmap"] =			"Proving Grounds",
+			["#Level_modders_devmap"] =			"Proving Grounds",
+			["#Job_Election_Funds"] =			"Election Funds",
+			["#Level_Election_Funds"] =			"Election Funds",
+			["#Job_tonisn1"] =					"Grand Harvest",
+			["#Level_tonisl1"] =				"Grand Harvest",
+			["#Job_Underground_Bargains"] =		"Underground_Bargains",
+			["#Level_Gambling_room"] =			"Underground_Bargains",
+			["#Job_hardware_store_wrapper"] =	"Hardware Store", 
+			["#Level_hardware_store"] =			"Hardware Store",
+			["#Job_family_jewels_wrapper"] =	"Family Jewels",
+			["#Level_family_jewels"] =			"Family Jewels",
+			["#Job_red_money"] =				"Red Money",
+			["#Level_red_money_stage_001"] =	"Red Money",
+			["#Job_hidden_vault"] =				"Hidden Vault",
+			["#Level_hidden_vault"] =			"Hidden Vault",
+			["#Job_Zdann_Enemy_Spawner"] =		"Enemy Spawner",
+			["#Level_Zdann_Enemy_Spawner"] =	"Enemy Spawner",
 		}
 
 		local data = {
@@ -332,6 +423,8 @@ if RequiredScript == "lib/managers/platformmanager" then
 			["game:heist"] = heist,
 			["game:heist_day"] = day,
 			["game:difficulty"] = difficulty,
+			["steam_player_group_size"] = peercount,
+			["max_peers"] = maxpeer,
 		}
 
 		local s = string.format("{%s}", display or "#raw_status")
@@ -385,7 +478,9 @@ if Hooks then	-- Basegame doesn't update RP on peer count changes...
 		local session = managers.network:session()
 		if session and Global.game_settings.permission ~= "private" then
 			local group_count = tostring(session and #session:all_peers() or 1)
+			local group_max = tostring(_G.tweak_data.max_players)
 			Steam:set_rich_presence("steam_player_group_size", group_count)
+			Steam:set_rich_presence("max_peers", group_count)
 		end
 	end)
 
@@ -393,7 +488,9 @@ if Hooks then	-- Basegame doesn't update RP on peer count changes...
 		local session = managers.network:session()
 		if session and Global.game_settings.permission ~= "private" then
 			local group_count = tostring(session and #session:all_peers() or 1)
+			local group_max = tostring(_G.tweak_data.max_players)
 			Steam:set_rich_presence("steam_player_group_size", group_count)
+			Steam:set_rich_presence("max_peers", group_count)
 		end
 	end)
 end

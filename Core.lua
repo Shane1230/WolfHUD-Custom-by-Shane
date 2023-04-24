@@ -51,7 +51,7 @@ if not _G.WolfHUD then
 					KILLCOUNTER = {
 						HIDE						= false,
 						SHOW_SPECIAL_KILLS 			= true,
-						SHOW_HEADSHOT_KILLS			= true,
+						SHOW_HEADSHOT_KILLS			= false,
 						COLOR						= "yellow",
 					},
 					SHOW_ACCURACY					= true,
@@ -102,7 +102,7 @@ if not _G.WolfHUD then
 					},
 				},
 				RESTORE_PLAYER_DOT					= true,
-				USE_REAL_AMMO 						= true,
+				USE_REAL_AMMO 						= false,
 			},
 			HUDChat = {
 				CHAT_WAIT_TIME							= 10,		--Time before chat fades out, 0 = never
@@ -110,6 +110,7 @@ if not _G.WolfHUD then
 				WIDTH									= 350,		--Width of the chat window
 				MAX_OUTPUT_LINES						= 10,		--Chat Output lines
 				MAX_INPUT_LINES							= 5,		--Number of lines of text you can type
+				CHANGE_LINES							= 3,		--Number of scrollable lines when you press UP or DOWN key
 				COLORED_BG								= false,	--Colorize the line bg based on the message source
 				SCROLLBAR_ALIGN							= 2,		--Alignment of the scroll bar (1 = left, 2 = right)
 				SPAM_FILTER								= true,		--Filter PocoHud and NGBTO Chat Spam messages.
@@ -171,7 +172,7 @@ if not _G.WolfHUD then
 				ENABLED									= true,
 				CLOCK_MODE								= 3,		-- 1 = disabled, 2 = 12h, 3 = 24h
 				COLOR		 							= "rainbow",
-				FONT_SIZE		 						= 18,
+				FONT_SIZE		 						= 15,
 				SHOW_MASK								= true,
 				SHOW_LOOT_NUMBERS						= true,
 			},
@@ -448,12 +449,12 @@ if not _G.WolfHUD then
 				ECM_FEEDBACK_STEALTH_DISABLED			= true,
 				SHAPED_CHARGE_STEALTH_DISABLED			= true,
 				KEYCARD_DOORS_DISABLED					= true,
-				ENABLE_BURSTMODE						= true,
+				ENABLE_BURSTMODE						= false,
 			},
 			INVENTORY = {
 				SHOW_WEAPON_NAMES 						= true,
 				SHOW_WEAPON_MINI_ICONS 					= true,
-				USE_REAL_WEAPON_NAMES 					= true,
+				USE_REAL_WEAPON_NAMES 					= false,
 				SHOW_SKILL_NAMES 						= true,
 				SHOW_CONTRACTOR_JOB_HEAT				= true,
 				CUSTOM_TAB_NAMES = {
@@ -474,7 +475,7 @@ if not _G.WolfHUD then
 				NO_SLOWMOTION 							= true,		--Disable mask-up and downed slow motion
 			},
 			MOD_OVERRIDES = {
-				fed_inv									= true,
+				fed_inv									= false,
 			},
 			LOBBY_SETTINGS = {
 				job_plan = -1,

@@ -34,14 +34,12 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 
 elseif RequiredScript == "lib/managers/hud/hudteammate" then
 
-
-
 	local init_original = HUDTeammate.init
 	local set_name_original = HUDTeammate.set_name
 	local set_condition_original = HUDTeammate.set_condition
 	local teammate_progress_original = HUDTeammate.teammate_progress
 	local update_original = HUDManager.update
-	
+
 	function HUDTeammate:init(...)
 		init_original(self, ...)
 

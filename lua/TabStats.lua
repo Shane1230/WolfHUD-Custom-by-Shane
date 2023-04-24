@@ -901,7 +901,7 @@ if string.lower(RequiredScript) == "lib/managers/hud/newhudstatsscreen" then
 				align = 'left',
 				vertical = 'top',
 				blend_mode = 'add',
-				font_size = tweak_data.menu.pd2_small_font_size - 7, --ont_size = tweak_data.menu.pd2_small_font_size,
+				font_size = tweak_data.menu.pd2_small_font_size - 7, --font_size = tweak_data.menu.pd2_small_font_size,
 				font = tweak_data.menu.pd2_small_font,
 				color = tweak_data.chat_colors[i],
 				text = peer and peer:name() or '',
