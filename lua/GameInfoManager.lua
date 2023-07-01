@@ -168,6 +168,14 @@ if string.lower(RequiredScript) == "lib/setups/setup" then
 			[140821] = { pause = function(...) GameInfoManager._TIMER_CALLBACKS.overrides.stop_on_pause(...) end },	--Cursed kill room safe 5 timer
 			[140822] = { pause = function(...) GameInfoManager._TIMER_CALLBACKS.overrides.stop_on_pause(...) end },	--Cursed kill room safe 5 timer
 			[140823] = { pause = function(...) GameInfoManager._TIMER_CALLBACKS.overrides.stop_on_pause(...) end },	--Cursed kill room safe 5 timer
+			[136015] = { pause = function(...) GameInfoManager._TIMER_CALLBACKS.overrides.stop_on_pause(...) end },	--Dragon Heist Time Lock jammed
+			[138640] = { pause = function(...) GameInfoManager._TIMER_CALLBACKS.overrides.stop_on_pause(...) end },	--Dragon Heist C4
+			[138940] = { pause = function(...) GameInfoManager._TIMER_CALLBACKS.overrides.stop_on_pause(...) end },	--Dragon Heist C4
+			[139540] = { pause = function(...) GameInfoManager._TIMER_CALLBACKS.overrides.stop_on_pause(...) end },	--Dragon Heist C4
+			[139840] = { pause = function(...) GameInfoManager._TIMER_CALLBACKS.overrides.stop_on_pause(...) end },	--Dragon Heist C4
+			[140140] = { pause = function(...) GameInfoManager._TIMER_CALLBACKS.overrides.stop_on_pause(...) end },	--Dragon Heist C4
+			[102452] = { pause = function(...) GameInfoManager._TIMER_CALLBACKS.overrides.stop_on_pause(...) end }, --Mountain Master Roof Button
+            [103872] = { pause = function(...) GameInfoManager._TIMER_CALLBACKS.overrides.stop_on_pause(...) end }, --Mountain Master Roof Button
 		}
 	}
 
@@ -442,18 +450,34 @@ lounge		100421		100448			102049
 				[100058] = true,
 			},
 			mex_cooking = { -- Border Crystals (4x Roman Armor)
-				roman_armor = true,
+				roman_armor = true
 			},
 			pent = { -- Mountain Master (2x artifact)
 				[500608] = true,
 				[500849] = true,
 			},
 			election_day_3 = { -- Election Day: Breaking Ballot (1x keycard)
-				[103887] = true,
+				[103887] = true
 			},
 			skm_big2 = { -- Big Bank Holdout (1x keycard)
-				[101499] = true,
-			}
+				[101499] = true
+			},
+			kosugi = { -- Shadow Raid (2x lost_tape keycard)
+				[105096] = true,
+				[105097] = true,
+				[105098] = true,
+				[105099] = true,
+				[105100] = true,
+				[105101] = true,
+			},
+			mex = { -- Border Crossing (2x lost_tape keycard)
+				[103806] = true,
+				[103807] = true,
+				[103808] = true,
+				[103809] = true,
+				[103810] = true,
+				[103811] = true,
+			},
 		},
 	}
 	GameInfoManager._INTERACTIONS.IGNORE_IDS.watchdogs_2_day = table.deep_map_copy(GameInfoManager._INTERACTIONS.IGNORE_IDS.watchdogs_2)

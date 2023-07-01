@@ -14,6 +14,14 @@ https://github.com/Kamikaze94/WolfHUD
 ## Changelog
 [한국어 변경사항](https://github.com/Shane1230/WolfHUD-Custom-by-Shane#변경사항)보러가기 (Go to korean changelog)
 
+
+### 4.0
+- HUDList
+  - Discount Lost Tape keycard
+  - Hide jammed timer
+    - Dragon Heist: time lock, C4
+    - Mountaim Mater: achievement button on roof
+---
 ### 3.0
 - Add keyBind
   > (*ESC- Mod Keybinds*) option to set keybinds.
@@ -74,6 +82,12 @@ https://github.com/Kamikaze94/WolfHUD
 
 ## 변경사항
 
+### 4.0
+- 허드리스트
+  - 이제 Lost Tape 키카드 표시를 표시 하지 않습니다.
+  - 정지된 타이머들을 표시하지 않습니다.
+    - 드래곤 하이스트: 타임락, C4
+    - 산주: 옥상의 도전과제 버튼
 ### 3.0
 - 단축키 추가
   > (*ESC- 모드 키설정*) 옵션에서 설정 가능합니다.

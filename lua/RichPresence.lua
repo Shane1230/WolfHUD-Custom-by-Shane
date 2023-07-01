@@ -347,6 +347,8 @@ if RequiredScript == "lib/managers/platformmanager" then
 			["#Level_trai"] = 				"Lost In Transit",
 			["#Job_corp"] = 				"Hostile Takeover",
 			["#Level_corp"] = 				"Hostile Takeover",
+			["#Job_deep"] = 				"Crude Awakening",
+			["#Level_deep"] = 				"Crude Awakening",
 
 			--Custom Heists
 			["#Job_zm_kino"] =					"Kino Der Minetoten",

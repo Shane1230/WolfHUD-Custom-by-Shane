@@ -404,7 +404,7 @@
 	"wolfhud_chat_scrollbar_align_title" : "스크롤바 위치",
 	"wolfhud_chat_scrollbar_align_desc" : "스크롤바 위치를 설정합니다.",
 	"wolfhud_chat_changeline_title" : "스크롤 할 줄의 수",
-	"wolfhud_chat_changeline_desc" : "위 혹은 아래 방향키를 누를때 스클롤 될 줄의 수를 설정합니다.",
+	"wolfhud_chat_changeline_desc" : "위 혹은 아래 방향키를 누를때 스크롤 될 줄의 수를 설정합니다.",
 
 	"wolfhud_suspicion_options_name" : "의심미터 옵션",
 	"wolfhud_suspicion_options_help" : "의심미터, 의심도 등을 설정합니다.",
