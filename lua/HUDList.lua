@@ -6831,7 +6831,7 @@ if string.lower(RequiredScript) == "lib/managers/objectinteractionmanager" then
 			managers.gameinfo:register_listener("pager_contour_remover", "pager", "set_answered", callback(nil, _G, "pager_answered_clbk"))
 		end
 	end
-
+	
 	function pager_answered_clbk(event, key, data)
 		managers.enemy:add_delayed_clbk("contour_remove_" .. key, callback(nil, _G, "remove_answered_pager_contour_clbk", data.unit), Application:time() + 0.01)
 	end

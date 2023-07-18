@@ -478,6 +478,22 @@ lounge		100421		100448			102049
 				[103810] = true,
 				[103811] = true,
 			},
+			mex_cooking = { -- Border Crystals (6x lost_tape keycard)
+				[103806] = true,
+				[103807] = true,
+				[103808] = true,
+				[103809] = true,
+				[103810] = true,
+				[103811] = true,
+			},
+			dah = { -- Diamond Heist (2x lost_tape keycard)
+				[105213] = true,
+				[105214] = true,
+				[105223] = true,
+				[105224] = true,
+				[105225] = true,
+				[105226] = true,
+			}
 		},
 	}
 	GameInfoManager._INTERACTIONS.IGNORE_IDS.watchdogs_2_day = table.deep_map_copy(GameInfoManager._INTERACTIONS.IGNORE_IDS.watchdogs_2)
@@ -2436,6 +2452,7 @@ if string.lower(RequiredScript) == "lib/units/equipment/ecm_jammer/ecmjammerbase
 	function ECMJammerBase:destroy(...)
 		managers.gameinfo:event("ecm", "set_feedback_active", self._ecm_unit_key, { feedback_active = false })
 		managers.gameinfo:event("ecm", "set_retrigger_active", self._ecm_unit_key, { retrigger_active = false })
+		managers.gameinfo:event("ecm", "set_jammer_active", self._ecm_unit_key, { jammer_active = false })
 		managers.gameinfo:event("ecm", "destroy", self._ecm_unit_key)
 		destroy_original(self, ...)
 	end

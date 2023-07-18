@@ -14,11 +14,18 @@ https://github.com/Kamikaze94/WolfHUD
 ## Changelog
 [한국어 변경사항](https://github.com/Shane1230/WolfHUD-Custom-by-Shane#변경사항)보러가기 (Go to korean changelog)
 
-
+### 4.1
+- HUDList
+  - Discount Lost Tapes keycards
+	- Diamond Heist (2x keycard)
+	- Border: Crystals (6x keycard)
+---
 ### 4.0
 - HUDList
-  - Discount Lost Tape keycard
-  - Hide jammed timer
+  - Discount Lost Tapes keycards
+	- Shadow Raid (2x keycard)
+	- Border Crossing (2x keycard)
+  - Hide paused timer
     - Dragon Heist: time lock, C4
     - Mountaim Mater: achievement button on roof
 ---
@@ -82,9 +89,16 @@ https://github.com/Kamikaze94/WolfHUD
 
 ## 변경사항
 
+### 4.1
+- 허드리스트
+  - 이제 Lost Tapes 키카드 표시를 표시 하지 않습니다.
+	- 다이아몬드 하이스트 (2x 키카드)
+	- 국경: 마약 제조 (6x 키카드)
 ### 4.0
 - 허드리스트
-  - 이제 Lost Tape 키카드 표시를 표시 하지 않습니다.
+  - 이제 Lost Tapes 키카드 표시를 표시 하지 않습니다.
+	- 쉐도우 레이드 (2x 키카드)
+	- 국경 횡단 (2x 키카드)
   - 정지된 타이머들을 표시하지 않습니다.
     - 드래곤 하이스트: 타임락, C4
     - 산주: 옥상의 도전과제 버튼
