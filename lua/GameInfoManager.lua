@@ -449,8 +449,14 @@ lounge		100421		100448			102049
 				[132537] = true,
 				[100058] = true,
 			},
-			mex_cooking = { -- Border Crystals (4x Roman Armor)
-				roman_armor = true
+			mex_cooking = { -- Border Crystals (4x Roman Armor, 6x lost_tape keycard)
+				roman_armor = true,
+				[103806] = true,
+				[103807] = true,
+				[103808] = true,
+				[103809] = true,
+				[103810] = true,
+				[103811] = true,
 			},
 			pent = { -- Mountain Master (2x artifact)
 				[500608] = true,
@@ -478,21 +484,18 @@ lounge		100421		100448			102049
 				[103810] = true,
 				[103811] = true,
 			},
-			mex_cooking = { -- Border Crystals (6x lost_tape keycard)
-				[103806] = true,
-				[103807] = true,
-				[103808] = true,
-				[103809] = true,
-				[103810] = true,
-				[103811] = true,
-			},
-			dah = { -- Diamond Heist (2x lost_tape keycard)
+			dah = { -- Diamond Heist (6x lost_tape keycard)
 				[105213] = true,
 				[105214] = true,
 				[105223] = true,
 				[105224] = true,
 				[105225] = true,
 				[105226] = true,
+			},
+			arm_for = { -- Transport: Train (3x camera)
+				[102552] = true,
+				[102553] = true,
+				[105554] = true,
 			}
 		},
 	}

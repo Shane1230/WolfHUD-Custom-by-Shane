@@ -495,6 +495,8 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		trai_printing_plates = 		"plates",
 		corp_papers = 				"papers",
 		corp_prototype = 			"neo2",
+		breaching_charges = 		"door_breaker",
+		hydraulic_opener = 			"door_breaker",
 		
 	}
 
@@ -3229,6 +3231,7 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		plates = 		{ text = "wolfhud_hudlist_loot_plates",	 	priority = 1 }, -- Lost in Transit
 		papers = 		{ text = "wolfhud_hudlist_loot_papers",	 	priority = 1 }, -- Hostile Takeover Reserch Documents
 		neo2 = 			{ text = "wolfhud_hudlist_loot_neo2",		priority = 1 }, -- Hostile Takeover NEO-2
+		door_breaker = 	{ text = "wolfhud_hudlist_loot_dbreaker",	priority = 1 }, -- Border Crossing, Breakfast in Tijuana
 	}
 	function HUDList.LootItem:init(parent, name, id, members)
 		local loot_data = HUDList.LootItem.MAP[id]

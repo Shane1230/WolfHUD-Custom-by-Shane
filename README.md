@@ -14,20 +14,29 @@ https://github.com/Kamikaze94/WolfHUD
 ## Changelog
 [한국어 변경사항](https://github.com/Shane1230/WolfHUD-Custom-by-Shane#변경사항)보러가기 (Go to korean changelog)
 
+
+### 4.2
+- HUDList
+  - Add bag count: Border Crossing - Breaching Charges
+  - Add bag count: Breakfast in Tijuana - Door Breaker
+  - Discount: Transport: Train - 3x Camera
+  - (Bug fixed) Discount: Border Crystal - 4x Roman armor
+---
 ### 4.1
 - HUDList
-  - Discount Lost Tapes keycards
+  - Discount Lost Tapes keycards:
 	- Diamond Heist (2x keycard)
 	- Border: Crystals (6x keycard)
 ---
 ### 4.0
 - HUDList
-  - Discount Lost Tapes keycards
+  - Discount Lost Tapes keycards:
 	- Shadow Raid (2x keycard)
 	- Border Crossing (2x keycard)
   - Hide paused timer
     - Dragon Heist: time lock, C4
     - Mountaim Mater: achievement button on roof
+---
 ---
 ### 3.0
 - Add keyBind
@@ -89,19 +98,28 @@ https://github.com/Kamikaze94/WolfHUD
 
 ## 변경사항
 
+### 4.2
+- 허드리스트
+  - 가방 추가: 국격 횡단 - 브리칭 폭약
+  - 가방 추가: 티후아나에서의 아침을 - 유압 프레스
+  - 표시 안함: 트랜스포트: 열차 - 3x 카메라
+  - (버그픽스) 표시 안함: 국경: 마약제조 - 4x 로마 아머
+---
 ### 4.1
 - 허드리스트
-  - 이제 Lost Tapes 키카드 표시를 표시 하지 않습니다.
+  - 이제 Lost Tapes 키카드 표시를 표시 하지 않습니다:
 	- 다이아몬드 하이스트 (2x 키카드)
 	- 국경: 마약 제조 (6x 키카드)
+---
 ### 4.0
 - 허드리스트
-  - 이제 Lost Tapes 키카드 표시를 표시 하지 않습니다.
+  - 이제 Lost Tapes 키카드 표시를 표시 하지 않습니다:
 	- 쉐도우 레이드 (2x 키카드)
 	- 국경 횡단 (2x 키카드)
   - 정지된 타이머들을 표시하지 않습니다.
     - 드래곤 하이스트: 타임락, C4
     - 산주: 옥상의 도전과제 버튼
+---
 ### 3.0
 - 단축키 추가
   > (*ESC- 모드 키설정*) 옵션에서 설정 가능합니다.
@@ -153,5 +171,3 @@ https://github.com/Kamikaze94/WolfHUD
 - 탭 스크린 리뉴얼
 - 에셋 모두 구매기능 되돌리기
 - 고품질 텍스쳐 기능 삭제 (Fed.net 아이콘)
-
----
