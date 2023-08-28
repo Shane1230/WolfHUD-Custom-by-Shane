@@ -10,7 +10,17 @@ if not _G.WolfHUD then
 	WolfHUD.notifications = {}
 	WolfHUD.settings = {}
 	WolfHUD.tweak_data = {}
-
+	
+	if not BLT.Keybinds:get_keybind("buy_all_asset_keybind"):HasKey() then
+		BLT.Keybinds:get_keybind("buy_all_asset_keybind"):SetKey("e")
+	end
+	if not BLT.Keybinds:get_keybind("next_profile"):HasKey() then
+		BLT.Keybinds:get_keybind("next_profile"):SetKey("right")
+	end
+	if not BLT.Keybinds:get_keybind("prev_profile"):HasKey() then
+		BLT.Keybinds:get_keybind("prev_profile"):SetKey("left")
+	end
+	
 	function WolfHUD:Reset()
 		local default_lang = "english"
 		for _, filename in pairs(file.GetFiles(self.mod_path .. "/loc/")) do

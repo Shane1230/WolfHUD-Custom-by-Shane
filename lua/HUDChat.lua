@@ -27,7 +27,7 @@ if RequiredScript == "lib/managers/hud/hudchat" then
 	local _on_focus_original = HUDChat._on_focus
 	local _loose_focus_original = HUDChat._loose_focus
 
-	function HUDChat:init(ws, hud, o, k)
+	function HUDChat:init(ws, hud)
 		local fullscreen = managers.hud:script(PlayerBase.PLAYER_INFO_HUD_FULLSCREEN_PD2)
 
 		self._x_offset = (fullscreen.panel:w() - hud.panel:w()) / 2
@@ -548,7 +548,7 @@ if RequiredScript == "lib/managers/hud/hudchat" then
 			self:_layout_output_panel()
 		end
 	end
-	
+
 	function HUDChat:_on_focus(...)
 		if HUDChat.MOUSE_SUPPORT then
 			self:connect_mouse()

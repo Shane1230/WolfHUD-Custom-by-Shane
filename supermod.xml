@@ -34,6 +34,7 @@
 				<post :hook_id="systemmenumanager" :script_path="Utils/InputDialog.lua"/>
 				<post :hook_id="dialogs/specializationdialog" :script_path="Utils/InputDialog.lua"/>
 				<post :hook_id="player/smokescreeneffect" :script_path="GameInfoManager.lua"/>
+				<post :hook_id="social_hub/lobbycodemenucomponent" :script_path="MenuTweaks.lua"/>
 
 				<group :hook_id="menumanager">
 					<post :script_path="PrePlanManager.lua"/>

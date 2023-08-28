@@ -4,7 +4,7 @@
 	"author" : "Kamikaze94, Shane",
 	"contact" : "https://github.com/Kamikaze94/WolfHUD		   \n
 		   https://steamcommunity.com/id/Shane1230/",
-	"version" : "4.2",
+	"version" : "4.3",
 	"priority" : 1,
 	"blt_version" : 2,
 	"supermod_definition" : "supermod.xml",
@@ -32,19 +32,19 @@
        			 "localized" : false
     		},
 		{
-       			 "keybind_id" : "next_profile",
-       			 "name" : "Next Profile",
-       			 "description" : "Change profile to next",
-       			 "script_path" : "lua/KeyBind/NextProfile.lua",
+       			 "keybind_id" : "prev_profile",
+       			 "name" : "Previous Profile",
+       			 "description" : "Change profile to previous",
+       			 "script_path" : "lua/KeyBind/PrevProfile.lua",
       			 "run_in_menu" : false,
        			 "run_in_game" : true,
        			 "localized" : false
     		},
 		{
-       			 "keybind_id" : "prev_profile",
-       			 "name" : "Previous Profile",
-       			 "description" : "Change profile to previous",
-       			 "script_path" : "lua/KeyBind/PrevProfile.lua",
+       			 "keybind_id" : "next_profile",
+       			 "name" : "Next Profile",
+       			 "description" : "Change profile to next",
+       			 "script_path" : "lua/KeyBind/NextProfile.lua",
       			 "run_in_menu" : false,
        			 "run_in_game" : true,
        			 "localized" : false

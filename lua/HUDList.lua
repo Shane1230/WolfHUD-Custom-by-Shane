@@ -497,7 +497,6 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		corp_prototype = 			"neo2",
 		breaching_charges = 		"door_breaker",
 		hydraulic_opener = 			"door_breaker",
-		
 	}
 
 	HUDListManager.POTENTIAL_LOOT_TYPES = {
@@ -577,6 +576,7 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		up_you_go = { "up_you_go", "damage_reduction" },
 		yakuza_recovery = { "yakuza" },
 		yakuza_speed = { "yakuza" },
+		copycat_kc = { "copycat_kc" },
 
 		armorer_9 = { "armorer" },
 		crew_chief_1 = { "crew_chief", "damage_reduction" },	--Bonus for <50% health changed separately through set_value

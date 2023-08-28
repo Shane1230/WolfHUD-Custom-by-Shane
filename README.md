@@ -1,10 +1,10 @@
 # WolfHUD-Custom-by-Shane
-After U234 - you need update to latest [SuperBLT](https://superblt.znix.xyz/)<br>
+You need update to latest [SuperBLT](https://superblt.znix.xyz/)<br>
 https://superblt.znix.xyz/<br>
-페이데이 업데이트 이후 BLT를 최신버전으로 업데이트 해야합니다. 위 [링크](https://superblt.znix.xyz/)로 들어가서 [Latest Release DLL](https://sblt-update.znix.xyz/pd2update/download/get.php?src=homepage&id=payday2bltwsockdll)버튼을 누르면 됩니다.
+Super BLT를 최신버전으로 업데이트 해야합니다. 위 [링크](https://superblt.znix.xyz/)로 들어가서 [Latest Release DLL](https://sblt-update.znix.xyz/pd2update/download/get.php?src=homepage&id=payday2bltwsockdll)버튼을 누르면 됩니다.
 
 ## About this
-Fix crashes, Add and updates features and changes as mystyle.<br>
+Fix crashes, updates, add features and changes as mystyle.<br>
 크래쉬수정, 기능 추가 및 업데이트 그리고 제 스타일대로 변경한 버전입니다.
 
 Original mod by Kamikaze94's WolfHUD<br>
@@ -14,7 +14,14 @@ https://github.com/Kamikaze94/WolfHUD
 ## Changelog
 [한국어 변경사항](https://github.com/Shane1230/WolfHUD-Custom-by-Shane#변경사항)보러가기 (Go to korean changelog)
 
-
+### 4.3
+- Show LOBBY CODE has been simplified.
+- Fixed community market links.
+- Set default key binds
+  - Buy All Assets: **E**
+  - Previous Profile: ***Left** arrow*
+  - Next Profile: ***Right** arrow*
+---
 ### 4.2
 - HUDList
   - Add bag count: Border Crossing - Breaching Charges
@@ -36,7 +43,6 @@ https://github.com/Kamikaze94/WolfHUD
   - Hide paused timer
     - Dragon Heist: time lock, C4
     - Mountaim Mater: achievement button on roof
----
 ---
 ### 3.0
 - Add keyBind
@@ -98,6 +104,14 @@ https://github.com/Kamikaze94/WolfHUD
 
 ## 변경사항
 
+### 4.3
+- 로비 코드 보기를 간소화 하였습니다.
+- 커뮤니티 장터 바로가기의 튕김을 고쳤습니다.
+- 기본 단축키 설정
+  - 에셋 모두 구매: **E**
+  - 이전 프로필: ***왼쪽** 방향키*
+  - 다음 프로필: ***오른쪽** 방향키*
+---
 ### 4.2
 - 허드리스트
   - 가방 추가: 국격 횡단 - 브리칭 폭약

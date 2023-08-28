@@ -58,7 +58,7 @@ elseif string.lower(RequiredScript) == "lib/managers/menu/missionbriefinggui" th
 	local confirm_pressed_original = AssetsItem.confirm_pressed
 	local mouse_moved_original = AssetsItem.mouse_moved
 	local mouse_pressed_original = AssetsItem.mouse_pressed
-
+	
 	function AssetsItem:create_assets(...)
 		create_assets_original(self, ...)
 		

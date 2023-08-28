@@ -935,4 +935,33 @@ elseif string.lower(RequiredScript) == "lib/managers/menumanagerdialogs" then
 		]]
 		close_person_joining_original(self, id, ...)
 	end
+	
+-- Simply Lobby code
+elseif string.lower(RequiredScript) == "lib/managers/social_hub/lobbycodemenucomponent" then
+	Hooks:PostHook(LobbyCodeMenuComponent, "init", "set_lobbycode_to_top", function(self, ...)
+		self._panel:set_y(73)
+	end)
+	
+	Hooks:PostHook(LobbyCodeMenuComponent, "create_hub_panel", "HideCode_UpsideDown", function(self, ...)
+		--lobby code
+		self._lobby_id_text:set_y(25)
+		self._id_text:set_y(25)
+		self._code_hidden_text:set_y(25)
+		
+		--hidecode button
+		self._lower_panel:set_y(0)
+		self._hide_code_text:set_y(0)
+		
+		--copy button
+		self._button_panel:set_center_y(self._id_text:center_y())
+		self._copied_code_text:set_bottom(self._button_panel:top() + 2)
+		
+		self._code_hider:set_alpha(0) --background blur
+	end)
+	
+	Hooks:PostHook(LobbyCodeMenuComponent, "set_code_hidden", "hide_lobbycode", function(self, hidden_state, ...)
+		self._code_hidden_text:set_alpha(not hidden_state)
+		self._lobby_id_text:set_visible(not hidden_state)
+		self._copy_icon:set_visible(not hidden_state)
+	end)
 end
