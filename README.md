@@ -14,6 +14,9 @@ https://github.com/Kamikaze94/WolfHUD
 ## Changelog
 [한국어 변경사항](https://github.com/Shane1230/WolfHUD-Custom-by-Shane#변경사항)보러가기 (Go to korean changelog)
 
+### 4.4
+- HUDChat: Fixed crash
+---
 ### 4.3
 - Show LOBBY CODE has been simplified.
 - Fixed community market links.
@@ -104,6 +107,9 @@ https://github.com/Kamikaze94/WolfHUD
 
 ## 변경사항
 
+### 4.4
+- 허드채팅: 튕김 문제 해결
+---
 ### 4.3
 - 로비 코드 보기를 간소화 하였습니다.
 - 커뮤니티 장터 바로가기의 튕김을 고쳤습니다.

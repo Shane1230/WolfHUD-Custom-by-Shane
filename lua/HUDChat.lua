@@ -254,7 +254,71 @@ if RequiredScript == "lib/managers/hud/hudchat" then
 			y = y + msg.panel:h()
 		end
 	end
+	
+	function HUDChat:set_scroll_indicators(force_update_scroll_indicators)
+	end
+	function HUDChat:scroll_up()
+	end
+	function HUDChat:scroll_down()
+	end
+	
+	function HUDChat:old_on_focus()
+		if self._focus then
+			return
+		end
 
+		local output_panel = self._panel:child("output_panel")
+
+		output_panel:stop()
+		output_panel:animate(callback(self, self, "_animate_show_output"), output_panel:alpha())
+		self._input_panel:stop()
+		self._input_panel:animate(callback(self, self, "_animate_show_component"))
+
+		self._focus = true
+
+		self._input_panel:child("focus_indicator"):set_color(Color(0.8, 1, 0.8):with_alpha(0.2))
+		self._ws:connect_keyboard(Input:keyboard())
+
+		if _G.IS_VR then
+			Input:keyboard():show()
+		end
+
+		self._input_panel:key_press(callback(self, self, "key_press"))
+		self._input_panel:key_release(callback(self, self, "key_release"))
+
+		self._enter_text_set = false
+
+		self._input_panel:child("input_bg"):animate(callback(self, self, "_animate_input_bg"))
+		self:set_scroll_indicators(true)
+		self:set_layer(1100)
+		self:update_caret()
+	end
+	
+	function HUDChat:old_loose_focus()
+		if not self._focus then
+			return
+		end
+
+		self._focus = false
+
+		self._input_panel:child("focus_indicator"):set_color(Color.white:with_alpha(0.2))
+		self._ws:disconnect_keyboard()
+		self._input_panel:key_press(nil)
+		self._input_panel:enter_text(nil)
+		self._input_panel:key_release(nil)
+		self._panel:child("output_panel"):stop()
+		self._panel:child("output_panel"):animate(callback(self, self, "_animate_fade_output"))
+		self._input_panel:stop()
+		self._input_panel:animate(callback(self, self, "_animate_hide_input"))
+
+		local text = self._input_panel:child("input_text")
+
+		text:stop()
+		self._input_panel:child("input_bg"):stop()
+		self:set_layer(1)
+		self:update_caret()
+	end
+	
 	function HUDChat:receive_message(name, message, color, icon)
 		local output_panel = self._panel:child("output_panel")
 		local scroll_bar_bg = output_panel and output_panel:child("scroll_bar_bg")
@@ -549,12 +613,14 @@ if RequiredScript == "lib/managers/hud/hudchat" then
 		end
 	end
 
+	local old_on_focus_original = HUDChat.old_on_focus
+	local old_loose_focus_original = HUDChat.old_loose_focus
 	function HUDChat:_on_focus(...)
 		if HUDChat.MOUSE_SUPPORT then
 			self:connect_mouse()
 		end
 
-		return _on_focus_original(self, ...)
+		return old_on_focus_original(self, ...)
 	end
 
 	function HUDChat:_loose_focus(...)
@@ -562,7 +628,7 @@ if RequiredScript == "lib/managers/hud/hudchat" then
 			self:disconnect_mouse()
 		end
 
-		return _loose_focus_original(self, ...)
+		return old_loose_focus_original(self, ...)
 	end
 
 	function HUDChat:connect_mouse()

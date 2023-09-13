@@ -647,7 +647,7 @@ lounge		100421		100448			102049
             unseen_strike = "unseen_strike",
 			pocket_ecm_kill_dodge =	"pocket_ecm_kill_dodge",
 			copr_ability = "copr_ability",
-			mrwi_health_invulnerable = { "copycat_health_invul", "copycat_health_invul_passive", },
+			mrwi_health_invulnerable = { "copycat_health_invul", "copycat_health_invul_passive" },
 
 			--"properties"
 			bloodthirst_reload_speed = "bloodthirst_aced",

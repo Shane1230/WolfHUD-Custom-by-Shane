@@ -576,8 +576,7 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		up_you_go = { "up_you_go", "damage_reduction" },
 		yakuza_recovery = { "yakuza" },
 		yakuza_speed = { "yakuza" },
-		copycat_kc = { "copycat_kc" },
-
+		
 		armorer_9 = { "armorer" },
 		crew_chief_1 = { "crew_chief", "damage_reduction" },	--Bonus for <50% health changed separately through set_value
 		crew_chief_3 = { "crew_chief" },
@@ -3118,7 +3117,10 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		crowbar =					{ hudpickups = { 0, 64, 32, 32 }, 												priority = 1, category = "mission_pickups", ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "mission_pickups"}, true) 	},
 		keycard =					{ hudpickups = { 32, 0, 32, 32 }, 												priority = 1, category = "mission_pickups", ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "mission_pickups"}, true) 	},
 		planks =					{ hudpickups = { 0, 32, 32, 32 }, 												priority = 2, category = "mission_pickups", ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "mission_pickups"}, true) 	},
-		meth_ingredients =			{ waypoints  = { 192, 32, 32, 32 }, 											priority = 2, category = "mission_pickups", ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "mission_pickups"}, true) 	},
+		meth_ingredients =			{ waypoints  = { 192, 32, 32, 32 }, 											priority = 2, category = "mission_pickups", ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "mission_pickups"}, true)	},
+		meth_mu =					{ hudpickups = { 32, 32, 32, 32 }, 												priority = 2.3, category = "mission_pickups", ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "mission_pickups"}, true)	},
+		meth_cs =					{ hudpickups = { 96, 32, 32, 32 }, 												priority = 2.2, category = "mission_pickups", ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "mission_pickups"}, true)	},
+		meth_hcl =					{ hudpickups = { 64, 32, 32, 32 }, 												priority = 2.1, category = "mission_pickups", ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "mission_pickups"}, true)	},
 		blowtorch = 				{ hudpickups = { 96, 192, 32, 32 }, 											priority = 1, category = "mission_pickups", ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "mission_pickups"}, true) 	},
 		thermite = 					{ hudpickups = { 64, 64, 32, 32 }, 												priority = 1, category = "mission_pickups", ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "mission_pickups"}, true) 	},
 		c4 = 						{ hudicons	 = { 36, 242, 32, 32 }, 											priority = 1, category = "mission_pickups", ignore = not WolfHUD:getSetting({"HUDList", "RIGHT_LIST", "SHOW_PICKUP_CATEGORIES", "mission_pickups"}, true) 	},
@@ -3232,6 +3234,8 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		papers = 		{ text = "wolfhud_hudlist_loot_papers",	 	priority = 1 }, -- Hostile Takeover Reserch Documents
 		neo2 = 			{ text = "wolfhud_hudlist_loot_neo2",		priority = 1 }, -- Hostile Takeover NEO-2
 		door_breaker = 	{ text = "wolfhud_hudlist_loot_dbreaker",	priority = 1 }, -- Border Crossing, Breakfast in Tijuana
+		red_pick	 = 	{ text = "red_pick",						priority = 1 },
+		red_pick_ax	 = 	{ text = "red_pick_ax",						priority = 1 },
 	}
 	function HUDList.LootItem:init(parent, name, id, members)
 		local loot_data = HUDList.LootItem.MAP[id]
@@ -4640,6 +4644,14 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 			self._level:set_text(string.format("Lv. %i", data.upgrade_level))
 			self._level:set_x(self._blocks_pager and (self._upgrade_lvl3:w() - 2) or 0)
 			self._level:set_w(self._panel:w() * (self._blocks_pager and 0.6 or 1))
+			
+			if data.upgrade_level < 3 then
+				if data.upgrade_level < 2 then
+					self._level:set_color( Color('FF2020') )
+				else
+					self._level:set_color( Color('FF5050') )
+				end
+			end
 		end
 	end
 
