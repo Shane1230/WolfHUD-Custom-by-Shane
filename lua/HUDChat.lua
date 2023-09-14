@@ -157,6 +157,10 @@ if RequiredScript == "lib/managers/hud/hudchat" then
 			layer = 1,
 		})
 
+		local scroll_panel = output_panel:panel({
+			name = "scroll_panel"
+		})
+
 		local scroll_bar_bg = output_panel:rect({
 			name = "scroll_bar_bg",
 			color = Color.black,
@@ -254,71 +258,10 @@ if RequiredScript == "lib/managers/hud/hudchat" then
 			y = y + msg.panel:h()
 		end
 	end
-	
-	function HUDChat:set_scroll_indicators(force_update_scroll_indicators)
+
+	function HUDChat:set_scroll_indicators()
 	end
-	function HUDChat:scroll_up()
-	end
-	function HUDChat:scroll_down()
-	end
-	
-	function HUDChat:old_on_focus()
-		if self._focus then
-			return
-		end
 
-		local output_panel = self._panel:child("output_panel")
-
-		output_panel:stop()
-		output_panel:animate(callback(self, self, "_animate_show_output"), output_panel:alpha())
-		self._input_panel:stop()
-		self._input_panel:animate(callback(self, self, "_animate_show_component"))
-
-		self._focus = true
-
-		self._input_panel:child("focus_indicator"):set_color(Color(0.8, 1, 0.8):with_alpha(0.2))
-		self._ws:connect_keyboard(Input:keyboard())
-
-		if _G.IS_VR then
-			Input:keyboard():show()
-		end
-
-		self._input_panel:key_press(callback(self, self, "key_press"))
-		self._input_panel:key_release(callback(self, self, "key_release"))
-
-		self._enter_text_set = false
-
-		self._input_panel:child("input_bg"):animate(callback(self, self, "_animate_input_bg"))
-		self:set_scroll_indicators(true)
-		self:set_layer(1100)
-		self:update_caret()
-	end
-	
-	function HUDChat:old_loose_focus()
-		if not self._focus then
-			return
-		end
-
-		self._focus = false
-
-		self._input_panel:child("focus_indicator"):set_color(Color.white:with_alpha(0.2))
-		self._ws:disconnect_keyboard()
-		self._input_panel:key_press(nil)
-		self._input_panel:enter_text(nil)
-		self._input_panel:key_release(nil)
-		self._panel:child("output_panel"):stop()
-		self._panel:child("output_panel"):animate(callback(self, self, "_animate_fade_output"))
-		self._input_panel:stop()
-		self._input_panel:animate(callback(self, self, "_animate_hide_input"))
-
-		local text = self._input_panel:child("input_text")
-
-		text:stop()
-		self._input_panel:child("input_bg"):stop()
-		self:set_layer(1)
-		self:update_caret()
-	end
-	
 	function HUDChat:receive_message(name, message, color, icon)
 		local output_panel = self._panel:child("output_panel")
 		local scroll_bar_bg = output_panel and output_panel:child("scroll_bar_bg")
@@ -540,6 +483,20 @@ if RequiredScript == "lib/managers/hud/hudchat" then
 				self:_set_input_lines(#(text:line_breaks()))
 				if not (utf8.len(text:text()) < 1) or type(self._esc_callback) ~= "number" then
 				end
+			elseif self._key_pressed == Idstring("insert") then
+				local clipboard = Application:get_clipboard() or ""
+
+				text:replace_text(clipboard)
+
+				local lbs = text:line_breaks()
+
+				if #lbs > 1 then
+					local s = lbs[2]
+					local e = utf8.len(text:text())
+
+					text:set_selection(s, e)
+					text:replace_text("")
+				end
 			elseif self._key_pressed == Idstring("left") then
 				if s < e then
 					text:set_selection(s, s)
@@ -613,14 +570,12 @@ if RequiredScript == "lib/managers/hud/hudchat" then
 		end
 	end
 
-	local old_on_focus_original = HUDChat.old_on_focus
-	local old_loose_focus_original = HUDChat.old_loose_focus
 	function HUDChat:_on_focus(...)
 		if HUDChat.MOUSE_SUPPORT then
 			self:connect_mouse()
 		end
 
-		return old_on_focus_original(self, ...)
+		return _on_focus_original(self, ...)
 	end
 
 	function HUDChat:_loose_focus(...)
@@ -628,7 +583,7 @@ if RequiredScript == "lib/managers/hud/hudchat" then
 			self:disconnect_mouse()
 		end
 
-		return old_loose_focus_original(self, ...)
+		return _loose_focus_original(self, ...)
 	end
 
 	function HUDChat:connect_mouse()
@@ -723,4 +678,123 @@ if RequiredScript == "lib/managers/hud/hudchat" then
 		self:_change_line_offset(new_line_offset - self._current_line_offset)
 	end
 
+end
+
+if RequiredScript == "lib/managers/chatmanager" then
+
+	-- enable chat in endscreen (U240)
+	function ChatGui:mouse_moved(x, y)
+		if not self._enabled then
+			return false, false
+		end
+
+		if self:moved_scroll_bar(x, y) then
+			return true, "grab"
+		end
+
+		local chat_button_panel = self._hud_panel:child("chat_button_panel")
+
+		if chat_button_panel and chat_button_panel:visible() then
+			local chat_button = chat_button_panel:child("chat_button")
+
+			if chat_button:inside(x, y) then
+				if not self._chat_button_highlight then
+					self._chat_button_highlight = true
+
+					managers.menu_component:post_event("highlight")
+					chat_button:set_color(tweak_data.screen_colors.button_stage_2)
+				end
+
+				return true, "link"
+			elseif self._chat_button_highlight then
+				self._chat_button_highlight = false
+
+				chat_button:set_color(tweak_data.screen_colors.button_stage_3)
+			end
+		end
+
+		if self._is_crimenet_chat and not self._crimenet_chat_state then
+			return false, false
+		end
+
+		local inside = self._input_panel:inside(x, y)
+
+		self._input_panel:child("focus_indicator"):set_visible(inside or self._focus)
+
+		if self._panel:child("scroll_bar"):visible() and self._panel:child("scroll_bar"):inside(x, y) then
+			return true, "hand"
+		elseif self._panel:child("scroll_down_indicator_arrow"):visible() and self._panel:child("scroll_down_indicator_arrow"):inside(x, y) or self._panel:child("scroll_up_indicator_arrow"):visible() and self._panel:child("scroll_up_indicator_arrow"):inside(x, y) then
+			return true, "link"
+		end
+
+		if self._focus then
+			inside = not inside
+		end
+
+		return inside or self._focus, inside and "link" or "arrow"
+	end
+	
+	function ChatGui:mouse_pressed(button, x, y)
+		if not self._enabled then
+			return
+		end
+
+		local chat_button_panel = self._hud_panel:child("chat_button_panel")
+
+		if button == Idstring("0") and chat_button_panel and chat_button_panel:visible() then
+			local chat_button = chat_button_panel:child("chat_button")
+
+			if chat_button:inside(x, y) then
+				self:toggle_crimenet_chat()
+
+				return true
+			end
+		end
+
+		if self._is_crimenet_chat and not self._crimenet_chat_state then
+			return false, false
+		end
+
+		local inside = self._input_panel:inside(x, y)
+		local my_input_focus = self:input_focus()
+		local ui_input_focus = managers.menu_component:input_focus()
+		local can_focus = my_input_focus == true or ui_input_focus ~= true
+
+		if inside then
+			self:_on_focus()
+
+			return true
+		end
+
+		if self._panel:child("output_panel"):inside(x, y) then
+			if button == Idstring("mouse wheel down") then
+				if self:mouse_wheel_down(x, y) then
+					self:set_scroll_indicators()
+					self:_on_focus()
+
+					return true
+				end
+			elseif button == Idstring("mouse wheel up") then
+				if self:mouse_wheel_up(x, y) then
+					self:set_scroll_indicators()
+					self:_on_focus()
+
+					return true
+				end
+			elseif button == Idstring("0") and self:check_grab_scroll_panel(x, y) then
+				self:set_scroll_indicators()
+				self:_on_focus()
+
+				return true
+			end
+		elseif button == Idstring("0") and self:check_grab_scroll_bar(x, y) then
+			self:set_scroll_indicators()
+			self:_on_focus()
+
+			return true
+		end
+
+		return self:_loose_focus()
+	end
+	
 end

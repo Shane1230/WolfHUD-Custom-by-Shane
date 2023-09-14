@@ -14,6 +14,12 @@ https://github.com/Kamikaze94/WolfHUD
 ## Changelog
 [한국어 변경사항](https://github.com/Shane1230/WolfHUD-Custom-by-Shane#변경사항)보러가기 (Go to korean changelog)
 
+### 4.5
+- HUDChat
+  - (Fixed) Unable disappearing chat in Endscreen.
+  - Restore ESC key in Endscreeen.
+  - Now you can paste text in-game chat using the ***Insert*** key.
+---
 ### 4.4
 - HUDChat: Fixed crash
 ---
@@ -107,6 +113,12 @@ https://github.com/Kamikaze94/WolfHUD
 
 ## 변경사항
 
+### 4.5
+- 허드채팅
+  - (버그픽스) 통계창에서 채팅이 사라지던 문제를 해결했습니다.
+  - 통계창에서 ESC를 다시 사용할 수 있게 되돌렸습니다.
+  - 이제 인게임에서 채팅창에서 ***Insert*** 키를 사용하여 텍스트를 붙여넣을 수 있습니다.
+---
 ### 4.4
 - 허드채팅: 튕김 문제 해결
 ---
