@@ -14,14 +14,22 @@ https://github.com/Kamikaze94/WolfHUD
 ## Changelog
 [한국어 변경사항](https://github.com/Shane1230/WolfHUD-Custom-by-Shane#변경사항)보러가기 (Go to korean changelog)
 
+### 4.6
+- HUDChat
+  - **Fixed an issue:** Did not disappear when out of focus.
+- Add missing changelog at v4.4
+---
 ### 4.5
 - HUDChat
-  - (Fixed) Unable disappearing chat in Endscreen.
+  - **Fixed an issue:** Unable disappearing chat in Endscreen.
   - Restore ESC key in Endscreeen.
   - Now you can paste text in-game chat using the ***Insert*** key.
 ---
 ### 4.4
-- HUDChat: Fixed crash
+- HUDChat
+  - Fixed crash
+- HudList
+ - *Lv.1* and *Lv.2* jammer is now show the red color in Left-List
 ---
 ### 4.3
 - Show LOBBY CODE has been simplified.
@@ -113,14 +121,22 @@ https://github.com/Kamikaze94/WolfHUD
 
 ## 변경사항
 
+### 4.6
+- 허드채팅
+  - **버그 수정:** 채팅창을 사용중이지 않을때 사라지지 않던 문제 주정.
+- v4.4의 누락된 변경사항 추가
+---
 ### 4.5
 - 허드채팅
-  - (버그픽스) 통계창에서 채팅이 사라지던 문제를 해결했습니다.
+  - **버그 수정:** 통계창에서 채팅이 사라지던 문제를 해결했습니다.
   - 통계창에서 ESC를 다시 사용할 수 있게 되돌렸습니다.
   - 이제 인게임에서 채팅창에서 ***Insert*** 키를 사용하여 텍스트를 붙여넣을 수 있습니다.
 ---
 ### 4.4
-- 허드채팅: 튕김 문제 해결
+- 허드채팅
+  - 튕김 문제 해결
+- 허드리스트
+  - 왼쪽 버프리스트의 *Lv.1* 그리고 *Lv.2* 재머의 텍스트를 이제 빨간색으로 표시합니다.
 ---
 ### 4.3
 - 로비 코드 보기를 간소화 하였습니다.

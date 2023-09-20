@@ -19,6 +19,7 @@
  
 			<group :hook_id="managers/">
 				<post :hook_id="menumanagerdialogs" :script_path="MenuTweaks.lua"/>
+				<post :hook_id="chatmanager" :script_path="MenuTweaks.lua"/>
 				<post :hook_id="crimenetmanager" :script_path="MenuTweaks.lua"/>
 				<post :hook_id="localizationmanager" :script_path="AdvAssault.lua"/>
 				<post :hook_id="experiencemanager" :script_path="Scripts.lua"/>
@@ -34,11 +35,6 @@
 				<post :hook_id="dialogs/specializationdialog" :script_path="Utils/InputDialog.lua"/>
 				<post :hook_id="player/smokescreeneffect" :script_path="GameInfoManager.lua"/>
 				<post :hook_id="social_hub/lobbycodemenucomponent" :script_path="MenuTweaks.lua"/>
-
-				<group :hook_id="chatmanager">
-					<post :script_path="MenuTweaks.lua"/>
-					<post :script_path="HUDChat.lua"/>
-				</group>
 
 				<group :hook_id="menumanager">
 					<post :script_path="PrePlanManager.lua"/>
