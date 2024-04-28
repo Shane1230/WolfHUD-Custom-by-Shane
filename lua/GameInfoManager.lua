@@ -462,7 +462,7 @@ lounge		100421		100448			102049
 				[500608] = true,
 				[500849] = true,
 			},
-			election_day_3 = { -- Election Day: Breaking Ballot (1x keycard)
+			election_day_3, election_day_3_skip1, election_day_3_skip2 = { -- Election Day: Breaking Ballot (1x keycard)
 				[103887] = true
 			},
 			skm_big2 = { -- Big Bank Holdout (1x keycard)
@@ -2930,7 +2930,7 @@ if string.lower(RequiredScript) == "lib/managers/playermanager" then
 
 				self._message_system:register(Message.OnHeadShot, "bullseye_debuff_listener", on_headshot)
 			end
-			
+
 			if self:has_category_upgrade("player", "headshot_regen_health_bonus") then
 				local function on_headshot()
 					managers.gameinfo:event("timed_buff", "activate", "copycat_health_shot_debuff", { duration = tweak_data.upgrades.on_headshot_dealt_cooldown or 0 })
@@ -3062,6 +3062,26 @@ if string.lower(RequiredScript) == "lib/managers/playermanager" then
 		local gain_throwable_per_kill = managers.player:upgrade_value("team", "crew_throwable_regen", 0)
 		if gain_throwable_per_kill > 0 then
 			managers.gameinfo:event("buff", "set_stack_count", "crew_throwable_regen", { stack_count = (gain_throwable_per_kill - (self._throw_regen_kills or 0)) })
+		end
+
+		if self:has_category_upgrade("player", "primary_reload_secondary") then
+			local primary_kills = self:get_property("primary_reload_secondary_kills")
+			if primary_kills > 0 then
+				managers.gameinfo:event("buff", "activate", "copycat_primary_kills")
+				managers.gameinfo:event("buff", "set_stack_count", "copycat_primary_kills", { stack_count = primary_kills })
+			else
+				managers.gameinfo:event("buff", "deactivate", "copycat_primary_kills")
+			end
+		end
+
+		if self:has_category_upgrade("player", "secondary_reload_primary") then
+			local secondary_kills = self:get_property("secondary_reload_primary_kills")
+			if secondary_kills > 0 then
+				managers.gameinfo:event("buff", "activate", "copycat_secondary_kills")
+				managers.gameinfo:event("buff", "set_stack_count", "copycat_secondary_kills", { stack_count = secondary_kills })
+			else
+				managers.gameinfo:event("buff", "deactivate", "copycat_secondary_kills")
+			end
 		end
 
 		return result
@@ -4025,6 +4045,15 @@ if string.lower(RequiredScript) == "lib/units/beings/player/playerdamage" then
 
 			managers.gameinfo:event("buff", "deactivate", "delayed_damage")
 		end
+	end
+
+	if WolfHUD:getSetting({"PerkDeck_SFX", "COPYCAT_INVUL"}, true) then
+		Hooks:PostHook(PlayerDamage, "_calc_health_damage", "copycat_invul_sound", function(self, ...)
+			if managers.player:has_activate_temporary_upgrade("temporary", "mrwi_health_invulnerable") then
+				self._unit:sound():play("perkdeck_cooldown_over")
+				return 0
+			end
+		end)
 	end
 
 	function PlayerDamage:_update_delayed_damage(t, ...)

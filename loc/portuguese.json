@@ -897,6 +897,12 @@
 	"wolfhud_hold_to_pick_title" : "Pickup automático",
 	"wolfhud_hold_to_pick_desc" : "Todo loot pequeno será pego automaticamente, enquanto a tecla de interação estiver pressionada.",
 
+	"wolfhud_perkdeck_sfx_options_name" : "Perkdeck SFX",
+	"wolfhud_perkdeck_sfx_options_help" : "perkdeck sound effect.",
+
+	"wolfhud_copycat_invul_sfx_title" : "Copycat Invulnerability",
+	"wolfhud_copycat_invul_sfx_desc" : "Add perkdeck 'cooldown over' sound.",
+
 	"wolfhud_inventory_options_name" : "Opções de melhoria no inventário",
 	"wolfhud_inventory_options_help" : "Opções para mudar o visual e o comportamento do seu inventário.",
 
@@ -1019,6 +1025,10 @@
 	"wolfhud_hudlist_copycat_health_invul_buff_desc" : "",
 	"wolfhud_hudlist_copycat_health_shot_buff_title" : "Headshot Health Regen (Copycat)",
 	"wolfhud_hudlist_copycat_health_shot_buff_desc" : "Show headshot health regen cooldown (2 sec)",
+	"wolfhud_hudlist_copycat_health_primary_kills_title" : "Primary Kills (Copycat)",
+	"wolfhud_hudlist_copycat_health_primary_kills_desc" : "Count primary kills for secondary reload.",
+	"wolfhud_hudlist_copycat_health_secondary_kills_title" : "Secondary Kills (Copycat)",
+	"wolfhud_hudlist_copycat_health_secondary_kills_desc" : "Count secondary kills for primary reload.",
 	
 	"wolfhud_restore_player_dot_title" : "Restore old Player dot",
 	"wolfhud_restore_player_dot_desc" : "Restoration player dot indicator with down counter",

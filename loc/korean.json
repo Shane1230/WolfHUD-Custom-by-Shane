@@ -159,8 +159,8 @@
 	"wolfhud_enemy_cop" : "일반 경찰",
 	"wolfhud_enemy_fbi" : "FBI 유닛",
 	"wolfhud_enemy_swat" : "스왓 유닛",
-	"wolfhud_enemy_heavy_swat" : "해비 스왓",
-    "wolfhud_enemy_heavy_swat_sniper" : "해비 스왓 스나이퍼",
+	"wolfhud_enemy_heavy_swat" : "헤비 스왓",
+    "wolfhud_enemy_heavy_swat_sniper" : "헤비 스왓 스나이퍼",
 	"wolfhud_enemy_city_swat" : "엘리트 스왓",
 	"wolfhud_enemy_shield" : "쉴드",
 	"wolfhud_enemy_spook" : "클로커",
@@ -909,6 +909,12 @@
 	"wolfhud_hold_to_pick_title" : "인스턴트 자동 줍기",
 	"wolfhud_hold_to_pick_desc" : "상호작용 키 를 계속 누르고 있으면 자동으로 인스턴트 캐쉬가 주워집니다.",
 
+	"wolfhud_perkdeck_sfx_options_name" : "퍽덱 효과음",
+	"wolfhud_perkdeck_sfx_options_help" : "퍽덱 효과음을 설정합니다.",
+
+	"wolfhud_copycat_invul_sfx_title" : "카피캣 무적 효과음",
+	"wolfhud_copycat_invul_sfx_desc" : "무적 활성화 시 '퍽덱 쿨타임 종료' 효과음을 추가합니다.",
+
 	"wolfhud_inventory_options_name" : "인벤토리 설정",
 	"wolfhud_inventory_options_help" : "Options to change the visuals of your Inventory and alter Equipment behavior.",
 
@@ -1021,6 +1027,10 @@
 	"wolfhud_hudlist_copycat_health_invul_buff_desc" : "",
 	"wolfhud_hudlist_copycat_health_shot_buff_title" : "헤드샷 체력 회복 (카피캣)",
 	"wolfhud_hudlist_copycat_health_shot_buff_desc" : "헤드샷을 명중했을 때 회복되는 쿨타임을 표시합니다. (2초)",
+	"wolfhud_hudlist_copycat_health_primary_kills_title" : "주무기 킬 수 (카피캣)",
+	"wolfhud_hudlist_copycat_health_primary_kills_desc" : "보조무기 장전까지 남은 주무기 킬 수 표시.",
+	"wolfhud_hudlist_copycat_health_secondary_kills_title" : "보조무기 킬 수 (카피캣)",
+	"wolfhud_hudlist_copycat_health_secondary_kills_desc" : "주무기 장전까지 남은 보조무기 킬 수 표시.",
 	
 	"wolfhud_restore_player_dot_title" : "이전버전의 팀원 도트 되돌리기",
 	"wolfhud_restore_player_dot_desc" : "다운횟수 표시와 함께 팀원 도트(dot)를 되돌립니다.",

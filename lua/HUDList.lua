@@ -58,6 +58,10 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 			texture = "guis/dlcs/big_bank/textures/pd2/pre_planning/preplan_icon_types"
 			local x, y = unpack(icon.preplanning)
 			texture_rect = { x * 48, y * 48, 48, 48 }
+		elseif icon.weapons then
+			texture = "guis/textures/pd2/weapons"
+			local x, y = unpack(icon.weapons)
+			texture_rect = { x * 64, y * 64, 64, 64 }
 		elseif icon.hud_tweak then
 			texture, texture_rect = tweak_data.hud_icons:get_icon_data(icon.hud_tweak, texture_rect)
 		elseif icon.hud_icons then
@@ -278,6 +282,8 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		swat = 						{ type_id = "cop",			category = "enemies",	long_name = "wolfhud_enemy_swat" 					},
 		heavy_swat = 				{ type_id = "cop",			category = "enemies",	long_name = "wolfhud_enemy_heavy_swat" 				},
         heavy_swat_sniper =         { type_id = "cop",			category = "enemies",	long_name = "wolfhud_enemy_heavy_swat_sniper"   	},
+		zeal_swat = 				{ type_id = "cop",			category = "enemies",	long_name = "wolfhud_enemy_heavy_swat" 				},
+        zeal_heavy_swat =         	{ type_id = "cop",			category = "enemies",	long_name = "wolfhud_enemy_heavy_swat_sniper"   	},
 		fbi_swat = 					{ type_id = "cop",			category = "enemies",	long_name = "wolfhud_enemy_swat" 					},
 		fbi_heavy_swat = 			{ type_id = "cop",			category = "enemies",	long_name = "wolfhud_enemy_heavy_swat" 				},
 		city_swat = 				{ type_id = "cop",			category = "enemies",	long_name = "wolfhud_enemy_city_swat" 				},
@@ -553,6 +559,8 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		copycat_health_invul = { "copycat_health_invul", "damage_reduction" },
 		copycat_health_invul_passive = { "copycat_health_invul_passive", "damage_reduction" },
 		copycat_health_shot = { "copycat_health_shot" },
+		copycat_primary_kill = { "copycat_primary_kill" },
+		copycat_secondary_kill = { "copycat_secondary_kill" },
 		maniac = { "maniac", "damage_reduction" },
 		melee_stack_damage = { "melee_stack_damage", "melee_damage_increase" },
 		movement_dodge = { "total_dodge_chance" },
@@ -5110,6 +5118,20 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 			priority = 4,
 			color = HUDList.BuffItemBase.ICON_COLOR.STANDARD,
 			ignore = not WolfHUD:getSetting({"HUDList", "BUFF_LIST", "PERK_BUFFS", "copycat_health_shot"}, true),
+		},
+		copycat_primary_kills = {
+			weapons = {2, 0},
+			class = "TimedBuffItem",
+			priority = -1, -- always left
+			color = HUDList.BuffItemBase.ICON_COLOR.STANDARD,
+			ignore = not WolfHUD:getSetting({"HUDList", "BUFF_LIST", "PERK_BUFFS", "copycat_primary_kills"}, true),
+		},
+		copycat_secondary_kills = {
+			weapons = {3, 0},
+			class = "TimedBuffItem",
+			priority = 20, -- always right
+			color = HUDList.BuffItemBase.ICON_COLOR.STANDARD,
+			ignore = not WolfHUD:getSetting({"HUDList", "BUFF_LIST", "PERK_BUFFS", "copycat_secondary_kills"}, true),
 		},
 		delayed_damage = {
 			perks = {3, 0},

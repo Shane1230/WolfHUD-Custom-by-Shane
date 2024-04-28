@@ -3186,6 +3186,28 @@ if WolfHUD then
 											{ setting = {"HUDList", "BUFF_LIST", "show_buffs"}, invert = false },
 										},
 									},
+									{
+										type = "toggle",
+										name_id = "wolfhud_hudlist_copycat_health_primary_kills_title",
+										desc_id = "wolfhud_hudlist_copycat_health_primary_kills_desc",
+										value = {"HUDList", "BUFF_LIST", "PERK_BUFFS", "copycat_primary_kills"},
+										visible_reqs = {},
+										enabled_reqs = {
+											{ setting = { "HUDList", "ENABLED" }, invert = false },
+											{ setting = {"HUDList", "BUFF_LIST", "show_buffs"}, invert = false },
+										},
+									},
+									{
+										type = "toggle",
+										name_id = "wolfhud_hudlist_copycat_health_secondary_kills_title",
+										desc_id = "wolfhud_hudlist_copycat_health_secondary_kills_desc",
+										value = {"HUDList", "BUFF_LIST", "PERK_BUFFS", "copycat_secondary_kills"},
+										visible_reqs = {},
+										enabled_reqs = {
+											{ setting = { "HUDList", "ENABLED" }, invert = false },
+											{ setting = {"HUDList", "BUFF_LIST", "show_buffs"}, invert = false },
+										},
+									},
 								},
 							},
 							{
@@ -3850,6 +3872,26 @@ if WolfHUD then
 						name_id = "wolfhud_profilemenu_replace_title",
 						desc_id = "wolfhud_profilemenu_replace_desc",
 						value = {"CrewLoadout", "REPLACE_PROFILE_MENU"},
+						visible_reqs = {}, enabled_reqs = {},
+					},
+				},
+			},
+			{
+				type ="divider",
+				size = 16,
+			},
+			-- PerkDeck SFX
+			{
+				type = "menu",
+				menu_id = "wolfhud_perkdeck_sfx_options_menu",
+				name_id = "wolfhud_perkdeck_sfx_options_name",
+				desc_id = "wolfhud_perkdeck_sfx_options_help",
+				options = {
+					{
+						type = "toggle",
+						name_id = "wolfhud_copycat_invul_sfx_title",
+						desc_id = "wolfhud_copycat_invul_sfx_desc",
+						value = {"PerkDeck_SFX", "COPYCAT_INVUL"},
 						visible_reqs = {}, enabled_reqs = {},
 					},
 				},

@@ -328,6 +328,8 @@ if not _G.WolfHUD then
 						copr_ability						= true,
 						copycat_health_invul				= true,
 						copycat_health_shot					= true,
+						copycat_primary_kills				= true,
+						copycat_secondary_kills				= true,
 					},
 					GAGE_BOOSTS = {
 						invulnerable_buff					= true,
@@ -460,6 +462,9 @@ if not _G.WolfHUD then
 				SHAPED_CHARGE_STEALTH_DISABLED			= true,
 				KEYCARD_DOORS_DISABLED					= true,
 				ENABLE_BURSTMODE						= false,
+			},
+			PerkDeck_SFX = {
+				COPYCAT_INVUL							= true,
 			},
 			INVENTORY = {
 				SHOW_WEAPON_NAMES 						= true,

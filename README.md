@@ -14,6 +14,12 @@ https://github.com/Kamikaze94/WolfHUD
 ## Changelog
 [한국어 변경사항](https://github.com/Shane1230/WolfHUD-Custom-by-Shane#변경사항)보러가기 (Go to korean changelog)
 
+### 4.7
+- HUDList
+  - Add Copycat reload kill count.
+  - Add Copycat Invulnerability effect sound (perkdeck cool over sfx)
+	> you can change in option.
+  - **Fixed an issue:** Not Discount the Breaking Ballot keycard when D1 is loud.
 ### 4.6
 - HUDChat
   - **Fixed an issue:** Did not disappear when out of focus.
@@ -121,6 +127,12 @@ https://github.com/Kamikaze94/WolfHUD
 
 ## 변경사항
 
+### 4.7
+- 허드리스트
+  - 카피캣 장전 킬 수 추가
+  - 카피캣 무적 효과음(퍽덱 쿨타임 종료 효과음) 추가
+	> 옵션에서 변경 가능합니다.
+  - **버그 수정:** 일렉션데이 1일차를 라우드로 완료시 투표함 부수기 맵에서 키카드를 표시하던 문제 수정.
 ### 4.6
 - 허드채팅
   - **버그 수정:** 채팅창을 사용중이지 않을때 사라지지 않던 문제 주정.

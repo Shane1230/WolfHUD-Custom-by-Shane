@@ -149,6 +149,8 @@ function WolfHUDTweakData:init()
 		[ "fbi" ] 								= { default = "wolfhud_enemy_fbi" },
 		[ "swat" ] 								= { default = "wolfhud_enemy_swat" },
 		[ "heavy_swat" ] 						= { default = "wolfhud_enemy_heavy_swat" },
+		[ "zeal_swat" ] 						= { default = "wolfhud_enemy_swat" },
+		[ "zeal_heavy_swat" ] 					= { default = "wolfhud_enemy_heavy_swat" },
 		[ "fbi_swat" ] 							= { default = "wolfhud_enemy_swat" },
 		[ "fbi_heavy_swat" ] 					= { default = "wolfhud_enemy_heavy_swat" },
         [ "heavy_swat_sniper" ] 				= { default = "wolfhud_enemy_heavy_swat_sniper" },
