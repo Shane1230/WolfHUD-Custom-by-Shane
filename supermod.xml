@@ -123,11 +123,15 @@
 					<post :hook_id="multiprofileitemgui" :script_path="ProfileMenu.lua"/>
 					<post :hook_id="lootdropscreengui" :script_path="MenuTweaks.lua"/>
 					<post :hook_id="skilltreeguinew" :script_path="MenuTweaks.lua"/>
-					<post :hook_id="playerinventorygui" :script_path="ProfileMenu.lua"/>
 					<post :hook_id="preplanningmapgui" :script_path="PrePlanManager.lua"/>
 					<post :hook_id="specializationboxgui" :script_path="Utils/InputDialog.lua"/>
 					<post :hook_id="items/menuitemmultichoice" :script_path="Scripts.lua"/>
 					<post :hook_id="items/contractbrokerheistitem" :script_path="ContractHeat.lua"/>
+
+					<group :hook_id="playerinventorygui">
+						<post :script_path="ProfileMenu.lua"/>
+						<post :script_path="MenuTweaks.lua"/>
+					</group>
 
 					<group :hook_id="contractboxgui">
 						<post :script_path="MenuTweaks.lua"/>
@@ -167,16 +171,24 @@
 			<group :hook_id="units/">
 				<post :hook_id="cameras/fpcameraplayerbase" :script_path="WeaponGadgets.lua"/>
 
-				<group :hook_id="civilians/civiliandamage">
-					<post :script_path="DamagePopup.lua"/>
-					<post :script_path="TabStats.lua"/>
+				<group :hook_id="civilians/">
+					<post :hook_id="logics/civilianlogictravel" :script_path="GameInfoManager.lua"/>
+
+					<group :hook_id="civiliandamage">
+						<post :script_path="DamagePopup.lua"/>
+						<post :script_path="TabStats.lua"/>
+					</group>
 				</group>
 
-				<group :hook_id="enemies/cop/copdamage">
-					<post :script_path="GameInfoManager.lua"/>
-					<post :script_path="KillCounter.lua"/>
-					<post :script_path="DamagePopup.lua"/>
-					<post :script_path="TabStats.lua"/>
+				<group :hook_id="enemies/cop/">
+					<post :hook_id="logics/coplogicidle" :script_path="GameInfoManager.lua"/>
+
+					<group :hook_id="copdamage">
+						<post :script_path="GameInfoManager.lua"/>
+						<post :script_path="KillCounter.lua"/>
+						<post :script_path="DamagePopup.lua"/>
+						<post :script_path="TabStats.lua"/>
+					</group>
 				</group>
 
 				<group :hook_id="interactions/interactionext">

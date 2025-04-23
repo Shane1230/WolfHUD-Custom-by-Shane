@@ -279,6 +279,7 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		cop = 						{ type_id = "cop",			category = "enemies",	long_name = "wolfhud_enemy_cop" 					},
 		cop_female = 				{ type_id = "cop",			category = "enemies",	long_name = "wolfhud_enemy_cop" 					},
 		fbi = 						{ type_id = "cop",			category = "enemies",	long_name = "wolfhud_enemy_fbi" 					},
+		fbi_female = 				{ type_id = "cop",			category = "enemies",	long_name = "wolfhud_enemy_fbi" 					},
 		swat = 						{ type_id = "cop",			category = "enemies",	long_name = "wolfhud_enemy_swat" 					},
 		heavy_swat = 				{ type_id = "cop",			category = "enemies",	long_name = "wolfhud_enemy_heavy_swat" 				},
         heavy_swat_sniper =         { type_id = "cop",			category = "enemies",	long_name = "wolfhud_enemy_heavy_swat_sniper"   	},
@@ -435,7 +436,7 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		bike_part_heavy = 			"bike",
 		circuit =					"server",
 		chas_artifact =				"dragon",
-		chas_teaset =				"tea",				   
+		chas_teaset =				"tea",
 		cloaker_cocaine = 			"coke",
 		cloaker_gold = 				"gold",
 		cloaker_money = 			"money",
@@ -452,7 +453,7 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		evidence_bag =				"evidence",
 		expensive_vine = 			"wine",
 		faberge_egg = 				"egg",
-		gnome = 					"gnome",			   
+		gnome = 					"gnome",
 		goat = 						"goat",
 		gold =						"gold",
 		hope_diamond =				"diamond",
@@ -584,7 +585,7 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		up_you_go = { "up_you_go", "damage_reduction" },
 		yakuza_recovery = { "yakuza" },
 		yakuza_speed = { "yakuza" },
-		
+
 		armorer_9 = { "armorer" },
 		crew_chief_1 = { "crew_chief", "damage_reduction" },	--Bonus for <50% health changed separately through set_value
 		crew_chief_3 = { "crew_chief" },
@@ -3206,7 +3207,6 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		drone_ctrl = 	{ text = "hud_carry_helmet", 				priority = 1 },	-- Biker Heist
 		egg = 			{ text = "wolfhud_hudlist_loot_egg", 		priority = 1 },	-- San Martin Bank
 		evidence =		{ text = "wolfhud_hudlist_loot_evidence", 	priority = 1 },	-- Hoxton revenge
-		gnome = 		{ text = "hud_carry_gnome", 				priority = 1 },												   
 		goat =			{ text = "hud_carry_goat", 					priority = 1 },	-- Goat Simulator
 		gold =			{ text = "hud_carry_gold", 					priority = 1 },
 		jewelry =		{ text = "hud_carry_diamonds", 				priority = 1 },
@@ -3242,8 +3242,6 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		papers = 		{ text = "wolfhud_hudlist_loot_papers",	 	priority = 1 }, -- Hostile Takeover Reserch Documents
 		neo2 = 			{ text = "wolfhud_hudlist_loot_neo2",		priority = 1 }, -- Hostile Takeover NEO-2
 		door_breaker = 	{ text = "wolfhud_hudlist_loot_dbreaker",	priority = 1 }, -- Border Crossing, Breakfast in Tijuana
-		red_pick	 = 	{ text = "red_pick",						priority = 1 },
-		red_pick_ax	 = 	{ text = "red_pick_ax",						priority = 1 },
 	}
 	function HUDList.LootItem:init(parent, name, id, members)
 		local loot_data = HUDList.LootItem.MAP[id]
@@ -3614,7 +3612,7 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 			self:_set_colors(new_color)
 		end
 	end
-	
+
 	function HUDList.TimerItem:_update_distance()
 		if self._show_distance then
 			self._distance_text:set_text(get_distance_to_player(self._unit))
@@ -3762,7 +3760,7 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 	HUDList.SecurityTimerItem = HUDList.SecurityTimerItem or class(HUDList.TimerItem)
 	function HUDList.SecurityTimerItem:init(parent, name, data)
 		data.show_distance = false	-- Disabled, we show current and total bars there.
-		
+
 		HUDList.SecurityTimerItem.super.init(self, parent, name, data)
 
 		self._bars = { current = data.current_bar or 1, total = data.total_bars or 3}
@@ -5730,23 +5728,23 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 			class = "TimedBuffItem",
 			priority = 15,
 			color = HUDList.BuffItemBase.ICON_COLOR.STANDARD,
-			ignore = false,
+			ignore = not WolfHUD:getSetting({"HUDList", "BUFF_LIST", "weapon_charge"}, true),
 		},
-		--[[melee_charge = {
+		melee_charge = {
 			--skills_new = tweak_data.skilltree.skills.hidden_blade.icon_xy,
 			skills = tweak_data.skilltree.skills.hidden_blade.icon_xy,
 			class = "TimedBuffItem",
 			priority = 15,
 			color = HUDList.BuffItemBase.ICON_COLOR.STANDARD,
-			ignore = WolfHUD:getSetting({"INTERACTION", "SHOW_MELEE"}, true)
-		},--]]
+			ignore = not WolfHUD:getSetting({"HUDList", "BUFF_LIST", "melee_charge"}, true),
+		},
 		reload = {
 			--skills_new = tweak_data.skilltree.skills.speedy_reload.icon_xy,
 			skills = {0, 9},
 			class = "TimedBuffItem",
 			priority = 15,
 			color = HUDList.BuffItemBase.ICON_COLOR.STANDARD,
-			ignore = WolfHUD:getSetting({"INTERACTION", "SHOW_RELOAD"}, true)
+			ignore = not WolfHUD:getSetting({"HUDList", "BUFF_LIST", "reload_time"}, true),
 		},
 		interact = {
 			--skills_new = tweak_data.skilltree.skills.second_chances.icon_xy,

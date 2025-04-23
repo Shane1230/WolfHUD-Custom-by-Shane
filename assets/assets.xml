@@ -13,6 +13,7 @@
 			<file :name="blackhawk.texture" :path="blackhawk.texture"/>
 			<file :name="boat.texture" :path="boat.texture"/>
 			<file :name="falcogini.texture" :path="falcogini.texture"/>
+			<file :name="golfcart.texture" :path="golfcart.texture"/>
 			<file :name="forklift.texture" :path="forklift.texture"/>
 			<file :name="longfellow.texture" :path="longfellow.texture"/>
 			<file :name="truck.texture" :path="truck.texture"/>

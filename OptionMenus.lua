@@ -2429,6 +2429,43 @@ if WolfHUD then
 							},
 							{
 								type = "divider",
+								size = 8,
+							},
+							{
+								type = "toggle",
+								name_id = "wolfhud_hudlist_weapon_charge_title",
+								desc_id = "wolfhud_hudlist_weapon_charge_desc",
+								value = {"HUDList", "BUFF_LIST", "weapon_charge"},
+								visible_reqs = {},
+								enabled_reqs = {
+									{ setting = { "HUDList", "ENABLED" }, invert = false },
+									{ setting = {"HUDList", "BUFF_LIST", "show_buffs"}, invert = false },
+								},
+							},
+							{
+								type = "toggle",
+								name_id = "wolfhud_hudlist_melee_charge_title",
+								desc_id = "wolfhud_hudlist_melee_charge_desc",
+								value = {"HUDList", "BUFF_LIST", "melee_charge"},
+								visible_reqs = {},
+								enabled_reqs = {
+									{ setting = { "HUDList", "ENABLED" }, invert = false },
+									{ setting = {"HUDList", "BUFF_LIST", "show_buffs"}, invert = false },
+								},
+							},
+							{
+								type = "toggle",
+								name_id = "wolfhud_hudlist_reload_time_title",
+								desc_id = "wolfhud_hudlist_reload_time_desc",
+								value = {"HUDList", "BUFF_LIST", "reload_time"},
+								visible_reqs = {},
+								enabled_reqs = {
+									{ setting = { "HUDList", "ENABLED" }, invert = false },
+									{ setting = {"HUDList", "BUFF_LIST", "show_buffs"}, invert = false },
+								},
+							},
+							{
+								type = "divider",
 								size = 16,
 							},
 							{
@@ -3742,6 +3779,17 @@ if WolfHUD then
 					},
 					{
 						type = "toggle",
+						name_id = "wolfhud_no_red_laser_title",
+						desc_id = "wolfhud_no_red_laser_desc",
+						value = {"GADGETS", "NO_RED_LASER"},
+						visible_reqs = {}, enabled_reqs = {},
+					},
+					{
+						type = "divider",
+						size = 24,
+					},
+					{
+						type = "toggle",
 						name_id = "wolfhud_show_angeled_sight_title",
 						desc_id = "wolfhud_show_angeled_sight_desc",
 						value = {"GADGETS", "SHOW_ANGELED_SIGHT"},
@@ -3847,17 +3895,6 @@ if WolfHUD then
 					},
 					{
 						type = "toggle",
-						name_id = "wolfhud_crewloadout_briefing_title",
-						desc_id = "wolfhud_crewloadout_briefing_desc",
-						value = {"CrewLoadout", "REPLACE_IN_BRIEFING"},
-						visible_reqs = {}, enabled_reqs = {},
-					},
-					{
-						type = "divider",
-						size = 16,
-					},
-					{
-						type = "toggle",
 						name_id = "wolfhud_crewloadout_tabscreen_title",
 						desc_id = "wolfhud_crewloadout_tabscreen_desc",
 						value = {"CrewLoadout", "SHOW_ON_STATS_PANEL"},
@@ -3869,29 +3906,20 @@ if WolfHUD then
 					},
 					{
 						type = "toggle",
+						name_id = "wolfhud_crewloadout_briefing_title",
+						desc_id = "wolfhud_crewloadout_briefing_desc",
+						value = {"CrewLoadout", "REPLACE_IN_BRIEFING"},
+						visible_reqs = {}, enabled_reqs = {},
+					},
+					{
+						type = "divider",
+						size = 16,
+					},
+					{
+						type = "toggle",
 						name_id = "wolfhud_profilemenu_replace_title",
 						desc_id = "wolfhud_profilemenu_replace_desc",
 						value = {"CrewLoadout", "REPLACE_PROFILE_MENU"},
-						visible_reqs = {}, enabled_reqs = {},
-					},
-				},
-			},
-			{
-				type ="divider",
-				size = 16,
-			},
-			-- PerkDeck SFX
-			{
-				type = "menu",
-				menu_id = "wolfhud_perkdeck_sfx_options_menu",
-				name_id = "wolfhud_perkdeck_sfx_options_name",
-				desc_id = "wolfhud_perkdeck_sfx_options_help",
-				options = {
-					{
-						type = "toggle",
-						name_id = "wolfhud_copycat_invul_sfx_title",
-						desc_id = "wolfhud_copycat_invul_sfx_desc",
-						value = {"PerkDeck_SFX", "COPYCAT_INVUL"},
 						visible_reqs = {}, enabled_reqs = {},
 					},
 				},
@@ -3945,16 +3973,6 @@ if WolfHUD then
 					{
 						type = "divider",
 						size = 24,
-					},{
-						type = "toggle",
-						name_id = "wolfhud_show_contractor_job_heat_title",
-						desc_id = "wolfhud_show_contractor_job_heat_desc",
-						value = {"INVENTORY", "SHOW_CONTRACTOR_JOB_HEAT"},
-						visible_reqs = {}, enabled_reqs = {},
-					},
-					{
-						type = "divider",
-						size = 24,
 					},
 					{
 						type = "toggle",
@@ -3988,18 +4006,7 @@ if WolfHUD then
 						type = "divider",
 						size = 24,
 					},
-					{
-						type = "toggle",
-						name_id = "wolfhud_override_fedinv",
-						desc_id = "wolfhud_override_fedinv_desc",
-						value = {"MOD_OVERRIDES", "fed_inv"},
-						visible_reqs = {}, enabled_reqs = {},
-					},
 				},
-			},
-			{
-				type ="divider",
-				size = 16,
 			},
 			--SkipIt
 			{
@@ -4094,6 +4101,57 @@ if WolfHUD then
 						desc_id = "wolfhud_no_slowmotion_desc",
 						value = {"SkipIt", "NO_SLOWMOTION"},
 						visible_reqs = {}, enabled_reqs = {},
+					},
+				},
+			},
+			{
+				type = "divider",
+				size = 16,
+			},
+			{
+				type = "menu",
+				menu_id = "wolfhud_etc_options_menu",
+				name_id = "wolfhud_etc_options_name",
+				desc_id = "wolfhud_etc_options_help",
+				options = {
+				-- PerkDeck SFX
+					{
+						type = "menu",
+						menu_id = "wolfhud_perkdeck_sfx_options_menu",
+						name_id = "wolfhud_perkdeck_sfx_options_name",
+						desc_id = "wolfhud_perkdeck_sfx_options_help",
+						options = {
+							{
+								type = "toggle",
+								name_id = "wolfhud_copycat_invul_sfx_title",
+								desc_id = "wolfhud_copycat_invul_sfx_desc",
+								value = {"ETC", "PerkDeck_SFX", "COPYCAT_INVUL"},
+								visible_reqs = {}, enabled_reqs = {},
+							},
+						},
+					},
+				-- Custom Rich Presence
+					{
+						type = "menu",
+						menu_id = "wolfhud_rich_presence_menu",
+						name_id = "wolfhud_rich_presence_name",
+						desc_id = "wolfhud_rich_presence_help",
+						options = {
+							{
+								type = "toggle",
+								name_id = "wolfhud_custom_rich_presence_title",
+								desc_id = "wolfhud_custom_rich_presence_desc",
+								value = {"ETC", "Rich_Presence", "CUSTOM_RICH_PRESENCE"},
+								visible_reqs = {}, enabled_reqs = {},
+							},
+							{
+								type = "toggle",
+								name_id = "wolfhud_real_private_title",
+								desc_id = "wolfhud_real_private_desc",
+								value = {"ETC", "Rich_Presence", "REAL_PRIVATE"},
+								visible_reqs = {}, enabled_reqs = {},
+							},
+						},
 					},
 				},
 			},

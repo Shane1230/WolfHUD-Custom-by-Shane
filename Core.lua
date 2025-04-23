@@ -48,8 +48,8 @@ if not _G.WolfHUD then
 					SPECIAL_EQUIPMENT				= true,
 					SPECIAL_EQUIPMENT_ROWS			= 3,
 					CALLSIGN						= false,
-					STAMINA							= true,
-					DOWNCOUNTER						= true,
+					STAMINA							= false,
+					DOWNCOUNTER						= false,
 					CARRY							= true,
 					CONDITION_ICON_COLOR			= "white",
 					WEAPON = {
@@ -80,7 +80,7 @@ if not _G.WolfHUD then
 					SPECIAL_EQUIPMENT				= true,
 					SPECIAL_EQUIPMENT_ROWS			= 3,
 					CALLSIGN						= false,
-					DOWNCOUNTER						= true,
+					DOWNCOUNTER						= false,
 					CARRY							= true,
 					CONDITION_ICON_COLOR			= "white",
 					BUILD = {
@@ -101,12 +101,12 @@ if not _G.WolfHUD then
 						HIDE					= false,		-- Show Interaction
 						NUMBER					= true,
 						TEXT					= true,
-						MIN_DURATION			= 1,
+						MIN_DURATION			= 0,
 					},
 					KILLCOUNTER = {
 						HIDE						= false,
 						SHOW_SPECIAL_KILLS 			= true,
-						SHOW_HEADSHOT_KILLS			= true,
+						SHOW_HEADSHOT_KILLS			= false,
 						COLOR						= "yellow",
 						SHOW_BOT_KILLS 				= true,
 					},
@@ -115,7 +115,7 @@ if not _G.WolfHUD then
 				USE_REAL_AMMO 						= false,
 			},
 			HUDChat = {
-				CHAT_WAIT_TIME							= 10,		--Time before chat fades out, 0 = never
+				CHAT_WAIT_TIME							= 7,		--Time before chat fades out, 0 = never
 				LINE_HEIGHT								= 20,		--Chat font Size
 				WIDTH									= 350,		--Width of the chat window
 				MAX_OUTPUT_LINES						= 10,		--Chat Output lines
@@ -132,7 +132,7 @@ if not _G.WolfHUD then
 				SHOW_POINTER		 					= false,	--Show pointer near the Healthbar, pointing at Healthbar owner
 			},
 			DamageIndicator = {
-				ENABLED									= true,
+				ENABLED									= false,
 				SIZE									= 150,
 				DURATION								= 2,
 				MAX_AMOUNT								= 10,
@@ -143,7 +143,7 @@ if not _G.WolfHUD then
 				FRIENDLY_FIRE_COLOR						= "orange",
 			},
 			DamagePopup = {
-				DISPLAY_MODE							= 2,
+				DISPLAY_MODE							= 1,
 				DURATION	 							= 3,
 				SCALE									= 1,
 				SKULL_SCALE								= 1.2,
@@ -168,7 +168,7 @@ if not _G.WolfHUD then
 			},
 			DrivingHUD = {
 				ENABLED									= true,		--Show DrivingHUD Panel
-				SCALE									= 1,
+				SCALE									= 0.9,
 				SHOW_VEHICLE 							= true,		--Show Vehicle and Teammate Mask Images
 				SHOW_HEALTH								= true,
 				SHOW_LOOT								= true,
@@ -181,7 +181,7 @@ if not _G.WolfHUD then
 			TabStats = {
 				ENABLED									= true,
 				CLOCK_MODE								= 3,		-- 1 = disabled, 2 = 12h, 3 = 24h
-				COLOR		 							= "rainbow",
+				COLOR		 							= "gray",
 				FONT_SIZE		 						= 15,
 				SHOW_MASK								= true,
 				SHOW_LOOT_NUMBERS						= true,
@@ -210,14 +210,14 @@ if not _G.WolfHUD then
 				timers_in_seconds 						= false,
 				LEFT_LIST = {
 					show_timers 							= true,     --Drills, time locks, hacking etc.
-					show_ammo_bags							= true,  	--Deployables (ammo)
-					show_doc_bags							= true,  	--Deployables (doc bags)
+					show_ammo_bags							= false,  	--Deployables (ammo)
+					show_doc_bags							= false,  	--Deployables (doc bags)
 					show_first_aid_kits						= false,	--Deployables (first_aid_kits)
-					show_body_bags							= true,  	--Deployables (body bags)
-					show_grenade_crates						= true,  	--Deployables (grenades)
-					show_sentries 							= true,   	--Deployable sentries
+					show_body_bags							= false,  	--Deployables (body bags)
+					show_grenade_crates						= false,  	--Deployables (grenades)
+					show_sentries 							= false,   	--Deployable sentries
 					show_ecms 								= true,		--Active ECMs
-					show_ecm_retrigger 						= true,  	--Countdown for players own ECM feedback retrigger delay
+					show_ecm_retrigger 						= false,  	--Countdown for players own ECM feedback retrigger delay
 					show_minions 							= true,  	--Converted enemies, type and health
 						show_own_minions_only				= false,	--Only show player-owned minions
 					show_pagers 							= true,  	--Show currently active pagers
@@ -225,11 +225,11 @@ if not _G.WolfHUD then
 				},
 				RIGHT_LIST = {
 					show_enemies 							= true,		--Currently spawned enemies
-						aggregate_enemies 					= false,  	--Don't split enemies on type; use a single entry for all
+						aggregate_enemies 					= true,  	--Don't split enemies on type; use a single entry for all
 					show_turrets 							= true,    	--Show active SWAT turrets
 					show_civilians 							= true,  	--Currently spawned, untied civs
 					show_hostages 							= true,   	--Currently tied civilian and dominated cops
-						aggregate_hostages					= false,
+						aggregate_hostages					= true,
 					show_minion_count 						= true,     --Current number of jokered enemies
 					show_pager_count 						= true,		--Show number of triggered pagers (only counts pagers triggered while you were present)
 					show_cam_count							= true,
@@ -238,27 +238,30 @@ if not _G.WolfHUD then
 					show_loot 								= true,     --Show spawned and active loot bags/piles (may not be shown if certain mission parameters has not been met)
 						aggregate_loot		 				= false, 	--Don't split loot on type; use a single entry for all
 						separate_bagged_loot		 		= true,     --Show bagged loot as a separate value
-						show_potential_loot					= false,
+						show_potential_loot					= true,
 					show_special_pickups 					= true,    	--Show number of special equipment/items
 					SHOW_PICKUP_CATEGORIES = {
 						mission_pickups 					= true,
-						collectables 						= true,
-						valuables 							= true,
+						collectables 						= false,
+						valuables 							= false,
 					}
 
 				},
 				BUFF_LIST = {
 					show_buffs 								= true,     --Active effects (buffs/debuffs). Also see HUDList.BuffItemBase.IGNORED_BUFFS table to ignore specific buffs that you don't want listed, or enable some of those not shown by default
-					damage_increase							= true,
+					damage_increase							= false,
 					damage_reduction						= true,
-					melee_damage_increase					= true,
+					melee_damage_increase					= false,
 					passive_health_regen 					= true,
 					total_dodge_chance 						= true,
+					weapon_charge							= false,
+					melee_charge							= false,
+					reload_time								= false,
 					MASTERMIND_BUFFS = {
-						forced_friendship					= true,
+						forced_friendship					= false,
 						aggressive_reload_aced				= true,
-						ammo_efficiency						= true,
-						combat_medic						= true,
+						ammo_efficiency						= false,
+						combat_medic						= false,
 						combat_medic_passive				= false,
 						hostage_taker						= false,
 						inspire								= true,
@@ -266,68 +269,68 @@ if not _G.WolfHUD then
 						partner_in_crime					= false,
 						quick_fix							= false,
 						uppers								= true,
-						inspire_debuff						= true,
+						inspire_debuff						= false,
 						inspire_revive_debuff				= true,
 					},
 					ENFORCER_BUFFS = {
-						bulletproof							= true,
+						bulletproof							= false,
 						bullet_storm						= true,
 						die_hard							= false,
-						overkill							= false,
+						overkill							= true,
 						underdog							= false,
-						bullseye_debuff						= true,
+						bullseye_debuff						= false,
 					},
 					TECHNICIAN_BUFFS = {
 						lock_n_load							= true,
 					},
 					GHOST_BUFFS = {
-						dire_need							= true,
+						dire_need							= false,
 						second_wind							= true,
 						sixth_sense							= true,
 						unseen_strike						= true,
 					},
 					FUGITIVE_BUFFS = {
-						berserker							= true,
+						berserker							= false,
 						bloodthirst_basic					= false,
-						bloodthirst_aced					= true,
-						desperado							= true,
+						bloodthirst_aced					= false,
+						desperado							= false,
 						frenzy			 					= false,
 						messiah								= true,
-						running_from_death					= true,
+						running_from_death					= false,
 						swan_song							= false,
 						trigger_happy						= false,
 						up_you_go							= false,
 					},
 					PERK_BUFFS = {
 						armor_break_invulnerable			= true,
-						anarchist_armor_recovery_debuff		= true,
-						ammo_give_out_debuff				= true,
-						armorer								= true,
-						biker								= true,
+						anarchist_armor_recovery_debuff		= false,
+						ammo_give_out_debuff				= false,
+						armorer								= false,
+						biker								= false,
 						chico_injector						= false,
-						close_contact						= true,
-						crew_chief							= true,
+						close_contact						= false,
+						crew_chief							= false,
 						damage_control_debuff 				= false,
 						delayed_damage 						= true,
 						hostage_situation					= false,
 						medical_supplies_debuff				= true,
-						grinder								= true,
-						tooth_and_claw						= true,
-						life_drain_debuff					= true,
+						grinder								= false,
+						tooth_and_claw						= false,
+						life_drain_debuff					= false,
 						melee_stack_damage					= false,
 						overdog								= false,
 						maniac								= false,
 						muscle_regen						= false,
-						pocket_ecm_jammer 					= true,
+						pocket_ecm_jammer 					= false,
 						pocket_ecm_kill_dodge 				= false,
-						sicario_dodge 						= true,
-						smoke_screen_grenade 				= true,
-						sociopath_debuff					= true,
-						tag_team 							= true,
+						sicario_dodge 						= false,
+						smoke_screen_grenade 				= false,
+						sociopath_debuff					= false,
+						tag_team 							= false,
 						yakuza								= false,
-						copr_ability						= true,
+						copr_ability						= false,
 						copycat_health_invul				= true,
-						copycat_health_shot					= true,
+						copycat_health_shot					= false,
 						copycat_primary_kills				= true,
 						copycat_secondary_kills				= true,
 					},
@@ -336,8 +339,8 @@ if not _G.WolfHUD then
 						life_steal_debuff					= true,
 					},
 					AI_SKILLS = {
-						crew_inspire_debuff 				= true,
-						crew_throwable_regen 				= true,
+						crew_inspire_debuff 				= false,
+						crew_throwable_regen 				= false,
 						crew_health_regen 					= false,
 					},
 				},
@@ -350,11 +353,11 @@ if not _G.WolfHUD then
 				SHOW_BODY_BAG			 				= true,
 				SHOW_GRENADE_CRATE			 			= true,
 				SHOW_SENTRIES			 				= false,
-				SHOW_ECMS								= false,
-				SHOW_TIMERS			 					= false,
+				SHOW_ECMS								= true,
+				SHOW_TIMERS			 					= true,
 				SHOW_MINIONS							= true,
-				SHOW_PAGER								= false,
-				SHOW_SPECIAL_EQUIPMENT					= false,
+				SHOW_PAGER								= true,
+				SHOW_SPECIAL_EQUIPMENT					= true,
 				LOOT = {
 					SHOW								= true,
 					ICON								= true,
@@ -364,36 +367,36 @@ if not _G.WolfHUD then
 				},
 			},
 			INTERACTION = {
-				LOCK_MODE 								= 3,			--Disabled (1, Lock interaction, if MIN_TIMER_DURATION is longer then total interaction time (2), or current interaction time(3)
+				LOCK_MODE 								= 1,			--Disabled (1, Lock interaction, if MIN_TIMER_DURATION is longer then total interaction time (2), or current interaction time(3)
 				MIN_TIMER_DURATION 						= 5, 			--Min interaction duration (in seconds) for the toggle behavior to activate
 				EQUIPMENT_PRESS_INTERRUPT 				= true, 		--Use the equipment key ('G') to toggle off active interactions
 				SHOW_LOCK_INDICATOR						= true,
 				SHOW_CIRCLE								= true,
-				CIRCLE_SCALE							= 0.8,
-				TEXT_SCALE								= 0.8,
+				CIRCLE_SCALE							= 1,
+				TEXT_SCALE								= 1,
 				SHOW_INTERRUPT_HINT						= true,
 				SHOW_TIME_REMAINING 					= true,			--Show remaining Time in the Interaction-Circle
-				SHOW_TIME_REMAINING_OUTLINE				= true,		--Show black outline around remaining Time text
+				SHOW_TIME_REMAINING_OUTLINE				= true,			--Show black outline around remaining Time text
 				GRADIENT_COLOR_START					= "white",		--Color, which the timer starts with
-				GRADIENT_COLOR							= "light_green",--Color, which the timer reaches on completition
-				TIMER_SCALE								= 1,			--Timer scale (also takes CIRCLE_SCALE into account)
+				GRADIENT_COLOR							= "white",		--Color, which the timer reaches on completition
+				TIMER_SCALE								= 0.7,			--Timer scale (also takes CIRCLE_SCALE into account)
 				SHOW_RELOAD								= false,
 				SHOW_MELEE								= false,
-				SUPRESS_NADES_STEALTH					= true,
+				SUPRESS_NADES_STEALTH					= false,
 				HOLD2PICK								= true,
 			},
 			GADGETS = {
-				LASER_AUTO_ON 							= true,
+				LASER_AUTO_ON 							= false,
 				laser = {
 					player = {
-						beam 							= { enabled = true, r = 0, g = 1, b = 0, a = 0.15 },
+						beam 							= { enabled = false, r = 0, g = 1, b = 0, a = 0.15 },
 						glow 							= { match_beam = true, r = 0, g = 1, b = 0, a = 0.02 },
 						dot 							= { match_beam = true, r = 0, g = 1, b = 0, a = 1 },
 						pulse 							= { enabled = false, min = 0.5, max = 2, frequency = 0.25 },
 						rainbow 						= { enabled = false, frequency = 0.25 },
 					},
 					team = {
-						beam 							= { enabled = true, r = 0, g = 1, b = 0, a = 0.05 },
+						beam 							= { enabled = false, r = 0, g = 1, b = 0, a = 0.05 },
 						glow 							= { match_beam = true, r = 0, g = 1, b = 0, a = 0.02 },
 						dot 							= { match_beam = true, r = 0, g = 1, b = 0, a = 1 },
 						pulse 							= { enabled = false, min = 0.5, max = 2, frequency = 0.25 },
@@ -444,34 +447,31 @@ if not _G.WolfHUD then
 				},
 				flashlight = {
 					player = {
-						light 							= { enabled = true, r = 1, g = 1, b = 1, brightness = 1, range = 10, angle = 60 },
+						light 							= { enabled = false, r = 1, g = 1, b = 1, brightness = 1, range = 10, angle = 60 },
 						pulse 							= { enabled = false, min = 0.5, max = 2, frequency = 0.25 },
 						rainbow 						= { enabled = false, frequency = 0.25 },
 					},
 					team = {
-						light 							= { enabled = true, r = 1, g = 1, b = 1, brightness = 1, range = 10, angle = 60 },
+						light 							= { enabled = false, r = 1, g = 1, b = 1, brightness = 1, range = 10, angle = 60 },
 						pulse 							= { enabled = false, min = 0.5, max = 2, frequency = 0.25 },
 						rainbow 						= { enabled = false, frequency = 0.25 },
 					},
 				},
+				NO_RED_LASER							= true,
 				SHOW_ANGELED_SIGHT						= true,
 			},
 			EQUIPMENT = {
 				SENTRY_AUTO_AP 							= true,
-				ECM_FEEDBACK_STEALTH_DISABLED			= true,
-				SHAPED_CHARGE_STEALTH_DISABLED			= true,
-				KEYCARD_DOORS_DISABLED					= true,
+				ECM_FEEDBACK_STEALTH_DISABLED			= false,
+				SHAPED_CHARGE_STEALTH_DISABLED			= false,
+				KEYCARD_DOORS_DISABLED					= false,
 				ENABLE_BURSTMODE						= false,
-			},
-			PerkDeck_SFX = {
-				COPYCAT_INVUL							= true,
 			},
 			INVENTORY = {
 				SHOW_WEAPON_NAMES 						= true,
 				SHOW_WEAPON_MINI_ICONS 					= true,
 				USE_REAL_WEAPON_NAMES 					= false,
 				SHOW_SKILL_NAMES 						= true,
-				SHOW_CONTRACTOR_JOB_HEAT				= true,
 				CUSTOM_TAB_NAMES = {
 					primaries 							= { "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
 					secondaries 						= { "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" },
@@ -481,23 +481,29 @@ if not _G.WolfHUD then
 			},
 			SkipIt = {
 				SKIP_BLACKSCREEN 						= true,		--Skip the blackscreen on mission start
-				INSTANT_RESTART							= false,
-				STAT_SCREEN_SPEEDUP						= false,
-				STAT_SCREEN_DELAY 						= 5,		--Skip the experience screen after X seconds
+				INSTANT_RESTART							= true,
+				STAT_SCREEN_SPEEDUP						= true,
+				STAT_SCREEN_DELAY 						= 3,		--Skip the experience screen after X seconds
 				AUTOPICK_CARD 							= true,		--Automatically pick a card on lootscreen
-				AUTOPICK_CARD_SPECIFIC 					= 4,		--left, center, right, random
-				LOOT_SCREEN_DELAY 						= 3,		--Skip the loot screen after X seconds
+				AUTOPICK_CARD_SPECIFIC 					= 2,		--left, center, right, random
+				LOOT_SCREEN_DELAY 						= 4,		--Skip the loot screen after X seconds
 				NO_SLOWMOTION 							= true,		--Disable mask-up and downed slow motion
 			},
-			MOD_OVERRIDES = {
-				fed_inv									= false,
+			ETC = {
+				PerkDeck_SFX = {
+					COPYCAT_INVUL							= true,
+				},
+				Rich_Presence = {
+					CUSTOM_RICH_PRESENCE					= true,
+					REAL_PRIVATE							= false,
+				},
 			},
 			LOBBY_SETTINGS = {
 				job_plan = -1,
 				kick_option = 1,
 				permission = "public",
 				reputation_permission = 0,
-				drop_in_option = 1,
+				drop_in_option = 3,
 				team_ai = true,
 				team_ai_option = 1,
 				auto_kick = true,

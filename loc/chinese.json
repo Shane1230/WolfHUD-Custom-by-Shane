@@ -179,6 +179,7 @@
 	"wolfhud_enemy_bank_manager" : "银行经理",
 	"wolfhud_enemy_dah_ralph" : "拉尔夫•加内特",
 	"wolfhud_enemy_inside_man" : "内应",
+	"wolfhud_enemy_inside_woman" : "内应",
 	"wolfhud_enemy_escort_undercover" : "税务官",
 	"wolfhud_enemy_escort_heatstreet" : "马特",
 	"wolfhud_enemy_escort_chinese_prisoner" : "和夫",
@@ -590,12 +591,18 @@
 	"wolfhud_hudlist_passive_health_regen_compbuff_desc" : "综合Buff项目，显示已加入的所有的技能生命恢复效果值",
 	"wolfhud_hudlist_total_dodge_chance_compbuff_title" : "总闪避几率",
 	"wolfhud_hudlist_total_dodge_chance_compbuff_desc" : "综合Buff项目，显示所有闪避增加技能的附加值",
+	"wolfhud_hudlist_weapon_charge_title" : "Weapon Charge Time",
+	"wolfhud_hudlist_weapon_charge_desc" : "Show Charge Time for Bow in buff list",
+	"wolfhud_hudlist_melee_charge_title" : "Melee Charge Time",
+	"wolfhud_hudlist_melee_charge_desc" : "Show melee charge time in buff list",
+	"wolfhud_hudlist_reload_time_title" : "Reload Time",
+	"wolfhud_hudlist_reload_time_desc" : "Show reload time in buff list",
 	"wolfhud_hudlist_aggressive_reload_aced_buff_title" : "迅猛装填",
 	"wolfhud_hudlist_aggressive_reload_aced_buff_desc" : "",
 	"wolfhud_hudlist_ammo_efficiency_buff_title" : "节约弹药",
 	"wolfhud_hudlist_ammo_efficiency_buff_desc" : "",
-	"wolfhud_hudlist_armor_break_invulnerable_buff_title" : "闪电战(反动派)",
-	"wolfhud_hudlist_armor_break_invulnerable_buff_desc" : "",
+	"wolfhud_hudlist_armor_break_invulnerable_buff_title" : "Armor Break Invulnerability time",
+	"wolfhud_hudlist_armor_break_invulnerable_buff_desc" : "Anarchist, Armorer",
 	"wolfhud_hudlist_berserker_buff_title" : "狂战士",
 	"wolfhud_hudlist_berserker_buff_desc" : "",
 	"wolfhud_hudlist_biker_buff_title" : "远景眺望(飞车党恢复)",
@@ -894,11 +901,17 @@
 	"wolfhud_hold_to_pick_title" : "自动拾取",
 	"wolfhud_hold_to_pick_desc" : "当你按下互动键时，小的战利品将会被自动拾取",
 
-	"wolfhud_perkdeck_sfx_options_name" : "Perkdeck SFX",
+	"wolfhud_perkdeck_sfx_options_name" : "Perkdeck SFX Option",
 	"wolfhud_perkdeck_sfx_options_help" : "perkdeck sound effect.",
-
 	"wolfhud_copycat_invul_sfx_title" : "Copycat Invulnerability",
 	"wolfhud_copycat_invul_sfx_desc" : "Add perkdeck 'cooldown over' sound.",
+
+	"wolfhud_rich_presence_name" : "Steam Rich Presence Option",
+	"wolfhud_rich_presence_help" : "Setting Steam Rish Presence.",
+	"wolfhud_custom_rich_presence_title" : "Custom Rich Presence",
+	"wolfhud_custom_rich_presence_desc" : "Enable Custom Rich Presence.\n Display more information with readable, but show up only english for other players.",
+	"wolfhud_real_private_title" : "hide rich prisence in private room",
+	"wolfhud_real_private_desc" : "Do not show up rish presence in private room instead 'private'.",
 
 	"wolfhud_inventory_options_name" : "装备调整选项",
 	"wolfhud_inventory_options_help" : "设置你的装备在游戏中的默认状态",
@@ -921,6 +934,8 @@
 
 	"wolfhud_laser_autoon_title" : "自动打开激光",
 	"wolfhud_laser_autoon_desc" : "每局开头前，自动将带有激光武器打开激光",
+	"wolfhud_no_red_laser_title" : "Disable Players Red Lasers",
+	"wolfhud_no_red_laser_desc" : "Change player's red laser to default color.",
 	"wolfhud_show_angeled_sight_title" : "显示角度视野",
 	"wolfhud_show_angeled_sight_desc" : "当启用角度视野时，你的手中的武器将会倾斜",
 
@@ -1030,6 +1045,9 @@
 	"wolfhud_restore_player_dot_title" : "Restore old Player dot",
 	"wolfhud_restore_player_dot_desc" : "Restoration player dot indicator with down counter",
 	
+	"wolfhud_etc_options_name" : "ETC Option Menu",
+	"wolfhud_etc_options_help" : "No category option menu.",
+
 	"lpi_packet_loss" : "packet loss",
 	"menu_lpi_fake_deck" : "Fake deck",
 }

@@ -603,6 +603,10 @@ lounge		100421		100448			102049
 				local upgrade_value = managers.player:upgrade_value("temporary", "armor_break_invulnerable")
 				managers.gameinfo:event("timed_buff", "activate", "armor_break_invulnerable", { t = data.t, duration = upgrade_value and upgrade_value[1] or 0 })
 			end,
+			copycat_health_invul = function(id, data)
+				local upgrade_values = managers.player:upgrade_value("temporary", "mrwi_health_invulnerable")
+				managers.gameinfo:event("timed_buff", "activate", "copycat_health_invul_debuff", { t = data.t, duration = upgrade_values and upgrade_values[3] or 0 })
+			end,
 		},
 		on_set_duration = {
 			overkill = function(id, data)
@@ -1956,7 +1960,6 @@ if string.lower(RequiredScript) == "lib/units/props/securitylockgui" then
 	function SecurityLockGui:_start(bar, ...)
 		managers.gameinfo:event("timer", "set_current_bar", self._info_key, bar)
 		managers.gameinfo:event("timer", "set_active", self._info_key, true)
-
 		return _start_original(self, bar, ...)
 	end
 
@@ -2030,6 +2033,7 @@ if string.lower(RequiredScript) == "lib/managers/group_ai_states/groupaistatebas
 	local remove_minion_original = GroupAIStateBase.remove_minion
 	local sync_converted_enemy_original = GroupAIStateBase.sync_converted_enemy
 	local set_whisper_mode_original = GroupAIStateBase.set_whisper_mode
+	local propagate_alert_original = GroupAIStateBase.propagate_alert
 
 	function GroupAIStateBase:register_turret(unit, ...)
 		managers.gameinfo:event("turret", "add", tostring(unit:key()), unit)
@@ -2118,6 +2122,16 @@ if string.lower(RequiredScript) == "lib/managers/group_ai_states/groupaistatebas
 		managers.gameinfo:event("unit_count", "set", "sec_hostage", security_hostages)
 	end
 
+	function GroupAIStateBase:propagate_alert(alert_data, ...)
+	--Scream Bug Fix
+		if Network:is_server() and managers and managers.groupai and managers.groupai:state() and managers.groupai:state():whisper_mode() then
+			if (alert_data[1] and alert_data[1] == "vo_distress") and (alert_data[3] and alert_data[3] > 200) then
+				alert_data[3] = 25
+			end
+		end
+		return propagate_alert_original(self, alert_data, ...)
+	end
+
 end
 
 if string.lower(RequiredScript) == "lib/network/handlers/unitnetworkhandler" then
@@ -2127,6 +2141,25 @@ if string.lower(RequiredScript) == "lib/network/handlers/unitnetworkhandler" the
 	local unit_traded_original = UnitNetworkHandler.unit_traded
 	local interaction_set_active_original = UnitNetworkHandler.interaction_set_active
 	local alarm_pager_interaction_original = UnitNetworkHandler.alarm_pager_interaction
+
+	if WolfHUD:getSetting({"GADGETS", "NO_RED_LASER"}, true) then
+		function UnitNetworkHandler:set_weapon_gadget_color(unit, red, green, blue, sender)
+			if not self._verify_character_and_sender(unit, sender) then
+				return
+			end
+
+			if red and green and blue then
+				local threshold = 0.66
+				if red * threshold > green + blue then
+					red = 1
+					green = 51
+					blue = 1
+				end
+			end
+
+			unit:inventory():sync_weapon_gadget_color(Color(red / 255, green / 255, blue / 255))
+		end
+	end
 
 	function UnitNetworkHandler:mark_minion(unit, owner_id, ...)
 		mark_minion_original(self, unit, owner_id, ...)
@@ -2199,9 +2232,9 @@ if string.lower(RequiredScript) == "lib/network/handlers/unitnetworkhandler" the
 
 end
 
-if string.lower(RequiredScript) == "lib/units/enemies/cop/copdamage" and not CopDamage._game_info_manager_loaded then
-    CopDamage._game_info_manager_loaded = true
+if string.lower(RequiredScript) == "lib/units/enemies/cop/copdamage" and not CopDamage.fix then
 
+	CopDamage.fix = true
 	local convert_to_criminal_original = CopDamage.convert_to_criminal
 	local _on_damage_received_original = CopDamage._on_damage_received
 	local chk_killshot_original = CopDamage.chk_killshot
@@ -2223,7 +2256,7 @@ if string.lower(RequiredScript) == "lib/units/enemies/cop/copdamage" and not Cop
 	end
 
 	function CopDamage:_on_damage_received(damage_info, ...)
-		if self._unit:in_slot(16) then
+		if self._unit:in_slot(16) or self._unit:in_slot(22) then
 			managers.gameinfo:event("minion", "set_health_ratio", tostring(self._unit:key()), { health_ratio = self:health_ratio() })
 		end
 		return _on_damage_received_original(self, damage_info, ...)
@@ -3272,8 +3305,10 @@ if string.lower(RequiredScript) == "lib/managers/playermanager" then
 			if gain_value > 0 then
 				managers.gameinfo:event("buff", "activate", "sicario_dodge")
 				managers.gameinfo:event("buff", "set_value", "sicario_dodge", { value = gain_value * self:upgrade_value("player", "sicario_multiplier", 1) })
-				managers.gameinfo:event("timed_buff", "activate", "sicario_dodge_debuff", { duration = tweak_data.upgrades.values.player.dodge_shot_gain[1][2] })	--self:upgrade_value("player", "dodge_shot_gain")[2]
+				managers.gameinfo:event("buff", "activate", "sicario_dodge_debuff")
+				managers.gameinfo:event("buff", "set_duration", "sicario_dodge_debuff", { duration = tweak_data.upgrades.values.player.dodge_shot_gain[1][2] })
 			else
+				managers.gameinfo:event("buff", "set_value", "sicario_dodge", { value = 0 })
 				managers.gameinfo:event("buff", "deactivate", "sicario_dodge")
 			end
 		end
@@ -3339,11 +3374,12 @@ if string.lower(RequiredScript) == "lib/managers/playermanager" then
 		remove_copr_risen_cooldown_original(self, ...)
 	end
 
-	
+
 	function PlayerManager:force_end_copr_ability(...)
 		force_end_copr_ability_original(self, ...)
 		managers.gameinfo:event("buff", "deactivate", "copr_ability")
 	end
+
 end
 
 if string.lower(RequiredScript) == "lib/managers/player/smokescreeneffect" then
@@ -3491,6 +3527,9 @@ if string.lower(RequiredScript) == "lib/units/beings/player/playermovement" then
 	function PlayerMovement:_update_base_dodge(t, dt)
 		if t > DODGE_RECHECK_T and alive(self._unit) then
 			local base_dodge = 0
+			if managers.player:has_category_upgrade("player", "mrwi_dodge_chance") then
+				base_dodge = base_dodge + managers.player:upgrade_value("player", "mrwi_dodge_chance", 0)
+			end
 			if self:running() then
 				base_dodge = base_dodge + managers.player:upgrade_value("player", "run_dodge_chance", 0)
 			elseif self:crouching() then
@@ -3498,6 +3537,7 @@ if string.lower(RequiredScript) == "lib/units/beings/player/playermovement" then
 			elseif self:zipline_unit() then
 				base_dodge = base_dodge + managers.player:upgrade_value("player", "on_zipline_dodge_chance", 0)
 			end
+
 
 			if not LAST_BASE_DODGE or LAST_BASE_DODGE ~= base_dodge then
                 if base_dodge > 0 then
@@ -3523,10 +3563,11 @@ if string.lower(RequiredScript) == "lib/units/beings/player/playerinventory" the
 	local get_jammer_time_original = PlayerInventory.get_jammer_time
 
 	function PlayerInventory:_start_jammer_effect(end_time, ...)
+		_start_jammer_effect_original(self, end_time, ...)
 		managers.gameinfo:event("buff", "activate", "pocket_ecm_jammer")
 		managers.gameinfo:event("buff", "set_duration", "pocket_ecm_jammer", { expire_t = end_time or ((self:get_jammer_time() or 0) + (TimerManager:game():time() or 0)) })
 
-		return _start_jammer_effect_original(self, end_time, ...)
+		return true
 	end
 
 	function PlayerInventory:_stop_jammer_effect(...)
@@ -3538,10 +3579,11 @@ if string.lower(RequiredScript) == "lib/units/beings/player/playerinventory" the
 	end
 
 	function PlayerInventory:_start_feedback_effect(end_time, ...)
+		_start_feedback_effect_original(self, end_time, ...)
 		managers.gameinfo:event("buff", "activate", "pocket_ecm_jammer")
 		managers.gameinfo:event("buff", "set_duration", "pocket_ecm_jammer", { expire_t = end_time or ((self:get_jammer_time() or 0) + (TimerManager:game():time() or 0)) })
 
-		return _start_feedback_effect_original(self, end_time, ...)
+		return true
 	end
 
 	function PlayerInventory:_stop_feedback_effect(...)
@@ -3632,7 +3674,7 @@ if string.lower(RequiredScript) == "lib/units/beings/player/states/playerstandar
 
 		local time = Application:time()
 		managers.gameinfo:event("player_action", "activate", "interact", { t = time, duration = timer })
-		managers.gameinfo:event("player_action", "set_data", "interact", { interact_id = interact_object:interaction().tweak_data })
+		managers.gameinfo:event("player_action", "set_data", "interact", { interact_id = interact_object and interact_object:interaction().tweak_data })
 
 		return _start_action_interact_original(self, t, input, timer, interact_object, ...)
 	end
@@ -4047,7 +4089,7 @@ if string.lower(RequiredScript) == "lib/units/beings/player/playerdamage" then
 		end
 	end
 
-	if WolfHUD:getSetting({"PerkDeck_SFX", "COPYCAT_INVUL"}, true) then
+	if WolfHUD:getSetting({"ETC", "PerkDeck_SFX", "COPYCAT_INVUL"}, true) then
 		Hooks:PostHook(PlayerDamage, "_calc_health_damage", "copycat_invul_sound", function(self, ...)
 			if managers.player:has_activate_temporary_upgrade("temporary", "mrwi_health_invulnerable") then
 				self._unit:sound():play("perkdeck_cooldown_over")
@@ -4170,11 +4212,14 @@ if string.lower(RequiredScript) == "lib/player_actions/skills/playeractionunseen
 	local unseenstrike_original = PlayerAction.UnseenStrike.Function
 
 	function PlayerAction.UnseenStrike.Function(player_manager, min_time, ...)
-		local function on_damage_taken()
-			managers.gameinfo:event("timed_buff", "activate", "unseen_strike_debuff", { duration = min_time })
+		local function on_player_damage()
+			if not player_manager:has_activate_temporary_upgrade("temporary", "unseen_strike") then
+				managers.gameinfo:event("timed_buff", "deactivate", "unseen_strike_debuff")
+				managers.gameinfo:event("timed_buff", "activate", "unseen_strike_debuff", { duration = min_time })
+			end
 		end
 
-		player_manager:register_message(Message.OnPlayerDamage, "unseen_strike_debuff_listener", on_damage_taken)
+		player_manager:register_message(Message.OnPlayerDamage, "unseen_strike_debuff_listener", on_player_damage)
 		unseenstrike_original(player_manager, min_time, ...)
 		player_manager:unregister_message(Message.OnPlayerDamage, "unseen_strike_debuff_listener")
 	end
@@ -4267,9 +4312,10 @@ if string.lower(RequiredScript) == "lib/player_actions/skills/playeractiontagtea
 	function PlayerAction.TagTeamTagged.Function(tagged, owner, ...)
 		local on_dmg_listener_key = string.format("gameinfo_tag_team_tagged_on_damage_listener_%s", tostring(owner:key()))
 
-		if tagged == managers.player:local_player() then
+		if tagged ~= managers.player:local_player() then
 			local tagged_name = GetUnitName(owner)
 			local base_values = managers.player:upgrade_value("player", "tag_team_base")
+			local kill_health_gain = base_values.kill_health_gain * base_values.tagged_health_gain_ratio
 			local duration = base_values.duration or 0
 			managers.gameinfo:event("timed_buff", "activate", "tag_team", { duration = duration })
 			managers.gameinfo:event("buff", "set_value", "tag_team", { value = tagged_name })
@@ -4280,12 +4326,135 @@ if string.lower(RequiredScript) == "lib/player_actions/skills/playeractiontagtea
 
 				if was_killed and valid_player then
 					managers.gameinfo:event("timed_buff", "change_expire", "tag_team", { difference = base_values.kill_extension })
+					tagged:character_damage():restore_health(kill_health_gain, true)
 				end
 			end)
 		end
 
 		tag_team_tagged_original(tagged, owner, ...)
 		CopDamage.unregister_listener(on_dmg_listener_key)
+	end
+
+end
+
+if string.lower(RequiredScript) == "lib/units/civilians/logics/civilianlogictravel" then
+	--Civilian Follow Fix
+	local _determine_exact_destination_original = CivilianLogicTravel._determine_exact_destination
+	function CivilianLogicTravel._determine_exact_destination(data, objective, ...)
+		if objective and objective.type == 'follow' and objective.follow_unit then
+			return objective.follow_unit:movement():nav_tracker():field_position()
+		end
+
+		return _determine_exact_destination_original(data, objective, ...)
+	end
+
+elseif string.lower(RequiredScript) == "lib/units/enemies/cop/logics/coplogicidle" then
+
+	function CopLogicIdle._chk_relocate(data)
+		if data.objective and data.objective.type == "follow" then
+			if data.is_converted then
+				if TeamAILogicIdle._check_should_relocate(data, data.internal_data, data.objective) then
+					data.objective.in_place = nil
+					data.logic._exit(data.unit, "travel")
+
+					return true
+				end
+				return
+			end
+
+			if data.is_tied and data.objective.lose_track_dis and data.objective.lose_track_dis * data.objective.lose_track_dis < mvector3.distance_sq(data.m_pos, data.objective.follow_unit:movement():m_newest_pos()) then
+				data.brain:set_objective(nil)
+
+				return true
+			end
+
+			local relocate = nil
+			local follow_unit = data.objective.follow_unit
+			local advance_pos = follow_unit:brain() and follow_unit:brain():is_advancing()
+			local follow_unit_pos = advance_pos or (follow_unit:movement() and follow_unit:movement().m_newest_pos and follow_unit:movement():m_newest_pos()) --- m_newest_pos can be nil
+			if not follow_unit_pos then
+				return
+			end
+
+			if data.objective.relocated_to and mvector3.distance_sq(data.objective.relocated_to, follow_unit_pos) <= 1 then --- <--- Fixed the comparison
+				return
+			end
+
+			if data.objective.distance and data.objective.distance < mvector3.distance(data.m_pos, follow_unit_pos) then
+				relocate = true
+			end
+
+			if not relocate then
+				local ray_params = {
+					tracker_from = data.unit:movement():nav_tracker(),
+					pos_to = follow_unit_pos
+				}
+				local ray_res = managers.navigation:raycast(ray_params)
+
+				if ray_res then
+					relocate = true
+				end
+			end
+
+			if relocate then
+				data.objective.in_place = nil
+				data.objective.nav_seg = follow_unit:movement():nav_tracker():nav_segment()
+				data.objective.relocated_to = mvector3.copy(follow_unit_pos)
+				data.logic._exit(data.unit, "travel")
+
+				return true
+			end
+		elseif data.objective and data.objective.type == "defend_area" and (not data.objective.grp_objective or data.objective.grp_objective.type ~= "retire") then
+			local area = data.objective.area
+
+			if area and not next(area.criminal.units) and (not data.attention_obj or AIAttentionObject.REACT_AIM > data.attention_obj.reaction) then
+				local records = managers.groupai:state():all_char_criminals()
+				local found_areas = {
+					[area] = true
+				}
+				local areas_to_search = {
+					area
+				}
+				local target_area = nil
+
+				while next(areas_to_search) do
+					local current_area = table.remove(areas_to_search)
+
+					for criminal_key, _ in pairs(current_area.criminal.units) do
+						if records[criminal_key] then
+							local status = records[criminal_key].status
+
+							if not status or status == "electrified" then
+								target_area = current_area
+
+								break
+							end
+						end
+					end
+
+					for _, n_area in pairs(current_area.neighbours) do
+						if not found_areas[n_area] then
+							found_areas[n_area] = true
+
+							table.insert(areas_to_search, n_area)
+						end
+					end
+				end
+
+				if target_area then
+					data.objective.in_place = nil
+					data.objective.nav_seg = next(target_area.nav_segs)
+					data.objective.path_data = {
+						{
+							data.objective.nav_seg
+						}
+					}
+					data.logic._exit(data.unit, "travel")
+
+					return true
+				end
+			end
+		end
 	end
 
 end

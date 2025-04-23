@@ -1,6 +1,6 @@
 if string.lower(RequiredScript) == "lib/managers/hud/huddriving" then
 	HUDDriving.VEHICLES = {
-		["Longfellow"] = {
+		["vhl_longfellow_name"] = {
 			["driver"] = 				{ scale_x = -0.2, 	scale_y = -0.15, 	is_seat = true },
 			["passenger_front"] = 		{ scale_x = 0.2, 	scale_y = -0.15, 	is_seat = true },
 			["passenger_back_left"] = 	{ scale_x = -0.2, 	scale_y = 0.25, 	is_seat = true },
@@ -8,19 +8,19 @@ if string.lower(RequiredScript) == "lib/managers/hud/huddriving" then
 			texture_rect = { 0, 0, 512, 512},
 			texture = "guis/textures/wolfhud/drivinghud/longfellow"
 		},
-		["Falcogini"] = {
+		["vhl_falcogini_name"] = {
 			["driver"] = 				{ scale_x = -0.2, 	scale_y = 0, 		is_seat = true },
 			["passenger_front"] = 		{ scale_x = 0.2, 	scale_y = 0, 		is_seat = true },
 			texture_rect = { 0, 0, 512, 512},
 			texture = "guis/textures/wolfhud/drivinghud/falcogini"
 		},
-		["Forklift"] = {
+		["vhl_forklift_name"] = {
 			["driver"] = 				{ scale_x = 0, 		scale_y = 0.3, 		is_seat = true },
 			["passenger_front"] = 		{ scale_x = 0, 		scale_y = 0.9, 		is_seat = true },
 			texture_rect = { 0, 0, 512, 512},
 			texture = "guis/textures/wolfhud/drivinghud/forklift"
 		},
-		["Truck"] = {
+		["vhl_truck_name"] = {
 			["driver"] = 				{ scale_x = -0.15, 	scale_y = -0.4,		is_seat = true },
 			["passenger_front"] = 		{ scale_x = 0.2, 	scale_y = -0.4,		is_seat = true },
 			["passenger_back_left"] = 	{ scale_x = -0.15, 	scale_y = 1, 		is_seat = true },
@@ -28,7 +28,7 @@ if string.lower(RequiredScript) == "lib/managers/hud/huddriving" then
 			texture_rect = { 0, 0, 512, 512},
 			texture = "guis/textures/wolfhud/drivinghud/truck"
 		},
-		["Rib Boat"] = {
+		["vhl_rib_boat_name"] = {
 			["driver"] = 				{ scale_x = 0, 		scale_y = 1, 		is_seat = true },
 			["passenger_front"] = 		{ scale_x = 0.2, 	scale_y = -0.6, 	is_seat = true },
 			["passenger_back_left"] = 	{ scale_x = -0.2, 	scale_y = -0.1, 	is_seat = true },
@@ -36,7 +36,7 @@ if string.lower(RequiredScript) == "lib/managers/hud/huddriving" then
 			texture_rect = { 0, 0, 512, 512},
 			texture = "guis/textures/wolfhud/drivinghud/boat"
 		},
-		["Blackhawk"] = {
+		["vhl_blackhawk_name"] = {
 			["driver"] = 				{ scale_x = -0.25, 	scale_y = -0.2, 	is_seat = true },
 			["passenger_front"] = 		{ scale_x = 0.25, 	scale_y = -0.2, 	is_seat = true },
 			["passenger_back_left"] = 	{ scale_x = -0.25, 	scale_y = 0.2, 		is_seat = true },
@@ -44,15 +44,21 @@ if string.lower(RequiredScript) == "lib/managers/hud/huddriving" then
 			texture_rect = { 0, 0, 512, 512},
 			texture = "guis/textures/wolfhud/drivinghud/blackhawk"
 		},
-		["Bike"] = {
+		["vhl_bike_name"] = {
 			["driver"] = 				{ scale_x = -0.02, 	scale_y = 0.35, 	is_seat = true },
 			texture_rect = { 0, 0, 512, 512},
 			texture = "guis/textures/wolfhud/drivinghud/bike"
+		},
+		["vhl_golfcart_name"] = {
+			["driver"] = 				{ scale_x = -0.3, 	scale_y = -0.2, 	is_seat = true },
+            ["passenger_front"] = 		{ scale_x = 0.3, 	scale_y = -0.2, 	is_seat = true },
+			texture_rect = { 0, 0, 512, 512},
+			texture = "guis/textures/wolfhud/drivinghud/golfcart"
 		}
 	}
 
 
-	HUDDriving.VEHICLES["Rust's bike"] = deep_clone(HUDDriving.VEHICLES["Bike"])
+	HUDDriving.VEHICLES["vhl_rust_bike_name"] = deep_clone(HUDDriving.VEHICLES["vhl_bike_name"])
 
 	HUDDriving._FONT_SIZE = 24
 	HUDDriving._MARGIN = 5
@@ -188,7 +194,7 @@ if string.lower(RequiredScript) == "lib/managers/hud/huddriving" then
 
 		if self._name ~= name then
 			self._name = name
-			self._vehicle_name:set_value(self._name and string.upper(tostring(self._name)))
+			self._vehicle_name:set_value(managers.localization:to_upper_text(self._name))
 
 			self._vehicle_image:set_vehicle_name(self._name or "Unknown")
 			self._people = 0
@@ -487,9 +493,9 @@ if string.lower(RequiredScript) == "lib/managers/hud/huddriving" then
 		self:_set_image(self._texture, self._texture_rect)
 	end
 
-	function HUDDriving.VehicleImageItem:set_vehicle_name(name)
-		if self._image and self._vehicle_name ~= name then
-			self._vehicle_name = name
+	function HUDDriving.VehicleImageItem:set_vehicle_name(name_id)
+		if self._image and self._vehicle_name ~= name_id then
+			self._vehicle_name = name_id
 			self._vehicle_table = HUDDriving.VEHICLES[self._vehicle_name]
 			if self._vehicle_table then
 				self._texture = self._vehicle_table and self._vehicle_table.texture
@@ -877,7 +883,6 @@ if string.lower(RequiredScript) == "lib/managers/hud/huddriving" then
 	end
 
 elseif string.lower(RequiredScript) == "lib/states/ingamedriving" then
-	CloneClass(IngameDriving)
 
 	function IngameDriving:_number_in_the_vehicle(vehicle_driving)
 		local used, total = 0, 0
@@ -891,17 +896,16 @@ elseif string.lower(RequiredScript) == "lib/states/ingamedriving" then
 	end
 
 	function IngameDriving:_update_driving_hud()
-		local pm_vehicle = managers.player and managers.player:get_vehicle()
-		local vehicle_unit = pm_vehicle and pm_vehicle.vehicle_unit
-		local vehicle = vehicle_unit and vehicle_unit:vehicle()
-		if vehicle and vehicle_unit then
+		if managers.player and managers.player:get_vehicle() and managers.player:get_vehicle().vehicle_unit and managers.player:get_vehicle().vehicle_unit:vehicle() then
+			local vehicle_unit = managers.player:get_vehicle().vehicle_unit
+			local vehicle = vehicle_unit:vehicle()
 			local vehicle_state = vehicle:get_state()
 			local speed = vehicle_state:get_speed() * 3.6
 			local rpm = vehicle_state:get_rpm()
 			local gear = vehicle_state:get_gear() - 1
 			local vehicle_driving = vehicle_unit:vehicle_driving()
 			local no_used_seats, no_total_seats = self:_number_in_the_vehicle(vehicle_driving)
-			local vehicle_name = vehicle_driving._tweak_data.name
+			local vehicle_name = vehicle_driving._tweak_data.name_id
 			local seats_table = vehicle_driving._seats
 			local health_total = math.min(vehicle_unit:character_damage()._current_max_health, 999999999)
 			local health_current = math.clamp(vehicle_unit:character_damage()._health, 0, health_total)
@@ -923,19 +927,22 @@ elseif string.lower(RequiredScript) == "lib/states/ingamedriving" then
 		end
 	end
 
+	local update_original = IngameDriving.update
 	function IngameDriving:update(t, dt)
 		self:_update_driving_hud()
-		self.orig.update(self, t, dt)
+		update_original(self, t, dt)
 	end
 
+	local at_enter_original = IngameDriving.at_enter
 	function IngameDriving.at_enter(self, old_state, ...)
-		self.orig.at_enter(self, old_state, ...)
+		at_enter_original(self, old_state, ...)
 		managers.hud:start_driving()
 	end
 
+	local at_exit_original = IngameDriving.at_exit
 	function IngameDriving:at_exit()
 		managers.hud:stop_driving()
-		self.orig.at_exit(self)
+		at_exit_original(self)
 	end
 elseif string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 	local _setup_player_info_hud_pd2_original = HUDManager._setup_player_info_hud_pd2

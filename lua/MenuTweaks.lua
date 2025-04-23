@@ -106,6 +106,18 @@ if string.lower(RequiredScript) == "lib/managers/menumanager" then
 		
 		return node, unpack(results or {})
 	end
+
+	-- sync infamy level in lobby
+		local function sync_lobby_info()
+		if managers.network and managers.network:session() then
+			local level = managers.experience:current_level()
+			local rank = managers.experience:current_rank()
+			managers.network:session():send_to_peers_loaded("lobby_info", level, rank)
+		end
+	end
+	Hooks:PostHook(MenuCallbackHandler, "_increase_infamous", "infamy_in_lobby_increase_infamous", sync_lobby_info)
+	Hooks:PostHook(MenuCallbackHandler, "_increase_infamous_with_prestige", "infamy_in_lobby_increase_infamous_with_prestige", sync_lobby_info)
+
 elseif string.lower(RequiredScript) == "lib/managers/menu/blackmarketgui" then
 	--Always enable mod mini icons, put ghost icon behind silent weapon names
 	local populate_weapon_category_new_original = BlackMarketGui.populate_weapon_category_new
@@ -935,20 +947,20 @@ elseif string.lower(RequiredScript) == "lib/managers/menumanagerdialogs" then
 		]]
 		close_person_joining_original(self, id, ...)
 	end
-	
--- Simply Lobby code
+
 elseif string.lower(RequiredScript) == "lib/managers/social_hub/lobbycodemenucomponent" then
+-- Simply Lobby code
 	Hooks:PostHook(LobbyCodeMenuComponent, "init", "set_lobbycode_to_top", function(self, ...)
 		self._panel:set_y(73)
 	end)
-	
+
 	Hooks:PostHook(LobbyCodeMenuComponent, "create_hub_panel", "HideCode_UpsideDown", function(self, ...)
 		--lobby code
 		self._lobby_id_text:set_y(25)
 		self._id_text:set_y(25)
 		self._code_hidden_text:set_y(25)
 		
-		--hidecode button
+		--hide code button
 		self._lower_panel:set_y(0)
 		self._hide_code_text:set_y(0)
 		
@@ -958,10 +970,53 @@ elseif string.lower(RequiredScript) == "lib/managers/social_hub/lobbycodemenucom
 		
 		self._code_hider:set_alpha(0) --background blur
 	end)
-	
+
 	Hooks:PostHook(LobbyCodeMenuComponent, "set_code_hidden", "hide_lobbycode", function(self, hidden_state, ...)
 		self._code_hidden_text:set_alpha(not hidden_state)
 		self._lobby_id_text:set_visible(not hidden_state)
 		self._copy_icon:set_visible(not hidden_state)
 	end)
+
+	--disable wheel to click
+	local original_mouse_pressed = LobbyCodeMenuComponent.mouse_pressed
+	function LobbyCodeMenuComponent:mouse_pressed(button, x, y)
+		if button ~= Idstring("0") then
+			return false
+		end
+
+		return original_mouse_pressed(self, button, x, y)
+	end
+
+elseif RequiredScript == "lib/managers/menu/playerinventorygui" then
+-- activate infamy menu
+	local orig_create_box = PlayerInventoryGui.create_box
+	function PlayerInventoryGui:create_box(params)
+		if params.name:match("infamy") then
+			params.alpha = 1
+			params.clbks = {
+				down = false,
+				up = false,
+				right = false,
+				left = callback(self, self, "open_infamy_menu")
+			}
+		end
+
+		return orig_create_box(self, params)
+	end
+
+	local orig_PlayerInventoryGui = PlayerInventoryGui._update_info_infamy
+	function PlayerInventoryGui:_update_info_infamy(name)
+		orig_PlayerInventoryGui(self, name)
+		local rank = managers.infamy:points()
+		local text_string = managers.localization:to_upper_text("menu_infamy_rank", {
+			rank = tostring(managers.experience:current_rank())
+		}) .. "\n"
+
+		text_string = text_string .. "\n" .. managers.localization:to_upper_text("menu_infamy_total_xp", {
+			xpboost = string.format("%0.1f", (managers.player:get_infamy_exp_multiplier() - 1) * 100)
+		}) .. "\n\n" .. managers.localization:text("menu_infamy_help")
+
+		self:set_info_text(text_string)
+	end
+
 end

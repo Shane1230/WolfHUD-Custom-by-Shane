@@ -860,13 +860,13 @@ if string.lower(RequiredScript) == "lib/managers/hud/newhudstatsscreen" then
 		
 		LobbyPlayerInfo._abbreviation_length_v = 3
 		
-		if _G.PD2KR then
+		if _G.PD2KR or WolfHUD:getSetting({"LANGUAGE"}) == "korean" then
 			LobbyPlayerInfo._abbreviation_length_v = 2
 		elseif BLT.Localization._current == 'cht' or BLT.Localization._current == 'zh-cn' then
 			LobbyPlayerInfo._abbreviation_length_v = 2
 		end
 		
-		function LobbyPlayerInfo:GetPerkTextId(perk_id)
+		function LobbyPlayerInfo:GetPerkTextId(perk_id, outfit)
 			if perk_id and tonumber(perk_id) <= #tweak_data.skilltree.specializations then
 				return 'st_spec_' .. tostring(perk_id)
 			else
@@ -877,7 +877,7 @@ if string.lower(RequiredScript) == "lib/managers/hud/newhudstatsscreen" then
 		function LobbyPlayerInfo:GetPerkText(perk_id)
 			return managers.localization:text('menu_' .. self:GetPerkTextId(perk_id))
 		end
-		
+
 		function LobbyPlayerInfo:GetSkillNameLength()
 			if self.settings.skills_layout == 1 then
 				return 1

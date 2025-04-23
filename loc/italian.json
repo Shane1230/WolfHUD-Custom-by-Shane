@@ -172,6 +172,7 @@
     "wolfhud_enemy_bank_manager" : "Direttore della Banca",
     "wolfhud_enemy_dah_ralph" : "Ralph Garnet",
     "wolfhud_enemy_inside_man" : "Infiltrato",
+	"wolfhud_enemy_inside_woman" : "Infiltrato",
     "wolfhud_enemy_escort_undercover" : "Uomo delle Tasse",
     "wolfhud_enemy_escort_heatstreet" : "Matt",
     "wolfhud_enemy_escort_chinese_prisoner" : "Kazo",
@@ -584,12 +585,18 @@
     "wolfhud_hudlist_passive_health_regen_compbuff_desc" : "Oggetto composito buff, mostra il valore aggiuntivo delle abilità di cura passiva.",
     "wolfhud_hudlist_total_dodge_chance_compbuff_title" : "Probabilità di Dodge Totale",
     "wolfhud_hudlist_total_dodge_chance_compbuff_desc" : "Oggetto composito buff, mostra il valore aggiuntivo delle abilità di dodge.",
+	"wolfhud_hudlist_weapon_charge_title" : "Weapon Charge Time",
+	"wolfhud_hudlist_weapon_charge_desc" : "Show Charge Time for Bow in buff list",
+	"wolfhud_hudlist_melee_charge_title" : "Melee Charge Time",
+	"wolfhud_hudlist_melee_charge_desc" : "Show melee charge time in buff list",
+	"wolfhud_hudlist_reload_time_title" : "Reload Time",
+	"wolfhud_hudlist_reload_time_desc" : "Show reload time in buff list",
     "wolfhud_hudlist_aggressive_reload_aced_buff_title" : "Ricarica Aggressiva",
     "wolfhud_hudlist_aggressive_reload_aced_buff_desc" : "",
     "wolfhud_hudlist_ammo_efficiency_buff_title" : "Efficienza Munizioni",
     "wolfhud_hudlist_ammo_efficiency_buff_desc" : "",
-    "wolfhud_hudlist_armor_break_invulnerable_buff_title" : "Blitzkrieg Bop (Anarchico)",
-    "wolfhud_hudlist_armor_break_invulnerable_buff_desc" : "",
+    "wolfhud_hudlist_armor_break_invulnerable_buff_title" : "Armor Break Invulnerability time",
+	"wolfhud_hudlist_armor_break_invulnerable_buff_desc" : "Anarchist, Armorer",
     "wolfhud_hudlist_berserker_buff_title" : "Berserker",
     "wolfhud_hudlist_berserker_buff_desc" : "Parte di Buff composti.",
     "wolfhud_hudlist_biker_buff_title" : "Debuff Rigen (Motociclista)",
@@ -888,11 +895,17 @@
     "wolfhud_hold_to_pick_title" : "Raccoglimento automatico",
     "wolfhud_hold_to_pick_desc" : "Bottini piccoli verranno raccolti automaticamente, mentre tieni premuto il tasto di interazione.",
  
-	"wolfhud_perkdeck_sfx_options_name" : "Perkdeck SFX",
+	"wolfhud_perkdeck_sfx_options_name" : "Perkdeck SFX Option",
 	"wolfhud_perkdeck_sfx_options_help" : "perkdeck sound effect.",
-
 	"wolfhud_copycat_invul_sfx_title" : "Copycat Invulnerability",
 	"wolfhud_copycat_invul_sfx_desc" : "Add perkdeck 'cooldown over' sound.",
+
+	"wolfhud_rich_presence_name" : "Steam Rich Presence Option",
+	"wolfhud_rich_presence_help" : "Setting Steam Rish Presence.",
+	"wolfhud_custom_rich_presence_title" : "Custom Rich Presence",
+	"wolfhud_custom_rich_presence_desc" : "Enable Custom Rich Presence.\n Display more information with readable, but show up only english for other players.",
+	"wolfhud_real_private_title" : "hide rich prisence in private room",
+	"wolfhud_real_private_desc" : "Do not show up rish presence in private room instead 'private'.",
 
     "wolfhud_inventory_options_name" : "Opzioni di miglioramento dell'inventario",
     "wolfhud_inventory_options_help" : "Opzioni per cambiare la visualizzazione del tuo inventario e alterare il comportamento del tuo equipaggiamento nello stesso.",
@@ -915,6 +928,8 @@
  
     "wolfhud_laser_autoon_title" : "Laser Attivo Automaticamente",
     "wolfhud_laser_autoon_desc" : "Accende automaticamente il laser appena si tira fuori l'arma, sulle armi che lo hanno montato.",
+	"wolfhud_no_red_laser_title" : "Disable Players Red Lasers",
+	"wolfhud_no_red_laser_desc" : "Change player's red laser to default color.",
     "wolfhud_show_angeled_sight_title" : "Mostra Mirino Angolato",
     "wolfhud_show_angeled_sight_desc" : "Gira leggermente l'arma nelle tue mani, mentre il mirino angolato è attivo.",
  
@@ -1024,6 +1039,9 @@
 	"wolfhud_restore_player_dot_title" : "Restore old Player dot",
 	"wolfhud_restore_player_dot_desc" : "Restoration player dot indicator with down counter",
 	
+	"wolfhud_etc_options_name" : "ETC Option Menu",
+	"wolfhud_etc_options_help" : "No category option menu.",
+
 	"lpi_packet_loss" : "packet loss",
 	"menu_lpi_fake_deck" : "Fake deck",
 }
