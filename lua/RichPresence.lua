@@ -40,13 +40,18 @@ if WolfHUD:getSetting({"ETC", "Rich_Presence", "CUSTOM_RICH_PRESENCE"}, true) th
 							group_max = tostring(_G.tweak_data.max_players)
 						end
 
+						local num_players = managers.network:session():amount_of_alive_players()
+
+					
 						-- Determine game state
 						if _G.game_state_machine and (_G.game_state_machine:current_state_name() == "menu_main" or _G.game_state_machine:current_state_name() == "ingame_lobby_menu") then
 							game_state = "lobby"
 						elseif self._current_rich_presence == "SPEnd" or self._current_rich_presence == "MPEnd" then
 							game_state = "payday"
-						else
+						elseif num_players > 0 then
 							game_state = "playing"
+						else
+							game_state = "preplanning"
 						end
 
 						-- Popululate gamemode, heist and difficulty
@@ -129,22 +134,26 @@ if WolfHUD:getSetting({"ETC", "Rich_Presence", "CUSTOM_RICH_PRESENCE"}, true) th
 		end
 
 		function WinPlatformManager:build_status_string(display, state, mode, heist, day, peercount, maxpeer, difficulty)
+			local ONE_DOWN_MOD = Global.game_settings.one_down and ", OD" or ""
+			local PLAYER_SEPARATOR = Global.game_settings.single_player and "" or "/"
+
 			local tokens = {
 				["#raw_status"] =				"{#State_%game:state%}",
 
 				-- Game states
 				["#State_menu"] =				"At the main menu",
 				["#State_private"] =			"In a private lobby",
-				["#State_lobby_no_job"] =		"In a lobby %steam_player_group_size%/%max_peers%",
+				["#State_lobby_no_job"] =		"In a lobby %steam_player_group_size%"..PLAYER_SEPARATOR.."%max_peers%",
 				["#State_lobby"] =				"Lobby: {#Mode_%game:mode%}",
 				["#State_playing"] =			"Playing: {#Mode_%game:mode%}",
+				["#State_preplanning"] =		"Briefing: {#Mode_%game:mode%}",
 				["#State_payday"] =				"Payday: {#Mode_%game:mode%}",
 
 				-- Game modes
-				["#Mode_crime_spree"] =			"[CS] {#Level_%game:heist%} %steam_player_group_size%/%max_peers% (Lvl. %game:difficulty%)",
-				["#Mode_skirmish"] =			"[HO] {#Level_%game:heist%} %steam_player_group_size%/%max_peers% (Wave %game:difficulty%)",
-				["#Mode_heist"] =				"{#Job_%game:heist%} %steam_player_group_size%/%max_peers% ({#Difficulty_%game:difficulty%})",
-				["#Mode_heist_chain"] =			"{#Job_%game:heist%}, Day:%game:heist_day% %steam_player_group_size%/%max_peers% ({#Difficulty_%game:difficulty%})",
+				["#Mode_crime_spree"] =			"[CS] {#Level_%game:heist%} %steam_player_group_size%"..PLAYER_SEPARATOR.."%max_peers% (Lvl. %game:difficulty%)",
+				["#Mode_skirmish"] =			"[HO] {#Level_%game:heist%} %steam_player_group_size%"..PLAYER_SEPARATOR.."%max_peers% (Wave %game:difficulty%)",
+				["#Mode_heist"] =				"{#Job_%game:heist%} %steam_player_group_size%"..PLAYER_SEPARATOR.."%max_peers% ({#Difficulty_%game:difficulty%}"..ONE_DOWN_MOD..")",
+				["#Mode_heist_chain"] =			"{#Job_%game:heist%}-Day%game:heist_day%, %steam_player_group_size%"..PLAYER_SEPARATOR.."%max_peers% ({#Difficulty_%game:difficulty%}"..ONE_DOWN_MOD..")",
 
 				-- Difficulties
 				["#Difficulty_easy"] =			"EASY",
@@ -424,6 +433,8 @@ if WolfHUD:getSetting({"ETC", "Rich_Presence", "CUSTOM_RICH_PRESENCE"}, true) th
 				["#Level_hidden_vault"] =			"Hidden Vault",
 				["#Job_Zdann_Enemy_Spawner"] =		"Enemy Spawner",
 				["#Level_Zdann_Enemy_Spawner"] =	"Enemy Spawner",
+				["#Job_rushing_saw_practice_narr"] =	"Saw Practice Big Bank",
+				["#Level_rushing_saw_practice_narr"] =	"Saw Practice Big Bank",
 			}
 
 			local data = {
@@ -480,6 +491,10 @@ if WolfHUD:getSetting({"ETC", "Rich_Presence", "CUSTOM_RICH_PRESENCE"}, true) th
 				end
 			end
 		end
+		
+		Hooks:PostHook(SkirmishManager, "sync_start_assault", "refresh_holdout_wave", function()
+			managers.platform:refresh_rich_presence_state()
+		end)
 	end
 
 	if Hooks then	-- Basegame doesn't update RP on peer count changes...

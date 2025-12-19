@@ -101,7 +101,7 @@ if string.lower(RequiredScript) == "lib/managers/hudmanager" then
 			self._bar_text_rect = self._shield and self._shield_text_rect or self._health_text_rect
 		end
 
-		if visible == true and not self._unit_health_visible and WolfHUD:getSetting({"EnemyHealthbar", "ENABLED_ALT"}, true) then
+		if visible == true and not self._unit_health_visible and WolfHUD:getSetting({"EnemyHealthbar", "ENABLED"}, true) then
 
 			self._unit_health_visible = true
 			self._unit_health_enemy_location:set_visible(WolfHUD:getSetting({"EnemyHealthbar", "SHOW_POINTER"}, false))
@@ -132,7 +132,7 @@ if string.lower(RequiredScript) == "lib/managers/hudmanager" then
 			end )
 		end
 		
-		--[[if WolfHUD:getSetting({"EnemyHealthbar", "ENABLED_ALT"}, true) then
+		--[[if WolfHUD:getSetting({"EnemyHealthbar", "ENABLED"}, true) then
 		    managers.hud:set_enemy_health_visible(false)
 		end		--]]
 	end
@@ -200,10 +200,10 @@ elseif string.lower(RequiredScript) == "lib/units/beings/player/states/playersta
 				unit = unit:parent()
 			end
 			
-			if WolfHUD:getSetting({"EnemyHealthbar", "IGNORE_CIVILIAN_HEALTH"}, true) and managers.enemy:is_civilian(unit) then
+			if not WolfHUD:getSetting({"EnemyHealthbar", "SHOW_CIVILIAN_HEALTH"}, true) and managers.enemy:is_civilian(unit) then
 				return
 			end
-			if WolfHUD:getSetting({"EnemyHealthbar", "IGNORE_TEAM_AI_HEALTH"}, true) and unit:in_slot(16) then
+			if not WolfHUD:getSetting({"EnemyHealthbar", "SHOW_TEAM_AI_HEALTH"}, true) and unit:in_slot(16) then
 				return
 			end
 			

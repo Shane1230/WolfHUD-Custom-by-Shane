@@ -38,7 +38,7 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 						for _, peer in ipairs(session:peers()) do
 							local is_friend = false
 							for _, friend in ipairs(friends_list) do
-								if friend:id() == peer:user_id() then
+								if friend:id() == peer:account_id() then
 									is_friend = true
 									break
 								end
@@ -126,7 +126,7 @@ elseif string.lower(RequiredScript) == "lib/managers/menu/menunodegui" then
 		Hooks:PostHook( MenuNodeMainGui , "_add_version_string" , "MenuNodeMainGuiPostAddVersionString_WolfHUD" , function( self )
 			if alive(self._version_string) then
 				self._version_string:set_text("Payday 2 v" .. Application:version() .. " | WolfHUD Custom by Shane v" .. WolfHUD:getVersion())
-				self._version_string:set_y(-45)
+				--self._version_string:set_y(-45)
 			end
 		end)
 	end

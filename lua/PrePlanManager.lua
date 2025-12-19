@@ -3,7 +3,7 @@
 -- 	Include Hint for taging plans as stealth/loud to input dialog
 -- Remove Save_ID from saved_plans node display.
 
-requiredScript = string.lower(RequiredScript)
+local requiredScript = string.lower(RequiredScript)
 if requiredScript == "lib/managers/menumanager" then
 	local modifiy_node_preplanning_original = MenuPrePlanningInitiator.modifiy_node_preplanning
 
@@ -243,7 +243,7 @@ elseif requiredScript == "lib/managers/preplanningmanager" then
 		PrePlanningManager._SAVED_PLANS = nil
 		PrePlanningManager.saved_plans_node = "preplanning_saved_plans"
 		PrePlanningManager._PREPLANNING_DELETE_MODE = false
-		PrePlanningManager._PREPLANNING_MAX_PLANS = WolfHUD and WolfHUD:getTweakEntry("MAX_PRE_PLANS", "number", 10) or 10
+		PrePlanningManager._PREPLANNING_MAX_PLANS = 10
 		PrePlanningManager._DEFAULT_PLAN_NAMES = { "Alfa", "Bravo", "Charlie", "Delta", "Echo", "Foxtrott", "Golf", "Hotel", "India", "Juliett", "Kilo", "Lima", "Mike", "November", "Oscar"}
 		PrePlanningManager._LEVEL_ID_SUB = { "_night", "_day" }
 		PrePlanningManager._LEVEL_ID_OVERWRITES = { gallery = "framing_frame_1", firestarter_3 = "branchbank" }
@@ -293,7 +293,6 @@ elseif requiredScript == "lib/managers/preplanningmanager" then
 
 		function PrePlanningManager.save_plans()
 			if not WolfHUD:DirectoryExists(PrePlanningManager._SAVE_FOLDER) then
-				WolfHUD:print_log("Preplanned folder '%s' is missing!", PrePlanningManager._SAVE_FOLDER, "warning")
 				if not WolfHUD:createDirectory(PrePlanningManager._SAVE_FOLDER) then
 					managers.preplanning:notify_user("wolfhud_preplanning_msg_folder_creation_failed", { FOLDER = PrePlanningManager._SAVE_FOLDER }, true)
 				end
@@ -370,8 +369,6 @@ elseif requiredScript == "lib/managers/preplanningmanager" then
 			local peer_id = managers.network and managers.network:session():local_peer():id()
 
 			local bought_assets = self._reserved_mission_elements
-			local votes = self:get_player_votes(peer_id) or {}
-			local default_votes = self:get_default_votes() or {}
 			local saved_assets, saved_votes = {}, {}
 
 			for element_id, mission_element in pairs(bought_assets) do
@@ -381,11 +378,14 @@ elseif requiredScript == "lib/managers/preplanningmanager" then
 				end
 			end
 
-			for plan, data in pairs(default_votes) do
-				local type, index = votes[plan] and unpack(votes[plan] or {})
-				local default_type, default_index = unpack(data)
-				table.insert(saved_votes, { id = self:get_mission_element_id(element_type, element_index), type = type or default_type, index = index or default_index })
+			local winners = self:get_current_majority_votes()
+			if winners then
+				for plan, data in pairs(winners) do
+					local type, index = unpack(data)
+					table.insert(saved_votes, { id = self:get_mission_element_id(type, index), type = type, index = index })
+				end
 			end
+
 
 			local preplanning_data = {
 				assets = #saved_assets > 0 and saved_assets or nil,
@@ -406,52 +406,36 @@ elseif requiredScript == "lib/managers/preplanningmanager" then
 			local saved_assets = PrePlanningManager._SAVED_PLANS[name].assets or {}
 			local saved_votes = PrePlanningManager._SAVED_PLANS[name].votes or {}
 
-			local missing_skill, missing_favours, missing_money, something_loaded = false, false, false, false
-			local peer_id = managers.network:session():local_peer():id()
 			for i, data in ipairs(saved_assets) do
-				local id = data.id or self:get_mission_element_id(data.type, data.index)
-				if not self:get_reserved_mission_element(id) then
-					local lockData = tweak_data:get_raw_value("preplanning", "types", data.type, "upgrade_lock") or false
-					if not lockData or managers.player:has_category_upgrade(lockData.category, lockData.upgrade) then
-						local available, err_code = self:can_reserve_mission_element(data.type, peer_id)
-						if available then
-							self:reserve_mission_element(data.type, id)
-                            something_loaded = true
-						elseif err_code == 1 then
-							missing_money = true
-						elseif err_code == 2 then
-							missing_favours = true
-						end
-					else
-						missing_skill = true
+				local td = managers.preplanning:get_tweak_data_by_type(data.type)
+				local can_unlock = managers.preplanning:can_reserve_mission_element(data.type)
+
+				if td.dlc_lock then
+					can_unlock = can_unlock and managers.dlc:is_dlc_unlocked(td.dlc_lock)
+				end
+
+				if td.upgrade_lock then
+					can_unlock = can_unlock and managers.player:has_category_upgrade(td.upgrade_lock.category, td.upgrade_lock.upgrade)
+				end
+
+				if can_unlock then
+					managers.preplanning:reserve_mission_element(data.type, data.id)
+				end
+			end
+
+			if #saved_votes > 0 and saved_votes[1].id == nil then -- check old plan format
+				for i, data in ipairs(saved_votes) do
+					local id = data.id or self:get_mission_element_id(data.type, data.index)
+					self:vote_on_plan(data.type, id)
+				end
+				managers.preplanning:notify_user("wolfhud_preplanning_msg_loaded_old_format", {}, true)
+				
+			else
+				for i, data in ipairs(saved_votes) do
+					if managers.preplanning:can_vote_on_plan(data.type, managers.network:session():local_peer():id()) then
+						managers.preplanning:mass_vote_on_plan(data.type, data.id)
 					end
-				else
-					-- Asset already unlocked
-                    something_loaded = true
 				end
-			end
-
-			for i, data in ipairs(saved_votes) do
-				local id = data.id or self:get_mission_element_id(data.type, data.index)
-				self:vote_on_plan(data.type, id)
-			end
-
-			if something_loaded and not (missing_skill or missing_favours or missing_money) then
-				managers.preplanning:notify_user("wolfhud_preplanning_msg_loaded_success", {}, false)
-			elseif something_loaded then
-				local error_msg = ""
-				if missing_skill then
-					error_msg = managers.localization:text("wolfhud_preplanning_msg_loaded_missing_skill")
-				end
-				if missing_favours then
-					error_msg = string.format("%s%s %s", error_msg, (missing_skill and ";" or ""), managers.localization:text("wolfhud_preplanning_msg_loaded_missing_favours"))
-				end
-				if missing_money then
-					error_msg = string.format("%s%s %s", error_msg, ((missing_skill or missing_favours) and ";" or ""), managers.localization:text("wolfhud_preplanning_msg_loaded_missing_money"))
-				end
-				managers.preplanning:notify_user("wolfhud_preplanning_msg_loaded_partitially", {ERRORMSG = error_msg}, true)
-            else
-				managers.preplanning:notify_user("wolfhud_preplanning_msg_loaded_failed", {}, true)
 			end
 		end
 	end
@@ -594,7 +578,7 @@ elseif requiredScript == "lib/managers/preplanningmanager" then
 					local plan_data = tweak_data and tweak_data.preplanning.types[data.type]
 					local plan_name = plan_data and plan_data.name_id and managers.localization:text(plan_data.name_id) or ""
 					text = string.format("%s - %s", text, plan_name)
-					local element = self._mission_elements_by_type[element_type] and self._mission_elements_by_type[data.type][data.index]
+					local element = self._mission_elements_by_type[data.type] and self._mission_elements_by_type[data.type][data.index]
 					local element_name = element and self:get_element_name(element)
 					if element_name and not element_name:lower():find("error") and not plan_data.pos_not_important then
 						text = string.format("%s (%s)\n", text, element_name)

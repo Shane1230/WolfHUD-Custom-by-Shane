@@ -560,8 +560,8 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		copycat_health_invul = { "copycat_health_invul", "damage_reduction" },
 		copycat_health_invul_passive = { "copycat_health_invul_passive", "damage_reduction" },
 		copycat_health_shot = { "copycat_health_shot" },
-		copycat_primary_kill = { "copycat_primary_kill" },
-		copycat_secondary_kill = { "copycat_secondary_kill" },
+		copycat_primary_kills = { "copycat_primary_kills" },
+		copycat_secondary_kills = { "copycat_secondary_kills" },
 		maniac = { "maniac", "damage_reduction" },
 		melee_stack_damage = { "melee_stack_damage", "melee_damage_increase" },
 		movement_dodge = { "total_dodge_chance" },
@@ -3196,26 +3196,26 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 	HUDList.LootItem.MAP = {
 		aggregate =		{ text = "", no_localize = true },	--Aggregated loot
 
-		armor =			{ text = "wolfhud_hudlist_loot_armor", 		priority = 1 }, -- Shaddow Raid
-		artifact =		{ text = "hud_carry_artifact", 				priority = 1 },	-- Schaddow Raid, The Diamond
+		armor =			{ text = "wolfhud_hudlist_loot_armor", 		priority = 1 }, -- Shadow Raid
+		artifact =		{ text = "wolfhud_hudlist_loot_artifact", 	priority = 1 },	-- Shadow Raid, The Diamond
 		bike = 			{ text = "hud_carry_bike_part", 			priority = 1 },	-- Biker Heist
 		bomb =			{ text = "wolfhud_hudlist_loot_bomb", 		priority = 1 },	-- Bomb Forest & Dockyard, Murky Station EMP
 		coke =			{ text = "hud_carry_coke", 					priority = 1 },
 		dentist =		{ text = "???", no_localize = true, 		priority = 1 },	-- Golden Grin
 		diamond = 		{ text = "wolfhud_hudlist_loot_diamond", 	priority = 1 },	-- The Diamond/Diamond Heist Red Diamond
-		diamonds =		{ text = "hud_carry_diamonds_dah", 			priority = 1 },	-- The Diamond Heist
+		diamonds =		{ text = "wolfhud_hudlist_loot_diamonds", 	priority = 1 },	-- The Diamond Heist
 		drone_ctrl = 	{ text = "hud_carry_helmet", 				priority = 1 },	-- Biker Heist
 		egg = 			{ text = "wolfhud_hudlist_loot_egg", 		priority = 1 },	-- San Martin Bank
 		evidence =		{ text = "wolfhud_hudlist_loot_evidence", 	priority = 1 },	-- Hoxton revenge
 		goat =			{ text = "hud_carry_goat", 					priority = 1 },	-- Goat Simulator
 		gold =			{ text = "hud_carry_gold", 					priority = 1 },
 		jewelry =		{ text = "hud_carry_diamonds", 				priority = 1 },
-		meth =			{ text = "hud_carry_meth", 					priority = 1 },
+		meth =			{ text = "wolfhud_hudlist_loot_meth", 		priority = 1 },
 		money =			{ text = "hud_carry_money", 				priority = 1 },
 		painting =		{ text = "hud_carry_painting", 				priority = 1 },
 		pig =			{ text = "hud_carry_pig", 					priority = 1 },	-- Slaugtherhouse
 		present =		{ text = "hud_carry_present", 				priority = 1 },	-- Santa's Workshop
-		prototype =		{ text = "hud_carry_prototype", 			priority = 1 },
+		prototype =		{ text = "wolfhud_hudlist_loot_prototype", 	priority = 1 },
 		safe =			{ text = "hud_carry_safe", 					priority = 1 },	-- Aftershock
 		server =		{ text = "hud_carry_circuit", 				priority = 1 },
 		shell =			{ text = "hud_carry_ammo", 					priority = 1 },	-- Transport: Train
@@ -3256,6 +3256,17 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		self._icon:set_center(self._panel:center())
 		self._icon:set_top(self._panel:top())
 
+		--[[local long_loot_names = {
+			artifact		 	= "wolfhud_hdlist_loot_long_artifact",
+			meth 				= "wolfhud_hdlist_loot_long_meth",
+			prototype 			= "wolfhud_hdlist_loot_long_prototype",
+			diamond, diamonds	= "wolfhud_hdlist_loot_long_diamond",
+		}
+
+		if loot_data.text then
+			if WolfHUD:getSetting({"LANGUAGE"}) == "korean" and long_loot_names[id] then
+				loot_data.text = long_loot_names[id]
+			end--]]
 		if loot_data.text then
 			local txt = loot_data.no_localize and loot_data.text or managers.localization:text(loot_data.text)
 
@@ -4469,9 +4480,9 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		local enabled, size_mult = HUDList.PagerItem.super.rescale(self, new_scale)
 
 		if enabled then
-			self._timer_text:sei_size(self._panel:w(), self._panel:h() * 0.6)
+			self._timer_text:set_size(self._panel:w(), self._panel:h() * 0.6)
 
-			self._distance_text:sei_size(self._panel:w() * 0.65, self._panel:h() * 0.4)
+			self._distance_text:set_size(self._panel:w() * 0.65, self._panel:h() * 0.4)
 			self._distance_text:set_y(self._timer_text:bottom())
 
 			self._direction_icon:set_size(self._panel:h() * 0.3, self._panel:h() * 0.2)

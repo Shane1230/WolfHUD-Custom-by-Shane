@@ -1,5 +1,4 @@
 {
-	"menu_jowi" : "Wick",
 	"menu_risk_elite" : "Todeswunsch. Ungeheuer viel ERF und Bargeld.",
 	"menu_difficulty_apocalypse" : "Todeswunsch",
 	"hud_int_hold_grab_the_bag" : "Halte $INTERACT um $BAG zu nehmen",
@@ -114,6 +113,10 @@
 	"wolfhud_hudlist_loot_egg" : "Ei",
 	"wolfhud_hudlist_loot_treasure" : "Schatz",
 	"wolfhud_hudlist_showcase" : "Vitrine",
+	"wolfhud_hudlist_loot_artifact" : "Artefakt",
+	"wolfhud_hudlist_loot_meth" : "Meth",
+	"wolfhud_hudlist_loot_prototype" : "Prototyp",
+	"wolfhud_hudlist_loot_diamonds" : "Diamanten",
 
 	"wolfhud_hudlist_buff_basic" : "Basic",
 	"wolfhud_hudlist_buff_aced" : "Aced",
@@ -784,6 +787,8 @@
 	"wolfhud_tabstats_clock_mode_a" : "12-h",
 	"wolfhud_tabstats_clock_mode_b" : "24-h",
 	"wolfhud_tabstats_clock_mode_c" : "Raub Dauer",
+	"wolfhud_tabstats_lip_skills_title" : "Show Crew Skills (LIP Style)",
+	"wolfhud_tabstats_lip_skills_desc" : "Display teammate skills like 'Lobby Player Info' style on right Tabscreen.\nIf you want to change the teammate equipment display on the left side, Please go to '$wolfhud_crewloadout_options_name'.",
 	"wolfhud_use_tabstats_title" : "Benutze TabStats",
 	"wolfhud_use_tabstats_desc" : "Zeige deine Statistiken auf dem Tab Panel, anstatt der Missionseinführung.\n(Wird erst beim Mapwechsel aktiv...)",
 	"wolfhud_tabstats_font_size_title" : "Schriftgröße der Liste",
@@ -862,8 +867,10 @@
 
 	"wolfhud_show_enemyhealthbar_title" : "Zeige Gegner Lebensanzeige",
 	"wolfhud_show_enemyhealthbar_desc" : "Zeige Gegner Lebensanzeige oben in der Mitte, wenn du auf einen Gegner zielst.\n(Wird erst beim Mapwechsel aktiv...)",
-	"wolfhud_show_civhealthbar_title" : "Zivilisten Lebensanzeige",
-	"wolfhud_show_civhealthbar_desc" : "Zeige Lebensanzeige für Zivilisten und Bots.",
+	"wolfhud_show_civhealthbar_title" : "Civilian Healthbar",
+	"wolfhud_show_civhealthbar_desc" : "Show Healthbar for Civilians.",
+	"wolfhud_show_teamaihealthbar_title" : "TeamAI Healthbar",
+	"wolfhud_show_teamaihealthbar_desc" : "Show Healthbar for TeamAI.",
 	"wolfhud_show_carhealthbar_title" : "Zeige Fahrzeug Lebensanzeige",
 	"wolfhud_show_carhealthbar_desc" : "Zeige Lebensanzeige für fahrbare Fahrzeuge.",
 	"wolfhud_show_healthbar_pointer_title" : "Zeige Pfeil",

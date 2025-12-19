@@ -637,11 +637,18 @@ function LoadoutImageItem:get_outfit_data(type, id)
 
 	local rarity_texture
 	if type == "weapon_skin" then
-		local rarity = tweak_entry[type][id] and tweak_entry[type][id].rarity
-		rarity_texture = tweak_data.economy.rarities[rarity] and tweak_data.economy.rarities[rarity].bg_texture
+		local skin = tweak_entry.weapon_skin[id]
+		if skin and skin.weapon_id then
+			texture, rarity_texture = managers.blackmarket:get_weapon_icon_path(skin.weapon_id, {id = id})
+			id = skin.weapon_id
+			type = "weapon"
+		else
+			local rarity = tweak_entry[type][id] and tweak_entry[type][id].rarity
+			rarity_texture = tweak_data.economy.rarities[rarity] and tweak_data.economy.rarities[rarity].bg_texture
 
-		id = tweak_entry[type][id] and tweak_entry[type][id].weapon_id or id
-		type = "weapon"
+			id = tweak_entry[type][id] and tweak_entry[type][id].weapon_id or id
+			type = "weapon"
+		end
 	end
 
 	local name_id = tweak_entry[type][id] and tweak_entry[type][id].name_id or tostring(id)
@@ -661,7 +668,7 @@ end
 
 function LoadoutNameItem:set_outfit(outfit)
 	local peer = self._owner:get_peer()
-	local peer_uid = peer and peer:user_id()
+	local peer_uid = peer and peer:account_id()
 	if peer_uid then
 		self:set_enabled("peer", true)
 		if peer_uid ~= self._loadout then
@@ -688,7 +695,7 @@ LoadoutLevelItem = LoadoutLevelItem or class(LoadoutTextItem)
 
 function LoadoutLevelItem:set_outfit(outfit)
 	local peer = self._owner:get_peer()
-	local peer_uid = peer and peer:user_id()
+	local peer_uid = peer and peer:account_id()
 	if peer_uid then
 		self:set_enabled("peer", true)
 		if peer_uid ~= self._loadout then
@@ -805,46 +812,52 @@ end
 LoadoutPlaytimeItem = LoadoutPlaytimeItem or class(LoadoutTextItem)
 
 function LoadoutPlaytimeItem:set_outfit(outfit)
-	local peer = self._owner:get_peer()
-	local steam_id = peer and tostring(peer:user_id())
-	if steam_id then
-		self:set_enabled("peer", true)
-		if steam_id ~= self._loadout then
-			self._loadout = steam_id
+    local peer = self._owner:get_peer()
+    local steam_id = peer and tostring(peer:account_id())
+    if steam_id then
+        self:set_enabled("peer", true)
+        if steam_id ~= self._loadout then
+            self._loadout = steam_id
 
-			self:set_text("...")
-			self:arrange()
+            self:set_text("...")
+            self:arrange()
 
-			--local profile_url = string.format("http://steamcommunity.com/profiles/%s/?xml=1", tostring(steam_id))
-			local all_games_url = string.format("http://steamcommunity.com/profiles/%s/games/?xml=1", tostring(steam_id))
-			Steam:http_request(all_games_url, callback(self, self, "set_playtime_clbk"))
-		end
-	else
-		self:set_enabled("peer", false)
-	end
+            local url = "http://steamcommunity.com/profiles/" .. steam_id .. "/?l=english"
+            dohttpreq(url, callback(self, self, "set_playtime_clbk"))
+        end
+    else
+        self:set_enabled("peer", false)
+    end
 end
 
-function LoadoutPlaytimeItem:set_playtime_clbk(success, page)
-	local text = "No Data."
-	if success then
-		local _, gameStart = page:find("<appID>218620</appID>", 1, false)	--"/app/218620" (alt. for profile_url)
-		if gameStart then
-			local _, hoursStart = page:find("<hoursOnRecord>", gameStart, false)
-			local hoursEnd, _ = page:find("</hoursOnRecord>", hoursStart, false)
-			if hoursStart and hoursEnd and ((hoursEnd - hoursStart) > 2) then
-				local playtime = page:sub(hoursStart + 1, hoursEnd - 1)
-				text = managers.localization:text("wolfhud_loadout_hours_played", { HOURS = playtime })
-			end
-		else
-			if page:find("This profile is private.", 1, false) then
-				text = "Private."
-			else
-				text = "No Game."
-			end
-		end
-	end
-	self:set_text(text)
-	self:arrange()
+function LoadoutPlaytimeItem:set_playtime_clbk(page)
+    local text = "No Data"
+    local hours
+
+    if page then
+        local app_pos = page:find("app/218620")
+        if app_pos then
+            local pattern = "([%d,%.]+)%s+hrs on record"
+            hours = page:match(pattern, app_pos)
+            if hours then
+                hours = hours:gsub(",", "")
+                text = managers.localization:text("wolfhud_loadout_hours_played", {
+                    HOURS = tostring(math.floor(tonumber(hours)))
+                })
+            else
+                text = "No Hours Found."
+            end
+        elseif page:find("profile_private_info") then
+            text = "Private"
+        elseif page:find("store.steampowered.com") then
+            text = "Hidden"
+        end
+    else
+        text = "Request Failed"
+    end
+
+    self:set_text(text)
+    self:arrange()
 end
 
 LoadoutCharacterItem = LoadoutCharacterItem or class(LoadoutTextItem)

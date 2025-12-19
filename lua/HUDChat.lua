@@ -543,7 +543,7 @@ if RequiredScript == "lib/managers/hud/hudchat" then
 			text:set_selection(n, n)
 		elseif self._key_pressed == Idstring("home") then
 			text:set_selection(0, 0)
-		elseif k == Idstring("enter") then
+		elseif k == Idstring("enter") or k == Idstring("num enter") then
 			if type(self._enter_callback) ~= "number" then
 				self._enter_callback()
 			end

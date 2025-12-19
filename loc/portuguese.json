@@ -1,5 +1,4 @@
 {
-	"menu_jowi" : "Wick",
 	"hud_int_hold_grab_the_bag" : "Segure $INTERACT para pegar a bag de $BAG",
 
 	"wolfhud_dialog_force_start_title" : "Forçar início de jogo?",
@@ -112,6 +111,10 @@
 	"wolfhud_hudlist_loot_egg" : "Egg",
 	"wolfhud_hudlist_loot_treasure" : "Treasure",
 	"wolfhud_hudlist_showcase" : "Mostruário",
+	"wolfhud_hudlist_loot_artifact" : "Artefato",
+	"wolfhud_hudlist_loot_meth" : "Metanfetamina",
+	"wolfhud_hudlist_loot_prototype" : "Protótipo",
+	"wolfhud_hudlist_loot_diamonds" : "Diamantes",
 
 	"wolfhud_hudlist_buff_basic" : "Basic",
 	"wolfhud_hudlist_buff_aced" : "Aced",
@@ -771,6 +774,8 @@
 	"wolfhud_tabstats_clock_mode_a" : "12-h",
 	"wolfhud_tabstats_clock_mode_b" : "24-h",
 	"wolfhud_tabstats_clock_mode_c" : "Tempo do assalto",
+	"wolfhud_tabstats_lip_skills_title" : "Show Crew Skills (LIP Style)",
+	"wolfhud_tabstats_lip_skills_desc" : "Display teammate skills like 'Lobby Player Info' style on right Tabscreen.\nIf you want to change the teammate equipment display on the left side, Please go to '$wolfhud_crewloadout_options_name'.",
 	"wolfhud_use_tabstats_title" : "Usar TabStats",
 	"wolfhud_use_tabstats_desc" : "Mostra suas estatísticas na tela de inventário estendido, em vez do sumário da missão.\n(Uma mudança de mapa é necessária para aplicar...)",
 	"wolfhud_tabstats_font_size_title" : "Tamanho da fonte da lista",
@@ -849,8 +854,10 @@
 
 	"wolfhud_show_enemyhealthbar_title" : "Mostrar barra de vida do inimigo",
 	"wolfhud_show_enemyhealthbar_desc" : "Exibe uma barra de vida no centro da tela, ao almejar um inimigo.\n(Uma mudança de mapa é necessária para aplicar...)",
-	"wolfhud_show_civhealthbar_title" : "Barra de vida dos civis",
-	"wolfhud_show_civhealthbar_desc" : "Também mostra uma barra de vida para os civis e a IA aliada.",
+	"wolfhud_show_civhealthbar_title" : "Civilian Healthbar",
+	"wolfhud_show_civhealthbar_desc" : "Show Healthbar for Civilians.",
+	"wolfhud_show_teamaihealthbar_title" : "TeamAI Healthbar",
+	"wolfhud_show_teamaihealthbar_desc" : "Show Healthbar for TeamAI.",
 	"wolfhud_show_carhealthbar_title" : "Mostrar barra de vida dos veículos",
 	"wolfhud_show_carhealthbar_desc" : "Mostra uma barra de vida para veículos dirigíveis.",
 	"wolfhud_show_healthbar_pointer_title" : "Mostrar cursor",

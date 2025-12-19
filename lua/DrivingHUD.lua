@@ -194,7 +194,7 @@ if string.lower(RequiredScript) == "lib/managers/hud/huddriving" then
 
 		if self._name ~= name then
 			self._name = name
-			self._vehicle_name:set_value(managers.localization:to_upper_text(self._name))
+			self._vehicle_name:set_value(self._name and managers.localization:to_upper_text(self._name))
 
 			self._vehicle_image:set_vehicle_name(self._name or "Unknown")
 			self._people = 0

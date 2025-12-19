@@ -987,9 +987,9 @@ elseif string.lower(RequiredScript) == "lib/managers/social_hub/lobbycodemenucom
 		return original_mouse_pressed(self, button, x, y)
 	end
 
-elseif RequiredScript == "lib/managers/menu/playerinventorygui" then
+elseif string.lower(RequiredScript) == "lib/managers/menu/playerinventorygui" then
 -- activate infamy menu
-	local orig_create_box = PlayerInventoryGui.create_box
+	local original_create_box = PlayerInventoryGui.create_box
 	function PlayerInventoryGui:create_box(params)
 		if params.name:match("infamy") then
 			params.alpha = 1
@@ -1001,12 +1001,12 @@ elseif RequiredScript == "lib/managers/menu/playerinventorygui" then
 			}
 		end
 
-		return orig_create_box(self, params)
+		return original_create_box(self, params)
 	end
 
-	local orig_PlayerInventoryGui = PlayerInventoryGui._update_info_infamy
+	local original_PlayerInventoryGui = PlayerInventoryGui._update_info_infamy
 	function PlayerInventoryGui:_update_info_infamy(name)
-		orig_PlayerInventoryGui(self, name)
+		original_PlayerInventoryGui(self, name)
 		local rank = managers.infamy:points()
 		local text_string = managers.localization:to_upper_text("menu_infamy_rank", {
 			rank = tostring(managers.experience:current_rank())
@@ -1017,6 +1017,26 @@ elseif RequiredScript == "lib/managers/menu/playerinventorygui" then
 		}) .. "\n\n" .. managers.localization:text("menu_infamy_help")
 
 		self:set_info_text(text_string)
+	end
+
+elseif string.lower(RequiredScript) == "lib/network/base/networkpeer" then
+	-- Display mods list for local peer
+	-- The Fixes https://modworkshop.net/mod/23732
+	local original_peer_init = NetworkPeer.init
+	function NetworkPeer:init(...)
+		original_peer_init(self, ...)
+
+		local local_peer = false
+		if self._rpc and self._rpc:ip_at_index(0) == Network:self(SystemInfo:matchmaking_protocol()):ip_at_index(0) then
+			local_peer = true
+		end
+
+		if local_peer and MenuCallbackHandler.build_mods_list then
+			self._mods = self._mods or {}
+			for k,v in ipairs(MenuCallbackHandler:build_mods_list() or {}) do
+				self:register_mod(v[2], v[1])
+			end
+		end
 	end
 
 end

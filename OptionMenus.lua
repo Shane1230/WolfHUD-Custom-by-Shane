@@ -1495,7 +1495,17 @@ if WolfHUD then
 								enabled_reqs = {
 									{ setting = { "EnemyHealthbar", "ENABLED" }, invert = false }
 								},
-								value = {"EnemyHealthbar", "SHOW_CIVILIAN"},
+								value = {"EnemyHealthbar", "SHOW_CIVILIAN_HEALTH"},
+							},
+							{
+								type = "toggle",
+								name_id = "wolfhud_show_teamaihealthbar_title",
+								desc_id = "wolfhud_show_teamaihealthbar_desc",
+								visible_reqs = {},
+								enabled_reqs = {
+									{ setting = { "EnemyHealthbar", "ENABLED" }, invert = false }
+								},
+								value = {"EnemyHealthbar", "SHOW_TEAM_AI_HEALTH"},
 							},
 							{
 								type = "toggle",
@@ -3819,6 +3829,13 @@ if WolfHUD then
 						},
 						visible_reqs = {}, enabled_reqs = {},
 						value = {"TabStats", "CLOCK_MODE"},
+					},
+					{
+						type = "toggle",
+						name_id = "wolfhud_tabstats_lip_skills_title",
+						desc_id = "wolfhud_tabstats_lip_skills_desc",
+						value = {"TabStats", "LPI_SKILLS"},
+						visible_reqs = {}, enabled_reqs = {},
 					},
 					{
 						type = "divider",

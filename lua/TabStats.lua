@@ -155,18 +155,21 @@ if string.lower(RequiredScript) == "lib/managers/hud/newhudstatsscreen" then
 					placer:add_right(difficulty_text)
 				end
 
-				placer:new_row(8, 0)
+				if not WolfHUD:getSetting({"TabStats", "ENABLED"}, true) and WolfHUD:getSetting({"TabStats", "LPI_SKILLS"}, true) then
+				else
+					placer:new_row(8, 0)
 
-				local payout = managers.localization:text("hud_day_payout", {
-					MONEY = managers.experience:cash_string(managers.money:get_potential_payout_from_current_stage())
-				})
+					local payout = managers.localization:text("hud_day_payout", {
+						MONEY = managers.experience:cash_string(managers.money:get_potential_payout_from_current_stage())
+					})
 
-				placer:add_bottom(self._left:fine_text({
-					keep_w = true,
-					font = tweak_data.hud_stats.objectives_font,
-					font_size = tweak_data.hud_stats.loot_size,
-					text = payout
-				}), 0)
+					placer:add_bottom(self._left:fine_text({
+						keep_w = true,
+						font = tweak_data.hud_stats.objectives_font,
+						font_size = tweak_data.hud_stats.loot_size,
+						text = payout
+					}), 0)
+				end
 			end
 
 			placer:new_row()
@@ -380,9 +383,6 @@ if string.lower(RequiredScript) == "lib/managers/hud/newhudstatsscreen" then
 		loot_panel:set_size(placer:most_rightbottom())
 		loot_panel:set_leftbottom(0, self._left:h() - 16)
 
-	
-		placer:new_row() --add music trak
-		
 		local track_text = self._left:fine_text({
 			text = managers.localization:to_upper_text("menu_es_playing_track") .. "\n" .. managers.music:current_track_string(),
 			font_size = tweak_data.menu.pd2_small_font_size,
@@ -393,418 +393,8 @@ if string.lower(RequiredScript) == "lib/managers/hud/newhudstatsscreen" then
 		})
 
 		track_text:set_leftbottom(-15, self._left:h() - 648) -- (-15, self._left:h() - 668)
-	
+
 	end
-	
-	--PD2 original left stats
-	--[[function HUDStatsScreen:recreate_left()
-		self._left:clear()
-		self._left:bitmap({
-			texture = "guis/textures/test_blur_df",
-			layer = -1,
-			render_template = "VertexColorTexturedBlur3D",
-			valign = "grow",
-			w = self._left:w(),
-			h = self._left:h()
-		})
-
-		local lb = HUDBGBox_create(self._left, {}, {
-			blend_mode = "normal",
-			color = Color.white
-		})
-
-		lb:child("bg"):set_color(Color(0, 0, 0):with_alpha(0.75))
-		lb:child("bg"):set_alpha(1)
-
-		local placer = UiPlacer:new(10, 10, 0, 8)
-		local job_data = managers.job:current_job_data()
-		local stage_data = managers.job:current_stage_data()
-
-		if job_data and managers.job:current_job_id() == "safehouse" and Global.mission_manager.saved_job_values.playedSafeHouseBefore then
-			self._left:set_visible(false)
-
-			return
-		end
-
-		if stage_data then
-			if managers.crime_spree:is_active() then
-				local level_data = managers.job:current_level_data()
-				local mission = managers.crime_spree:get_mission(managers.crime_spree:current_played_mission())
-
-				if mission then
-					local level_str = managers.localization:to_upper_text(tweak_data.levels[mission.level.level_id].name_id) or ""
-
-					placer:add_row(self._left:fine_text({
-						font = large_font,
-						font_size = tweak_data.hud_stats.objectives_title_size,
-						text = level_str
-					}))
-				end
-
-				placer:add_row(self._left:fine_text({
-					font = medium_font,
-					font_size = tweak_data.hud_stats.loot_size,
-					text = managers.localization:to_upper_text("menu_lobby_difficulty_title"),
-					color = tweak_data.screen_colors.text
-				}), 8, 0)
-
-				local str = managers.localization:text("menu_cs_level", {level = managers.experience:cash_string(managers.crime_spree:server_spree_level(), "")})
-
-				placer:add_right(self._left:fine_text({
-					font = medium_font,
-					font_size = tweak_data.hud_stats.loot_size,
-					text = str,
-					color = tweak_data.screen_colors.crime_spree_risk
-				}))
-			else
-				local job_chain = managers.job:current_job_chain_data()
-				local day = managers.job:current_stage()
-				local days = job_chain and #job_chain or 0
-				local day_title = placer:add_bottom(self._left:fine_text({
-					font = tweak_data.hud_stats.objectives_font,
-					font_size = tweak_data.hud_stats.loot_size,
-					text = managers.localization:to_upper_text("hud_days_title", {
-						DAY = day,
-						DAYS = days
-					})
-				}))
-
-				if managers.job:is_level_ghostable(managers.job:current_level_id()) then
-					local is_whisper_mode = managers.groupai and managers.groupai:state():whisper_mode()
-					local ghost_color = is_whisper_mode and Color.white or tweak_data.screen_colors.important_1
-					local ghost = placer:add_right(self._left:bitmap({
-						texture = "guis/textures/pd2/cn_minighost",
-						name = "ghost_icon",
-						h = 16,
-						blend_mode = "add",
-						w = 16,
-						color = ghost_color
-					}))
-
-					ghost:set_center_y(day_title:center_y())
-				end
-
-				placer:new_row(8)
-
-				local level_data = managers.job:current_level_data()
-
-				if level_data then
-					placer:add_bottom(self._left:fine_text({
-						font = large_font,
-						font_size = tweak_data.hud_stats.objectives_title_size,
-						text = managers.localization:to_upper_text(level_data.name_id)
-					}))
-				end
-
-				placer:add_bottom(self._left:fine_text({
-					font = medium_font,
-					font_size = tweak_data.hud_stats.loot_size,
-					text = managers.localization:to_upper_text("menu_lobby_difficulty_title"),
-					color = tweak_data.screen_colors.text
-				}), 0)
-
-				if job_data then
-					local job_stars = managers.job:current_job_stars()
-					local difficulty_stars = managers.job:current_difficulty_stars()
-					local difficulty = tweak_data.difficulties[difficulty_stars + 2] or 1
-					local difficulty_string = managers.localization:to_upper_text(tweak_data.difficulty_name_ids[difficulty])
-					local difficulty_text = self._left:fine_text({
-						font = medium_font,
-						font_size = tweak_data.hud_stats.loot_size,
-						text = difficulty_string,
-						color = difficulty_stars > 0 and tweak_data.screen_colors.risk or tweak_data.screen_colors.text
-					})
-
-					if Global.game_settings.one_down then
-						local one_down_string = managers.localization:to_upper_text("menu_one_down")
-
-						difficulty_text:set_text(difficulty_string .. " " .. one_down_string)
-						difficulty_text:set_range_color(#difficulty_string + 1, math.huge, tweak_data.screen_colors.one_down)
-					end
-
-					local _, _, tw, th = difficulty_text:text_rect()
-
-					difficulty_text:set_size(tw, th)
-					placer:add_right(difficulty_text)
-				end
-
-				placer:new_row(8, 0)
-
-				local payout = managers.localization:text("hud_day_payout", {MONEY = managers.experience:cash_string(managers.money:get_potential_payout_from_current_stage())})
-
-				placer:add_bottom(self._left:fine_text({
-					keep_w = true,
-					font = tweak_data.hud_stats.objectives_font,
-					font_size = tweak_data.hud_stats.loot_size,
-					text = payout
-				}), 0)
-			end
-
-			placer:new_row()
-		end
-
-		placer:add_bottom(self._left:fine_text({
-			vertical = "top",
-			align = "left",
-			font_size = tweak_data.hud_stats.objectives_title_size,
-			font = tweak_data.hud_stats.objectives_font,
-			text = managers.localization:to_upper_text("hud_objective")
-		}), 16)
-		placer:new_row(8)
-
-		local row_w = self._left:w() - placer:current_left() * 2
-
-		for i, data in pairs(managers.objectives:get_active_objectives()) do
-			placer:add_bottom(self._left:fine_text({
-				word_wrap = true,
-				wrap = true,
-				align = "left",
-				text = utf8.to_upper(data.text),
-				font = tweak_data.hud.medium_font,
-				font_size = tweak_data.hud.active_objective_title_font_size,
-				w = row_w
-			}))
-			placer:add_bottom(self._left:fine_text({
-				word_wrap = true,
-				wrap = true,
-				font_size = 24,
-				align = "left",
-				text = data.description,
-				font = tweak_data.hud_stats.objective_desc_font,
-				w = row_w
-			}), 0)
-		end
-
-		local loot_panel = ExtendedPanel:new(self._left, {w = (self._left:w() - 16) - 8})
-		placer = UiPlacer:new(16, 0, 8, 4)
-		local mandatory_bags_data = managers.loot:get_mandatory_bags_data()
-		local mandatory_amount = mandatory_bags_data and mandatory_bags_data.amount
-		local secured_amount = managers.loot:get_secured_mandatory_bags_amount()
-		local bonus_amount = managers.loot:get_secured_bonus_bags_amount()
-		local bag_text = placer:add_bottom(loot_panel:fine_text({
-			keep_w = true,
-			text = managers.localization:text("hud_stats_bags_secured"),
-			font = medium_font,
-			font_size = medium_font_size
-		}))
-
-		placer:add_right(nil,0)
-
-		local bag_texture, bag_rect = tweak_data.hud_icons:get_icon_data("bag_icon")
-		local bag_icon = placer:add_left(loot_panel:fit_bitmap({
-			w = 16,
-			h = 16,
-			texture = bag_texture,
-			texture_rect = bag_rect
-		}))
-
-		bag_icon:set_center_y(bag_text:center_y())
-
-		if mandatory_amount and mandatory_amount > 0 then
-			local str = bonus_amount > 0 and string.format("%d/%d+%d", secured_amount, mandatory_amount, bonus_amount) or string.format("%d/%d", secured_amount, mandatory_amount)
-
-			placer:add_left(loot_panel:fine_text({
-				text = str,
-				font = medium_font,
-				font_size = medium_font_size
-			}))
-		else
-			placer:add_left(loot_panel:fine_text({
-				text = tostring(bonus_amount),
-				font = medium_font,
-				font_size = medium_font_size
-			}))
-		end
-
-		placer:new_row()
-
-		local body_text = placer:add_bottom(loot_panel:fine_text({
-			keep_w = true,
-			text = managers.localization:to_upper_text("hud_body_bags"),
-			font = medium_font,
-			font_size = medium_font_size
-		}))
-
-		placer:add_right(nil, 0)
-
-		local body_texture, body_rect = tweak_data.hud_icons:get_icon_data("equipment_body_bag")
-		local body_icon = placer:add_left(loot_panel:fit_bitmap({
-			w = 17,
-			h = 17,
-			texture = body_texture,
-			texture_rect = body_rect
-		}))
-
-		body_icon:set_center_y(body_text:center_y())
-		placer:add_left(loot_panel:fine_text({
-			text = tostring(managers.player:get_body_bags_amount()),
-			font = medium_font,
-			font_size = medium_font_size
-		}), 7)
-		placer:new_row()
-
-		local secured_bags_money = managers.experience:cash_string(managers.money:get_secured_mandatory_bags_money() + managers.money:get_secured_bonus_bags_money())
-
-		placer:add_bottom(loot_panel:fine_text({
-			keep_w = true,
-			text_id = "hud_stats_bags_secured_value",
-			font = medium_font,
-			font_size = medium_font_size
-		}), 12)
-		placer:add_right(nil, 0)
-		placer:add_left(loot_panel:fine_text({
-			text = secured_bags_money,
-			font = medium_font,
-			font_size = medium_font_size
-		}))
-		placer:new_row()
-
-		local instant_cash = managers.experience:cash_string(managers.loot:get_real_total_small_loot_value())
-
-		placer:add_bottom(loot_panel:fine_text({
-			keep_w = true,
-			text = managers.localization:to_upper_text("hud_instant_cash"),
-			font = medium_font,
-			font_size = medium_font_size
-		}))
-		placer:add_right(nil, 0)
-		placer:add_left(loot_panel:fine_text({
-			text = instant_cash,
-			font = medium_font,
-			font_size = medium_font_size
-		}))
-		loot_panel:set_size(placer:most_rightbottom())
-		loot_panel:set_leftbottom(0, self._left:h() - 16)
-		
-		placer:new_row()
-		
-		local track_text = self._left:fine_text({
-			text = managers.localization:to_upper_text("menu_es_playing_track") .. " " .. managers.music:current_track_string(),
-			font_size = tweak_data.menu.pd2_small_font_size,
-			font = tweak_data.menu.pd2_small_font,
-			color = tweak_data.screen_colors.text,
-			align = "right",
-			keep_w = true
-		})
-
-		track_text:set_leftbottom(-15, self._left:h() - 150)
-		
-	end--]]
-
----------------------------------------------
-
---wolfhud left stats
-	--[[function HUDStatsScreen:recreate_left(...)
-		if WolfHUD:getSetting({"TabStats", "ENABLED"}, true) then
-			self._use_tab_stats = true
-			self._left:clear()
-			self._left:bitmap({
-				texture = "guis/textures/test_blur_df",
-				layer = -1,
-				render_template = "VertexColorTexturedBlur3D",
-				valign = "grow",
-				w = self._left:w(),
-				h = self._left:h()
-			})
-
-			local l_bg = HUDBGBox_create(self._left, {}, {
-				blend_mode = "normal",
-				color = Color.white
-			})
-			if l_bg:child("bg") then
-				l_bg:child("bg"):set_color(Color(0, 0, 0):with_alpha(0.75))
-				l_bg:child("bg"):set_alpha(1)
-			end
-
-			local placer = UiPlacer:new(10, 10, 0, 8)
-			local row_w = self._left:w() - placer:current_left() * 2
-			local y = 0
-
-			for i, data in pairs(managers.objectives:get_active_objectives()) do
-				placer:add_bottom(self._left:fine_text({
-					word_wrap = true,
-					wrap = true,
-					align = "left",
-					text = utf8.to_upper(data.text),
-					font = medium_font,
-					font_size = tweak_data.hud.objectives_title_size,
-					w = row_w
-				}))
-				placer:new_row(8)
-				local item = placer:add_bottom(self._left:fine_text({
-					word_wrap = true,
-					wrap = true,
-					font_size = objective_font_size * 0.9,
-					align = "left",
-					text = data.description,
-					font = objective_font,
-					w = row_w
-				}), 0)
-				y = math.max(y, item:bottom())
-			end
-
-			local placer = UiPlacer:new(0, 0)
-			local ext_inv_panel = ExtendedPanel:new(self._left, {
-				x = self._leftpos[2],
-				y = self._left:h() - self._leftpos[2] - medium_font_size * 2 - 10,
-				w = self._left:w() - 2 * self._leftpos[2],
-				h = medium_font_size * 2 + 5
-			})
-
-			local body_text = placer:add_row(ext_inv_panel:fine_text({
-				keep_w = true,
-				text = managers.localization:to_upper_text("hud_body_bags"),
-				font = medium_font,
-				font_size = medium_font_size
-			}))
-
-			placer:add_right(nil, 0)
-
-			local body_texture, body_rect = tweak_data.hud_icons:get_icon_data("equipment_body_bag")
-			local body_icon = placer:add_left(ext_inv_panel:fit_bitmap({
-				w = 17,
-				h = 17,
-				texture = body_texture,
-				texture_rect = body_rect
-			}))
-			body_icon:set_center_y(body_text:center_y())
-
-			placer:add_left(ext_inv_panel:fine_text({
-				text = tostring(managers.player:get_body_bags_amount()),
-				font = medium_font,
-				font_size = medium_font_size
-			}), 7)
-
-			placer:new_row(0, 8)
-
-			local track_text = placer:add_bottom(ext_inv_panel:fine_text({
-				text = managers.localization:to_upper_text("menu_es_playing_track") .. " " .. managers.music:current_track_string(),
-				font_size = small_font_size,
-				font = small_font,
-				color = tweak_data.screen_colors.text,
-				align = "right",
-				keep_w = true
-			}))
-
-			local list_panel = ExtendedPanel:new(self._left, {
-				y = y + self._leftpos[2],
-				w = self._left:w(),
-				h = self._left:h() - y - ext_inv_panel:h() - 2 * self._leftpos[2]
-			})
-
-			if managers.mutators:are_mutators_active() then
-				self:_create_mutators_list(list_panel)
-			elseif table.size(managers.achievment:get_tracked_fill()) > 0 then
-				self:_create_tracked_list(list_panel)
-			elseif managers.challenge:can_progress_challenges() then
-				self:_create_sidejobs_list(list_panel)
-			end
-		else
-			recreate_left_original(self, ...)
-		end
-	end--]]
-
-
 
 	function HUDStatsScreen:recreate_right(...)
 		if WolfHUD:getSetting({"TabStats", "ENABLED"}, true) then
@@ -836,10 +426,11 @@ if string.lower(RequiredScript) == "lib/managers/hud/newhudstatsscreen" then
 			local stats_panel = ExtendedPanel:new(self._right, { w = self._right:w(), h = self._right:h() })
 			self:_create_stat_list(stats_panel)
 			self:_update_stats_list(stats_panel)
-		
+
 			if self._create_player_info then -- Enhanced Crew Loadout compatability
 				self:_create_player_info()
 			end
+
 		else
 			recreate_right_original(self, ...)
 		end
@@ -848,164 +439,169 @@ if string.lower(RequiredScript) == "lib/managers/hud/newhudstatsscreen" then
 		clock_panel:set_right(self._right:w() - self._rightpos[2])
 		clock_panel:set_y(self._rightpos[2])
 		
-		
-		--LPI style crew skills		
-		_G.LobbyPlayerInfo = _G.LobbyPlayerInfo or {}
-		LobbyPlayerInfo.skills_layouts = {
-			'%s:%02u  %s:%02u  %s:%02u  %s:%02u  %s:%02u',
-			'%s.: %s\n%s.: %s\n%s.: %s\n%s.: %s\n%s.: %s',
-			'',
-			'%s:%02u %02u %02u  %s:%02u %02u %02u  %s:%02u %02u %02u  %s:%02u %02u %02u  %s:%02u %02u %02u' -- for hudstatsscreen
-		}
-		
-		LobbyPlayerInfo._abbreviation_length_v = 3
-		
-		if _G.PD2KR or WolfHUD:getSetting({"LANGUAGE"}) == "korean" then
-			LobbyPlayerInfo._abbreviation_length_v = 2
-		elseif BLT.Localization._current == 'cht' or BLT.Localization._current == 'zh-cn' then
-			LobbyPlayerInfo._abbreviation_length_v = 2
-		end
-		
-		function LobbyPlayerInfo:GetPerkTextId(perk_id, outfit)
-			if perk_id and tonumber(perk_id) <= #tweak_data.skilltree.specializations then
-				return 'st_spec_' .. tostring(perk_id)
-			else
-				return 'lpi_fake_deck'
+		if WolfHUD:getSetting({"TabStats", "LPI_SKILLS"}, true) then
+			--LPI style crew skills		
+			_G.LobbyPlayerInfo = _G.LobbyPlayerInfo or {}
+			LobbyPlayerInfo.skills_layouts = {
+				'%s:%02u  %s:%02u  %s:%02u  %s:%02u  %s:%02u',
+				'%s.: %s\n%s.: %s\n%s.: %s\n%s.: %s\n%s.: %s',
+				'',
+				'%s:%02u %02u %02u  %s:%02u %02u %02u  %s:%02u %02u %02u  %s:%02u %02u %02u  %s:%02u %02u %02u' -- for hudstatsscreen
+			}
+			
+			LobbyPlayerInfo._abbreviation_length_v = 3
+			
+			if _G.PD2KR or WolfHUD:getSetting({"LANGUAGE"}) == "korean" then
+				LobbyPlayerInfo._abbreviation_length_v = 2
+			elseif BLT.Localization._current == 'cht' or BLT.Localization._current == 'zh-cn' then
+				LobbyPlayerInfo._abbreviation_length_v = 2
 			end
-		end
-		
-		function LobbyPlayerInfo:GetPerkText(perk_id)
-			return managers.localization:text('menu_' .. self:GetPerkTextId(perk_id))
-		end
-
-		function LobbyPlayerInfo:GetSkillNameLength()
-			if self.settings.skills_layout == 1 then
-				return 1
-			else
-				return self._abbreviation_length_v
-			end
-		end
-		
-		local right_panel = self._right
-		if not right_panel then
-			return
-		end
-		
-		local r = right_panel:w() - 10 --right_panel:w()
-		local placer = UiPlacer:new(20, 472) --(20, 350) --460
-
-		for i = 1, 4 do
-			local peer = managers.network:session() and managers.network:session():peer(i)
-			placer:add_row(self._right:fine_text({
-				name = 'lpi_team_text_name' .. tostring(i),
-				align = 'left',
-				vertical = 'top',
-				blend_mode = 'add',
-				font_size = tweak_data.menu.pd2_small_font_size - 7, --font_size = tweak_data.menu.pd2_small_font_size,
-				font = tweak_data.menu.pd2_small_font,
-				color = tweak_data.chat_colors[i],
-				text = peer and peer:name() or '',
-			}), 0, 10)  --0, 15
-
-			local ping_txt = ''
-			if peer then
-				local ping = math.ceil(peer:qos().ping)
-				if ping > 0 then
-					ping_txt = ping .. ' ms'
-				end
-			end
-			local text_ping = self._right:fine_text({
-				name = 'lpi_team_text_ping' .. tostring(i),
-				align = 'right',
-				vertical = 'top',
-				blend_mode = 'add',
-				font_size = tweak_data.menu.pd2_small_font_size - 7,
-				font = tweak_data.menu.pd2_small_font,
-				color = tweak_data.screen_colors.text,
-				text = ping_txt,
-			})
-			placer:add_right(text_ping)
-			text_ping:set_right(r)
-
-			local outfit = peer and peer:blackmarket_outfit()
-			local skills = outfit and outfit.skills
-			local perk = skills and skills.specializations
-
-			local skills_txt = ''
-			skills = skills and skills.skills
-			if skills and #skills >= 15 then
-				local ini_len = LobbyPlayerInfo._abbreviation_length_v
-				skills_txt = string.format(LobbyPlayerInfo.skills_layouts[#LobbyPlayerInfo.skills_layouts],
-					utf8.sub(managers.localization:text('st_menu_mastermind'),  1, ini_len), skills[1],  skills[2],  skills[3],
-					utf8.sub(managers.localization:text('st_menu_enforcer'),    1, ini_len), skills[4],  skills[5],  skills[6],
-					utf8.sub(managers.localization:text('st_menu_technician'),  1, ini_len), skills[7],  skills[8],  skills[9],
-					utf8.sub(managers.localization:text('st_menu_ghost'),       1, ini_len), skills[10], skills[11], skills[12],
-					utf8.sub(managers.localization:text('st_menu_hoxton_pack'), 1, ini_len), skills[13], skills[14], skills[15]
-				)
-			end
-			placer:add_row(self._right:fine_text({
-				name = 'lpi_team_text_skills' .. tostring(i),
-				align = 'left',
-				vertical = 'top',
-				blend_mode = 'add',
-				font_size = tweak_data.menu.pd2_small_font_size - 5,
-				font = tweak_data.menu.pd2_small_font,
-				color = tweak_data.screen_colors.text,
-				text = skills_txt,
-			}))
-
-			local perk_txt = ''
-			if perk then
-				if #perk == 2 then
-					perk_txt = LobbyPlayerInfo:GetPerkText(perk[1])
-					if tonumber(perk[2]) < 9 then
-						perk_txt = perk_txt .. ' (' .. perk[2] .. '/9)'
-					end
+			
+			function LobbyPlayerInfo:GetPerkTextId(perk_id, outfit)
+				if perk_id and tonumber(perk_id) <= #tweak_data.skilltree.specializations then
+					return 'st_spec_' .. tostring(perk_id)
 				else
-					perk_txt = 'Unknown perk'
+					return 'lpi_fake_deck'
 				end
 			end
-			placer:add_row(self._right:fine_text({
-				name = 'lpi_team_text_perk' .. tostring(i),
-				align = 'left',
-				vertical = 'top',
-				blend_mode = 'add',
-				font_size = tweak_data.menu.pd2_small_font_size - 7,
-				font = tweak_data.menu.pd2_small_font,
-				color = tweak_data.screen_colors.text,
-				text = perk_txt,
-			}))
+			
+			function LobbyPlayerInfo:GetPerkText(perk_id)
+				return managers.localization:text('menu_' .. self:GetPerkTextId(perk_id))
+			end
 
-			local loss_nr = peer and peer:qos().packet_loss or 0
-			local ploss_txt = loss_nr == 0 and '' or managers.localization:text('lpi_packet_loss') .. ' (' .. loss_nr .. ')'
-			local text_ploss = self._right:fine_text({
-				name = 'lpi_team_text_ploss' .. tostring(i),
-				text = ploss_txt,
-				align = 'right',
-				vertical = 'top',
-				blend_mode = 'add',
-				font_size = tweak_data.menu.pd2_small_font_size - 7,
-				font = tweak_data.menu.pd2_small_font,
-				color = tweak_data.chat_colors[i],
-			})
-			placer:add_right(text_ploss)
-			text_ploss:set_width(180)
-			text_ploss:set_right(r)
+			function LobbyPlayerInfo:GetSkillNameLength()
+				if self.settings.skills_layout == 1 then
+					return 1
+				else
+					return self._abbreviation_length_v
+				end
+			end
+			
+			local right_panel = self._right
+			if not right_panel then
+				return
+			end
+			
+			local r = right_panel:w() - 10 --right_panel:w()
+			local placer = UiPlacer:new(20, 472) --(20, 350) --460
 
-			if peer and NoMA then
+			if not WolfHUD:getSetting({"TabStats", "ENABLED"}, true) then
+				placer = UiPlacer:new(20, 450)
+			end
+
+			for i = 1, 4 do
+				local peer = managers.network:session() and managers.network:session():peer(i)
 				placer:add_row(self._right:fine_text({
-					name = 'lpi_team_text_noma' .. tostring(i),
+					name = 'lpi_team_text_name' .. tostring(i),
 					align = 'left',
 					vertical = 'top',
 					blend_mode = 'add',
-					font_size = tweak_data.menu.pd2_small_font_size - 4,
+					font_size = tweak_data.menu.pd2_small_font_size - 7, --font_size = tweak_data.menu.pd2_small_font_size,
+					font = tweak_data.menu.pd2_small_font,
+					color = tweak_data.chat_colors[i],
+					text = peer and peer:name() or '',
+				}), 0, 10)  --0, 15
+
+				local ping_txt = ''
+				if peer then
+					local ping = math.ceil(peer:qos().ping)
+					if ping > 0 then
+						ping_txt = ping .. ' ms'
+					end
+				end
+				local text_ping = self._right:fine_text({
+					name = 'lpi_team_text_ping' .. tostring(i),
+					align = 'right',
+					vertical = 'top',
+					blend_mode = 'add',
+					font_size = tweak_data.menu.pd2_small_font_size - 7,
 					font = tweak_data.menu.pd2_small_font,
 					color = tweak_data.screen_colors.text,
-					text = NoMA:get_text_info(i),
+					text = ping_txt,
+				})
+				placer:add_right(text_ping)
+				text_ping:set_right(r)
+
+				local outfit = peer and peer:blackmarket_outfit()
+				local skills = outfit and outfit.skills
+				local perk = skills and skills.specializations
+
+				local skills_txt = ''
+				skills = skills and skills.skills
+				if skills and #skills >= 15 then
+					local ini_len = LobbyPlayerInfo._abbreviation_length_v
+					skills_txt = string.format(LobbyPlayerInfo.skills_layouts[#LobbyPlayerInfo.skills_layouts],
+						utf8.sub(managers.localization:text('st_menu_mastermind'),  1, ini_len), skills[1],  skills[2],  skills[3],
+						utf8.sub(managers.localization:text('st_menu_enforcer'),    1, ini_len), skills[4],  skills[5],  skills[6],
+						utf8.sub(managers.localization:text('st_menu_technician'),  1, ini_len), skills[7],  skills[8],  skills[9],
+						utf8.sub(managers.localization:text('st_menu_ghost'),       1, ini_len), skills[10], skills[11], skills[12],
+						utf8.sub(managers.localization:text('st_menu_hoxton_pack'), 1, ini_len), skills[13], skills[14], skills[15]
+					)
+				end
+				placer:add_row(self._right:fine_text({
+					name = 'lpi_team_text_skills' .. tostring(i),
+					align = 'left',
+					vertical = 'top',
+					blend_mode = 'add',
+					font_size = tweak_data.menu.pd2_small_font_size - 5,
+					font = tweak_data.menu.pd2_small_font,
+					color = tweak_data.screen_colors.text,
+					text = skills_txt,
 				}))
+
+				local perk_txt = ''
+				if perk then
+					if #perk == 2 then
+						perk_txt = LobbyPlayerInfo:GetPerkText(perk[1])
+						if tonumber(perk[2]) < 9 then
+							perk_txt = perk_txt .. ' (' .. perk[2] .. '/9)'
+						end
+					else
+						perk_txt = 'Unknown perk'
+					end
+				end
+				placer:add_row(self._right:fine_text({
+					name = 'lpi_team_text_perk' .. tostring(i),
+					align = 'left',
+					vertical = 'top',
+					blend_mode = 'add',
+					font_size = tweak_data.menu.pd2_small_font_size - 7,
+					font = tweak_data.menu.pd2_small_font,
+					color = tweak_data.screen_colors.text,
+					text = perk_txt,
+				}))
+
+				local loss_nr = peer and peer:qos().packet_loss or 0
+				local ploss_txt = loss_nr == 0 and '' or managers.localization:text('lpi_packet_loss') .. ' (' .. loss_nr .. ')'
+				local text_ploss = self._right:fine_text({
+					name = 'lpi_team_text_ploss' .. tostring(i),
+					text = ploss_txt,
+					align = 'right',
+					vertical = 'top',
+					blend_mode = 'add',
+					font_size = tweak_data.menu.pd2_small_font_size - 7,
+					font = tweak_data.menu.pd2_small_font,
+					color = tweak_data.chat_colors[i],
+				})
+				placer:add_right(text_ploss)
+				text_ploss:set_width(180)
+				text_ploss:set_right(r)
+
+				if peer and NoMA then
+					placer:add_row(self._right:fine_text({
+						name = 'lpi_team_text_noma' .. tostring(i),
+						align = 'left',
+						vertical = 'top',
+						blend_mode = 'add',
+						font_size = tweak_data.menu.pd2_small_font_size - 4,
+						font = tweak_data.menu.pd2_small_font,
+						color = tweak_data.screen_colors.text,
+						text = NoMA:get_text_info(i),
+					}))
+				end
 			end
 		end
-		
+
 	end
 
 	function HUDStatsScreen:_create_tracked_list(panel, ...)
@@ -1959,7 +1555,7 @@ elseif string.lower(RequiredScript) == "lib/managers/statisticsmanager" then
 
 	function StatisticsManager:session_damage(peer_id)
 		local peer = peer_id and managers.network:session():peer(peer_id)
-		local peer_uid = peer and peer:user_id() or Steam:userid()
+		local peer_uid = peer and peer:account_id() or Steam:userid()
 		self._session_damage = self._session_damage or {}
 		return math.round(self._session_damage[peer_uid] or 0)
 	end
@@ -1971,14 +1567,14 @@ elseif string.lower(RequiredScript) == "lib/managers/statisticsmanager" then
 
 	function StatisticsManager:add_session_damage(damage, peer_id)
 		local peer = peer_id and managers.network:session():peer(peer_id)
-		local peer_uid = peer and peer:user_id() or Steam:userid()
+		local peer_uid = peer and peer:account_id() or Steam:userid()
 		self._session_damage = self._session_damage or {}
 		self._session_damage[peer_uid] = (self._session_damage[peer_uid] or 0 ) + (damage * 10)
 	end
 
 	function StatisticsManager:reset_session_damage(peer_id)
 		local peer = peer_id and managers.network:session():peer(peer_id)
-		local peer_uid = peer and peer:user_id() or Steam:userid()
+		local peer_uid = peer and peer:account_id() or Steam:userid()
 		self._session_damage = self._session_damage or {}
 		self._session_damage[peer_uid] = 0
 	end

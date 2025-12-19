@@ -1,5 +1,4 @@
 {
-	"menu_jowi" : "威克",
 	"hud_int_hold_grab_the_bag" : "按住 $INTERACT 捡起 $BAG",
 
 	"wolfhud_dialog_force_start_title" : "强制开始游戏？",
@@ -112,6 +111,10 @@
 	"wolfhud_hudlist_loot_egg" : "Egg",
 	"wolfhud_hudlist_loot_treasure" : "Treasure",
 	"wolfhud_hudlist_showcase" : "展示柜",
+	"wolfhud_hudlist_loot_artifact" : "文物",
+	"wolfhud_hudlist_loot_meth" : "冰毒",
+	"wolfhud_hudlist_loot_prototype" : "原型机",
+	"wolfhud_hudlist_loot_diamonds" : "钻石",
 
 	"wolfhud_hudlist_buff_basic" : "基础",
 	"wolfhud_hudlist_buff_aced" : "精通",
@@ -774,6 +777,8 @@
 	"wolfhud_tabstats_clock_mode_a" : "12-h",
 	"wolfhud_tabstats_clock_mode_b" : "24-h",
 	"wolfhud_tabstats_clock_mode_c" : "劫案时间",
+	"wolfhud_tabstats_lip_skills_title" : "Show Crew Skills (LIP Style)",
+	"wolfhud_tabstats_lip_skills_desc" : "Display teammate skills like 'Lobby Player Info' style on right Tabscreen.\nIf you want to change the teammate equipment display on the left side, Please go to '$wolfhud_crewloadout_options_name'.",
 	"wolfhud_use_tabstats_title" : "使用TAB统计",
 	"wolfhud_use_tabstats_desc" : "按TAB键显示统计数据，而不是普通的统计及任务简报\n(需要重新载入使其生效...)",
 	"wolfhud_tabstats_font_size_title" : "列表字体大小",
@@ -852,8 +857,10 @@
 
 	"wolfhud_show_enemyhealthbar_title" : "显示敌人生命条",
 	"wolfhud_show_enemyhealthbar_desc" : "瞄准敌人时，显示敌人生命条\n(需要重新载入使其生效...)",
-	"wolfhud_show_civhealthbar_title" : "平民生命条",
-	"wolfhud_show_civhealthbar_desc" : "显示平民和队友AI的生命条",
+	"wolfhud_show_civhealthbar_title" : "Civilian Healthbar",
+	"wolfhud_show_civhealthbar_desc" : "Show Healthbar for Civilians.",
+	"wolfhud_show_teamaihealthbar_title" : "TeamAI Healthbar",
+	"wolfhud_show_teamaihealthbar_desc" : "Show Healthbar for TeamAI.",
 	"wolfhud_show_carhealthbar_title" : "显示车辆生命条",
 	"wolfhud_show_carhealthbar_desc" : "为可驾驶的车辆显示生命条",
 	"wolfhud_show_healthbar_pointer_title" : "显示指针",

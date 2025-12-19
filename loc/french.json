@@ -1,5 +1,4 @@
 {
-	"menu_jowi" : "Wick",
 	"hud_int_hold_grab_the_bag" : "MAINTENEZ $INTERACT POUR PRENDRE $BAG",
 
 	"wolfhud_dialog_force_start_title" : "Forcer le début de la partie?",
@@ -112,6 +111,10 @@
 	"wolfhud_hudlist_loot_egg" : "Egg",
 	"wolfhud_hudlist_loot_treasure" : "Treasure",
 	"wolfhud_hudlist_showcase" : "Vitrine",
+	"wolfhud_hudlist_loot_artifact" : "Artéfact",
+	"wolfhud_hudlist_loot_meth" : "Méth",
+	"wolfhud_hudlist_loot_prototype" : "Prototype",
+	"wolfhud_hudlist_loot_diamonds" : "Diamants",
 
 	"wolfhud_hudlist_buff_basic" : "Basique",
 	"wolfhud_hudlist_buff_aced" : "Ace",
@@ -774,6 +777,8 @@
 	"wolfhud_tabstats_clock_mode_a" : "12 heures",
 	"wolfhud_tabstats_clock_mode_b" : "24 heures",
 	"wolfhud_tabstats_clock_mode_c" : "Temps de jeu",
+	"wolfhud_tabstats_lip_skills_title" : "Show Crew Skills (LIP Style)",
+	"wolfhud_tabstats_lip_skills_desc" : "Display teammate skills like 'Lobby Player Info' style on right Tabscreen.\nIf you want to change the teammate equipment display on the left side, Please go to '$wolfhud_crewloadout_options_name'.",
 	"wolfhud_use_tabstats_title" : "Utiliser TabStats",
 	"wolfhud_use_tabstats_desc" : "Affiche vos statistiques dans le menu TAB, au lieu de les afficher à la fin de la mission.\n(Changez de map pour que les changements s'effectuent...)",
 	"wolfhud_tabstats_font_size_title" : "Taille du texte",
@@ -853,8 +858,10 @@
 
 	"wolfhud_show_enemyhealthbar_title" : "Ennemis",
 	"wolfhud_show_enemyhealthbar_desc" : "Affiche la barre de vie d'un ennemi lorsque vous le visez.\n(Changez de map pour que les changements s'effectuent...)",
-	"wolfhud_show_civhealthbar_title" : "Civils",
-	"wolfhud_show_civhealthbar_desc" : "Affihce une barre de vie pour les civils et les coéquipiers IA.",
+	"wolfhud_show_civhealthbar_title" : "Civilian Healthbar",
+	"wolfhud_show_civhealthbar_desc" : "Show Healthbar for Civilians.",
+	"wolfhud_show_teamaihealthbar_title" : "TeamAI Healthbar",
+	"wolfhud_show_teamaihealthbar_desc" : "Show Healthbar for TeamAI.",
 	"wolfhud_show_carhealthbar_title" : "Véhicule",
 	"wolfhud_show_carhealthbar_desc" : "Affiche une barre de vie pour les véhicules que vous pouvez conduire.",
 	"wolfhud_show_healthbar_pointer_title" : "Afficher un pointeur",

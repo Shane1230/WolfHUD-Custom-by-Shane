@@ -542,6 +542,17 @@ elseif string.lower(RequiredScript) == "lib/managers/menu/missionbriefinggui" th
 	function TeamLoadoutCustom:set_slot_outfit(slot, criminal_name, outfit)
 		if self._player_slots[slot] then
 			self._player_slots[slot]:set_outfit(outfit)
+			
+			local local_peer_id = managers.network:session():local_peer():id()
+			if slot == local_peer_id then
+				local perk_item = self._player_slots[slot]._components.perk
+				if perk_item and perk_item._text then
+					local text = perk_item._text:text()
+					if not text:find("> ") then
+						perk_item._text:set_text("> " .. text)
+					end
+				end
+			end
 		end
 	end
 
@@ -650,33 +661,43 @@ elseif string.lower(RequiredScript) == "lib/managers/hud/newhudstatsscreen" then
 	end
 
 	function HUDStatsScreen:populate_loadout_panel(parent_panel)
-		for peer_id, panel in ipairs(self._peer_loadout or {}) do
-			if panel then
-				panel:destroy()
-				self._peer_loadout[peer_id] = nil
-			end
+		for _, panel in ipairs(self._peer_loadout or {}) do
+			if panel then panel:destroy() end
+		end
+		self._peer_loadout = {}
+
+		if not parent_panel then
+			return
 		end
 
-		if parent_panel then
-			local width = math.floor(self._loadout_data:w() / 2)
-			for peer_id = 1, 4  do
-				if not self._peer_loadout[peer_id] then
-					self._peer_loadout[peer_id] = LoadoutPanel:new(parent_panel, self, peer_id, parent_panel:w() - 3, parent_panel:h() - 505 , {
-						component_layout = WolfHUD:getTweakEntry("TAB_LOADOUT_LAYOUT", "table",
-							{
-								{ "name", "character" },
-								{ "primary", "secondary", "melee_weapon", "armor" },
-							}),
-						name = 		{ font_size = tweak_data.menu.pd2_medium_font_size * 1.00, height = tweak_data.menu.pd2_medium_font_size * 1.00,  align = "center", margin = 1, use_peer_color = true },
-						character = { font_size = tweak_data.menu.pd2_small_font_size  * 1.00, height = tweak_data.menu.pd2_small_font_size  * 1.25,  align = "left", use_peer_color = true },
-						default = 	{ hide_name = true },
-						margin = 1,
-						borders = { 1, 1, 1, 1 }
-					})
-				end
+		local width = math.floor(self._loadout_data:w() / 2)
+
+		for peer_id = 1, 4 do
+			local loadout_panel = LoadoutPanel:new(
+				parent_panel, self, peer_id,
+				parent_panel:w() - 3, parent_panel:h() - 505,
+				{
+					component_layout = WolfHUD:getTweakEntry("TAB_LOADOUT_LAYOUT", "table", {
+						{ "name", "character" },
+						{ "primary", "secondary", "melee_weapon", "armor" },
+					}),
+					name = { font_size = tweak_data.menu.pd2_medium_font_size, height = tweak_data.menu.pd2_medium_font_size, align = "center", margin = 1, use_peer_color = true },
+					character = { font_size = tweak_data.menu.pd2_small_font_size, height = tweak_data.menu.pd2_small_font_size * 1.25, align = "left", use_peer_color = true },
+					default = { hide_name = true },
+					margin = 1,
+					borders = { 1, 1, 1, 1 }
+				}
+			)
+
+			local peer = managers.network:session():peer(peer_id)
+			if peer and loadout_panel._components and loadout_panel._components.name then
+				loadout_panel._components.name._text:set_text(peer:name())
 			end
-			self:arrange_loadout_panels(parent_panel)
+
+			self._peer_loadout[peer_id] = loadout_panel
 		end
+
+		self:arrange_loadout_panels(parent_panel)
 	end
 
 	function HUDStatsScreen:update_loadout_panel(peer_id)

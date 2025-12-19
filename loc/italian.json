@@ -1,5 +1,4 @@
 {
-    "menu_jowi" : "Wick",
     "hud_int_hold_grab_the_bag" : "Tieni premuto $INTERACT per prendere $BAG",
  
     "wolfhud_dialog_force_start_title" : "Forzare l'avvio del gioco?",
@@ -108,6 +107,10 @@
     "wolfhud_hudlist_loot_toy" : "Giocattolo",
     "wolfhud_hudlist_loot_vr" : "Casco",
     "wolfhud_hudlist_showcase" : "Mostra",
+	"wolfhud_hudlist_loot_artifact" : "Manufatto",
+	"wolfhud_hudlist_loot_meth" : "Metanfetamina",
+	"wolfhud_hudlist_loot_prototype" : "Prototipo",
+	"wolfhud_hudlist_loot_diamonds" : "Diamanti",
  
     "wolfhud_hudlist_buff_basic" : "Base",
     "wolfhud_hudlist_buff_aced" : "Asso",
@@ -768,6 +771,8 @@
     "wolfhud_tabstats_clock_mode_a" : "12 ore",
     "wolfhud_tabstats_clock_mode_b" : "24 ore",
     "wolfhud_tabstats_clock_mode_c" : "Ora rapina",
+	"wolfhud_tabstats_lip_skills_title" : "Show Crew Skills (LIP Style)",
+	"wolfhud_tabstats_lip_skills_desc" : "Display teammate skills like 'Lobby Player Info' style on right Tabscreen.\nIf you want to change the teammate equipment display on the left side, Please go to '$wolfhud_crewloadout_options_name'.",
     "wolfhud_use_tabstats_title" : "Usa TabStats",
     "wolfhud_use_tabstats_desc" : "Mostra your Statistics on Tab Screen instead, of the Mission briefing.\n(A Map change is needed to apply...)",
     "wolfhud_tabstats_font_size_title" : "Dimensione Font della Lista",
@@ -846,8 +851,10 @@
  
     "wolfhud_show_enemyhealthbar_title" : "Mostra Barra della Salute nemica",
     "wolfhud_show_enemyhealthbar_desc" : "Mostra barra della salute nemica in alto al centro, quando miri ad un nemico.\n(Riavvio della mappa necessario per applicare le modifiche...)",
-    "wolfhud_show_civhealthbar_title" : "Barra della Salute Civili",
-    "wolfhud_show_civhealthbar_desc" : "Mostra la barra della salute anche per i Civili e la IA di squadra.",
+    "wolfhud_show_civhealthbar_title" : "Civilian Healthbar",
+	"wolfhud_show_civhealthbar_desc" : "Show Healthbar for Civilians.",
+	"wolfhud_show_teamaihealthbar_title" : "TeamAI Healthbar",
+	"wolfhud_show_teamaihealthbar_desc" : "Show Healthbar for TeamAI.",
     "wolfhud_show_carhealthbar_title" : "Mostra barra della Salute Veicolo",
     "wolfhud_show_carhealthbar_desc" : "Mostra Barra della Salute per i veicoli guidabili.",
     "wolfhud_show_healthbar_pointer_title" : "Mostra Puntatore",

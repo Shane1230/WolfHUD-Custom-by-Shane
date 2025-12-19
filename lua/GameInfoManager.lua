@@ -484,7 +484,7 @@ lounge		100421		100448			102049
 				[103810] = true,
 				[103811] = true,
 			},
-			dah = { -- Diamond Heist (6x lost_tape keycard)
+			dah = { -- Diamond Heist (2x lost_tape keycard)
 				[105213] = true,
 				[105214] = true,
 				[105223] = true,
@@ -2122,7 +2122,7 @@ if string.lower(RequiredScript) == "lib/managers/group_ai_states/groupaistatebas
 		managers.gameinfo:event("unit_count", "set", "sec_hostage", security_hostages)
 	end
 
-	function GroupAIStateBase:propagate_alert(alert_data, ...)
+	--[[function GroupAIStateBase:propagate_alert(alert_data, ...)
 	--Scream Bug Fix
 		if Network:is_server() and managers and managers.groupai and managers.groupai:state() and managers.groupai:state():whisper_mode() then
 			if (alert_data[1] and alert_data[1] == "vo_distress") and (alert_data[3] and alert_data[3] > 200) then
@@ -2130,7 +2130,7 @@ if string.lower(RequiredScript) == "lib/managers/group_ai_states/groupaistatebas
 			end
 		end
 		return propagate_alert_original(self, alert_data, ...)
-	end
+	end--]]
 
 end
 
@@ -2142,6 +2142,7 @@ if string.lower(RequiredScript) == "lib/network/handlers/unitnetworkhandler" the
 	local interaction_set_active_original = UnitNetworkHandler.interaction_set_active
 	local alarm_pager_interaction_original = UnitNetworkHandler.alarm_pager_interaction
 
+	-- No Red Players Laser https://modworkshop.net/mod/21990
 	if WolfHUD:getSetting({"GADGETS", "NO_RED_LASER"}, true) then
 		function UnitNetworkHandler:set_weapon_gadget_color(unit, red, green, blue, sender)
 			if not self._verify_character_and_sender(unit, sender) then
@@ -2222,7 +2223,6 @@ if string.lower(RequiredScript) == "lib/network/handlers/unitnetworkhandler" the
 				if status == 1 then
 					managers.gameinfo:event("pager", "set_answered", tostring(unit_data.unit:key()))
 				else
-					--managers.gameinfo:event("pager", "remove", tostring(unit_data.unit:key()))
 				end
 			end
 		end
@@ -4336,276 +4336,3 @@ if string.lower(RequiredScript) == "lib/player_actions/skills/playeractiontagtea
 	end
 
 end
-
-if string.lower(RequiredScript) == "lib/units/civilians/logics/civilianlogictravel" then
-	--Civilian Follow Fix
-	local _determine_exact_destination_original = CivilianLogicTravel._determine_exact_destination
-	function CivilianLogicTravel._determine_exact_destination(data, objective, ...)
-		if objective and objective.type == 'follow' and objective.follow_unit then
-			return objective.follow_unit:movement():nav_tracker():field_position()
-		end
-
-		return _determine_exact_destination_original(data, objective, ...)
-	end
-
-elseif string.lower(RequiredScript) == "lib/units/enemies/cop/logics/coplogicidle" then
-
-	function CopLogicIdle._chk_relocate(data)
-		if data.objective and data.objective.type == "follow" then
-			if data.is_converted then
-				if TeamAILogicIdle._check_should_relocate(data, data.internal_data, data.objective) then
-					data.objective.in_place = nil
-					data.logic._exit(data.unit, "travel")
-
-					return true
-				end
-				return
-			end
-
-			if data.is_tied and data.objective.lose_track_dis and data.objective.lose_track_dis * data.objective.lose_track_dis < mvector3.distance_sq(data.m_pos, data.objective.follow_unit:movement():m_newest_pos()) then
-				data.brain:set_objective(nil)
-
-				return true
-			end
-
-			local relocate = nil
-			local follow_unit = data.objective.follow_unit
-			local advance_pos = follow_unit:brain() and follow_unit:brain():is_advancing()
-			local follow_unit_pos = advance_pos or (follow_unit:movement() and follow_unit:movement().m_newest_pos and follow_unit:movement():m_newest_pos()) --- m_newest_pos can be nil
-			if not follow_unit_pos then
-				return
-			end
-
-			if data.objective.relocated_to and mvector3.distance_sq(data.objective.relocated_to, follow_unit_pos) <= 1 then --- <--- Fixed the comparison
-				return
-			end
-
-			if data.objective.distance and data.objective.distance < mvector3.distance(data.m_pos, follow_unit_pos) then
-				relocate = true
-			end
-
-			if not relocate then
-				local ray_params = {
-					tracker_from = data.unit:movement():nav_tracker(),
-					pos_to = follow_unit_pos
-				}
-				local ray_res = managers.navigation:raycast(ray_params)
-
-				if ray_res then
-					relocate = true
-				end
-			end
-
-			if relocate then
-				data.objective.in_place = nil
-				data.objective.nav_seg = follow_unit:movement():nav_tracker():nav_segment()
-				data.objective.relocated_to = mvector3.copy(follow_unit_pos)
-				data.logic._exit(data.unit, "travel")
-
-				return true
-			end
-		elseif data.objective and data.objective.type == "defend_area" and (not data.objective.grp_objective or data.objective.grp_objective.type ~= "retire") then
-			local area = data.objective.area
-
-			if area and not next(area.criminal.units) and (not data.attention_obj or AIAttentionObject.REACT_AIM > data.attention_obj.reaction) then
-				local records = managers.groupai:state():all_char_criminals()
-				local found_areas = {
-					[area] = true
-				}
-				local areas_to_search = {
-					area
-				}
-				local target_area = nil
-
-				while next(areas_to_search) do
-					local current_area = table.remove(areas_to_search)
-
-					for criminal_key, _ in pairs(current_area.criminal.units) do
-						if records[criminal_key] then
-							local status = records[criminal_key].status
-
-							if not status or status == "electrified" then
-								target_area = current_area
-
-								break
-							end
-						end
-					end
-
-					for _, n_area in pairs(current_area.neighbours) do
-						if not found_areas[n_area] then
-							found_areas[n_area] = true
-
-							table.insert(areas_to_search, n_area)
-						end
-					end
-				end
-
-				if target_area then
-					data.objective.in_place = nil
-					data.objective.nav_seg = next(target_area.nav_segs)
-					data.objective.path_data = {
-						{
-							data.objective.nav_seg
-						}
-					}
-					data.logic._exit(data.unit, "travel")
-
-					return true
-				end
-			end
-		end
-	end
-
-end
-
---[[
-if string.lower(RequiredScript) == "lib/managers/objectinteractionmanager" then
-
-	local init_original = ObjectInteractionManager.init
-	local update_original = ObjectInteractionManager.update
-	local add_unit_original = ObjectInteractionManager.add_unit
-	local remove_unit_original = ObjectInteractionManager.remove_unit
-
-
-	ObjectInteractionManager.TRIGGERS = {
-		[136843] = {
-			136844, 136845, 136846, 136847, --HB armory ammo shelves
-			136859, 136860, 136864, 136865, 136866, 136867, 136868, 136869, 136870, --HB armory grenades
-		},
-		[151868] = { 151611 }, --GGC armory ammo shelf 1
-		[151869] = {
-			151612, --GGC armory ammo shelf 2
-			151596, 151597, 151598, --GGC armory grenades
-		},
-		--[101835] = { 101470, 101472, 101473 },	--HB infirmary med boxes (not needed, triggers on interaction activation)
-	}
-
-	ObjectInteractionManager.INTERACTION_TRIGGERS = {
-		requires_ecm_jammer_double = {
-			[Vector3(-2217.05, 2415.52, -354.502)] = 136843,	--HB armory door 1
-			[Vector3(1817.05, 3659.48, 45.4985)] = 136843,	--HB armory door 2
-		},
-		drill = {
-			[Vector3(142, 3098, -197)] = 151868,	--GGC armory cage 1 alt 1
-			[Vector3(-166, 3413, -197)] = 151869,	--GGC armory cage 2 alt 1
-			[Vector3(3130, 1239, -195.5)] = 151868,	--GGC armory cage X alt 2	(may be reversed)
-			[Vector3(3445, 1547, -195.5)] = 151869,	--GGC armory cage Y alt 2	(may be reversed)
-		},
-	}
-
-	function ObjectInteractionManager:init(...)
-		init_original(self, ...)
-
-		self._queued_units = {}
-		self._unit_triggers = {}
-		self._trigger_blocks = {}
-
-		GroupAIStateBase.register_listener_clbk("ObjectInteractionManager_cancel_pager_listener", "on_whisper_mode_change", callback(self, self, "_whisper_mode_change"))
-	end
-
-	function ObjectInteractionManager:update(t, ...)
-		update_original(self, t, ...)
-		self:_check_queued_units(t)
-	end
-
-	function ObjectInteractionManager:add_unit(unit, ...)
-		for pos, trigger_id in pairs(ObjectInteractionManager.INTERACTION_TRIGGERS[unit:interaction().tweak_data] or {}) do
-			if mvector3.distance(unit:position(), pos) <= 10 then
-				self:block_trigger(trigger_id, true)
-				break
-			end
-		end
-
-		table.insert(self._queued_units, unit)
-		return add_unit_original(self, unit, ...)
-	end
-
-	function ObjectInteractionManager:remove_unit(unit, ...)
-		for pos, trigger_id in pairs(ObjectInteractionManager.INTERACTION_TRIGGERS[unit:interaction().tweak_data] or {}) do
-			if mvector3.distance(unit:position(), pos) <= 10 then
-				self._trigger_blocks[trigger_id] = false
-				break
-			end
-		end
-
-		self:_check_remove_unit(unit)
-		return remove_unit_original(self, unit, ...)
-	end
-
-	function ObjectInteractionManager:_check_queued_units(t)
-		local level_id = managers.job:current_level_id()
-
-		for i, unit in ipairs(self._queued_units) do
-			if alive(unit) then
-				local editor_id = unit:editor_id()
-				local interaction_id = unit:interaction().tweak_data
-
-				if false then --ObjectInteractionManager.EQUIPMENT_INTERACTION_ID[interaction_id] then
-					local data = ObjectInteractionManager.EQUIPMENT_INTERACTION_ID[interaction_id]
-					local blocked
-
-					for trigger_id, editor_ids in pairs(ObjectInteractionManager.TRIGGERS) do
-						if table.contains(editor_ids, editor_id) then
-							blocked = self._trigger_blocks[trigger_id]
-							self._unit_triggers[trigger_id] = self._unit_triggers[trigger_id] or {}
-							table.insert(self._unit_triggers[trigger_id], { unit = unit, class = data.class, offset = data.offset })
-							break
-						end
-					end
-
-					unit:base():set_equipment_active(data.class, not blocked, data.offset)
-				end
-
-				self._do_listener_callback("on_unit_added", unit)
-			end
-		end
-
-		self._queued_units = {}
-	end
-
-	function ObjectInteractionManager:_check_remove_unit(unit)
-		for i, queued_unit in ipairs(self._queued_units) do
-			if queued_unit:key() == unit:key() then
-				table.remove(self._queued_units, i)
-				return
-			end
-		end
-
-		local editor_id = unit:editor_id()
-		local interaction_id = unit:interaction().tweak_data
-
-		if false then --ObjectInteractionManager.EQUIPMENT_INTERACTION_ID[interaction_id] then
-			unit:base():set_equipment_active(ObjectInteractionManager.EQUIPMENT_INTERACTION_ID[interaction_id].class, false)
-		end
-
-		self._do_listener_callback("on_unit_removed", unit)
-	end
-
-	function ObjectInteractionManager:block_trigger(trigger_id, status)
-		if ObjectInteractionManager.TRIGGERS[trigger_id] then
-			--io.write("ObjectInteractionManager:block_trigger(" .. tostring(trigger_id) .. ", " .. tostring(status) .. ")\n")
-			self._trigger_blocks[trigger_id] = status
-
-			for id, data in ipairs(self._unit_triggers[trigger_id] or {}) do
-				if alive(data.unit) then
-					--io.write("Set active " .. tostring(data.unit:editor_id()) .. ": " .. tostring(not status) .. "\n")
-					data.unit:base():set_equipment_active(data.class, not status, data.offset)
-				end
-			end
-		end
-	end
-
-end
-
-if string.lower(RequiredScript) == "lib/units/props/missiondoor" then
-
-	local deactivate_original = MissionDoor.deactivate
-
-	function MissionDoor:deactivate(...)
-		managers.interaction:block_trigger(self._unit:editor_id(), false)
-		return deactivate_original(self, ...)
-	end
-
-end
-]]

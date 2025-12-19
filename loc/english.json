@@ -1,5 +1,4 @@
 {
-	"menu_jowi" : "Wick",
 	"hud_int_hold_grab_the_bag" : "Hold $INTERACT to grab the $BAG",
 
 	"wolfhud_dialog_force_start_title" : "Force start game?",
@@ -67,6 +66,7 @@
 	"wolfhud_preplanning_msg_deleted_failed" : "An error occurred while deleting saved plan.",
 	"wolfhud_preplanning_msg_folder_creation_failed" : "Failed to create folder: $FOLDER \nPlease make sure the game has the required permissions or create it manually.",
 	"wolfhud_preplanning_msg_file_creation_failed" : "Failed to create file: $FILE \nPlease make sure the game has the required permissions or create it manually.",
+	"wolfhud_preplanning_msg_loaded_old_format" : "The old format plan has been loaded. Please save again current plan.",
 
 	"wolfhud_inv_tab_rename_hint" : "Double click the selected Inventory tab to rename it.",
 
@@ -119,6 +119,10 @@
 	"wolfhud_hudlist_loot_papers" : "Documents",
 	"wolfhud_hudlist_loot_neo2" : "NEO-2",
 	"wolfhud_hudlist_loot_dbreaker" : "Breaker",
+	"wolfhud_hudlist_loot_artifact" : "Artifact",
+	"wolfhud_hudlist_loot_meth" : "Meth",
+	"wolfhud_hudlist_loot_prototype" : "Prototype",
+	"wolfhud_hudlist_loot_diamonds" : "Diamonds",
 
 	"wolfhud_hudlist_buff_basic" : "Basic",
 	"wolfhud_hudlist_buff_aced" : "Aced",
@@ -788,6 +792,8 @@
 	"wolfhud_tabstats_clock_mode_a" : "12-h",
 	"wolfhud_tabstats_clock_mode_b" : "24-h",
 	"wolfhud_tabstats_clock_mode_c" : "Heist Time",
+	"wolfhud_tabstats_lip_skills_title" : "Show Crew Skills (LIP Style)",
+	"wolfhud_tabstats_lip_skills_desc" : "Display teammate skills like 'Lobby Player Info' style on right Tabscreen.\nIf you want to change the teammate equipment display on the left side, Please go to '$wolfhud_crewloadout_options_name'.",
 	"wolfhud_use_tabstats_title" : "Use TabStats",
 	"wolfhud_use_tabstats_desc" : "Show your Statistics on Tab Screen instead, of the Mission briefing.\n(A Map change is needed to apply...)",
 	"wolfhud_tabstats_font_size_title" : "List Font Size",
@@ -867,7 +873,9 @@
 	"wolfhud_show_enemyhealthbar_title" : "Show Enemy Healthbar",
 	"wolfhud_show_enemyhealthbar_desc" : "Display Enemy Healthbar at the top enter, when aiming at an enemy.\n(A Map change is needed to apply...)",
 	"wolfhud_show_civhealthbar_title" : "Civilian Healthbar",
-	"wolfhud_show_civhealthbar_desc" : "Also show Healthbar for Civilians and TeamAI.",
+	"wolfhud_show_civhealthbar_desc" : "Show Healthbar for Civilians.",
+	"wolfhud_show_teamaihealthbar_title" : "TeamAI Healthbar",
+	"wolfhud_show_teamaihealthbar_desc" : "Show Healthbar for TeamAI.",
 	"wolfhud_show_carhealthbar_title" : "Show Vehicle Healthbar",
 	"wolfhud_show_carhealthbar_desc" : "Show Healthbar for drivable Vehicles.",
 	"wolfhud_show_healthbar_pointer_title" : "Show Pointer",

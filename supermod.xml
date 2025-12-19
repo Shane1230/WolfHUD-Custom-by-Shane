@@ -126,7 +126,6 @@
 					<post :hook_id="preplanningmapgui" :script_path="PrePlanManager.lua"/>
 					<post :hook_id="specializationboxgui" :script_path="Utils/InputDialog.lua"/>
 					<post :hook_id="items/menuitemmultichoice" :script_path="Scripts.lua"/>
-					<post :hook_id="items/contractbrokerheistitem" :script_path="ContractHeat.lua"/>
 
 					<group :hook_id="playerinventorygui">
 						<post :script_path="ProfileMenu.lua"/>
@@ -161,34 +160,30 @@
 				<post :hook_id="gagemodifierlifesteal" :script_path="GameInfoManager.lua"/>
 			</group>
 
-			<group :hook_id="network/handlers/unitnetworkhandler">
-				<post :script_path="GameInfoManager.lua"/>
-				<!-- TODO: Untested changes!!! -->
-				<!-- <post :script_path="NetworkHandler.lua"/> -->
-				<post :script_path="DownCounter.lua"/>
+			<group :hook_id="network/">
+				<post :hook_id="base/networkpeer" :script_path="MenuTweaks.lua"/>
+
+				<group :hook_id="handlers/unitnetworkhandler">
+					<post :script_path="GameInfoManager.lua"/>
+					<!-- TODO: Untested changes!!! -->
+					<!-- <post :script_path="NetworkHandler.lua"/> -->
+					<post :script_path="DownCounter.lua"/>
+				</group>
 			</group>
 
 			<group :hook_id="units/">
 				<post :hook_id="cameras/fpcameraplayerbase" :script_path="WeaponGadgets.lua"/>
 
-				<group :hook_id="civilians/">
-					<post :hook_id="logics/civilianlogictravel" :script_path="GameInfoManager.lua"/>
-
-					<group :hook_id="civiliandamage">
-						<post :script_path="DamagePopup.lua"/>
-						<post :script_path="TabStats.lua"/>
-					</group>
+				<group :hook_id="civilians/civiliandamage">
+					<post :script_path="DamagePopup.lua"/>
+					<post :script_path="TabStats.lua"/>
 				</group>
 
-				<group :hook_id="enemies/cop/">
-					<post :hook_id="logics/coplogicidle" :script_path="GameInfoManager.lua"/>
-
-					<group :hook_id="copdamage">
-						<post :script_path="GameInfoManager.lua"/>
-						<post :script_path="KillCounter.lua"/>
-						<post :script_path="DamagePopup.lua"/>
-						<post :script_path="TabStats.lua"/>
-					</group>
+				<group :hook_id="enemies/cop/copdamage">
+					<post :script_path="GameInfoManager.lua"/>
+					<post :script_path="KillCounter.lua"/>
+					<post :script_path="DamagePopup.lua"/>
+					<post :script_path="TabStats.lua"/>
 				</group>
 
 				<group :hook_id="interactions/interactionext">

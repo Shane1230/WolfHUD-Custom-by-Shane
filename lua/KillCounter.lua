@@ -289,9 +289,9 @@ elseif string.lower(RequiredScript) == "lib/managers/hud/hudteammate" then
 
 			self._accuracy_icon = self._accuracy_panel:bitmap({
 				texture = "guis/textures/pd2/pd2_waypoints",
-				w = self._accuracy_panel:h() * 0.75,
-				h = self._accuracy_panel:h(),
-				texture_rect = { 96, 0, 32, 32 },
+				w = self._accuracy_panel:h() * 0.8,
+				h = self._accuracy_panel:h() * 0.8,
+				texture_rect = { 96, -3, 32, 32 }, --{ 96, 0, 32, 32 }
 				alpha = 1,
 				blend_mode = "normal",
 				layer = 0,

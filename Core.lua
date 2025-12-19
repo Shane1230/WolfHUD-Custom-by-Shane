@@ -2,7 +2,6 @@ if not _G.WolfHUD then
 	_G.WolfHUD = {}
 	WolfHUD.mod_path = ModPath
 	WolfHUD.save_path = SavePath
-	WolfHUD.assets_path = "./assets/mod_overrides/"
 	WolfHUD.settings_path = WolfHUD.save_path .. "WolfHUD_v2.json"
 	WolfHUD.tweak_file = "WolfHUDTweakData.lua"
 	WolfHUD.identifier = string.match(WolfHUD.mod_path, "[\\/]([%w_%-%.]+)[\\/]$") or "WolfHUD"
@@ -127,7 +126,8 @@ if not _G.WolfHUD then
 			},
 			EnemyHealthbar = {
 				ENABLED 								= true,		--Show healthbars
-				SHOW_CIVILIAN 							= false,	--Show Healthbars for Civilians and TeamAI
+				SHOW_CIVILIAN_HEALTH					= false,	--Show Healthbars for Civilians
+				SHOW_TEAM_AI_HEALTH						= false,	--Show Healthbars for TeamAI
 				SHOW_VEHICLE							= true,		--Show Healthbar for vehicles
 				SHOW_POINTER		 					= false,	--Show pointer near the Healthbar, pointing at Healthbar owner
 			},
@@ -185,6 +185,7 @@ if not _G.WolfHUD then
 				FONT_SIZE		 						= 15,
 				SHOW_MASK								= true,
 				SHOW_LOOT_NUMBERS						= true,
+				LPI_SKILLS								= true,
 			},
 			CrewLoadout = {
 				REPLACE_IN_BRIEFING 					= true,
@@ -806,36 +807,12 @@ if not _G.WolfHUD then
 				if WeaponGadgetBase and WeaponGadgetBase.update_theme_setting and #setting >= 4 then
 					WeaponGadgetBase.update_theme_setting(setting[1], setting[2], setting[3], setting[4], WolfHUD:getColor(value) or value)
 				end
-			end,
-			["MOD_OVERRIDES"] = function(setting, value)
-				if FedInv then
-					FedInv.loadAssetsCallback()
-				end
 			end
 		}
 	end
 
-	if not WolfHUD:DirectoryExists(WolfHUD.assets_path) then
-		WolfHUD:print_log("Folder '%s' doesn't exist, creating....\t%s", WolfHUD.assets_path, tostring(WolfHUD:createDirectory(WolfHUD.assets_path)), "warining")
-	end
-
 	WolfHUD:Reset()	-- Populate settings table
 	WolfHUD:Load()	-- Load user settings
-
-	do	-- Romove Disabled Updates, so they don't show up in the download manager.
-		local mod = BLT and BLT.Mods:GetMod(WolfHUD.identifier or "")
-		for i, update in pairs(mod:GetUpdates()) do
-			if update:GetInstallFolder() ~= WolfHUD.identifier then
-				local directory = Application:nice_path( update:GetInstallDirectory() .. "/" .. update:GetInstallFolder(), true )
-				if WolfHUD:getSetting({"MOD_OVERRIDES", update:GetId()}) then
-					WolfHUD:createDirectory(directory)
-				else
-					table.remove(mod:GetUpdates(), i)
-					io.remove_directory_and_files(directory)
-				end
-			end
-		end
-	end
 
 
 	-- Create Ingame Menus

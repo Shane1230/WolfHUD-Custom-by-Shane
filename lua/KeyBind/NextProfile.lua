@@ -1,3 +1,4 @@
-if managers.network:session() and not managers.network.matchmake:set_server_state("HostStateInGame") then
+local is_ready = managers.network:session():local_peer():waiting_for_player_ready()
+if managers.network:session() and managers.multi_profile:has_next() and not is_ready then
 	managers.multi_profile:next_profile()
 end
