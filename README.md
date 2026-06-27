@@ -5,7 +5,7 @@ Super BLT를 최신버전으로 업데이트 해야합니다. 위 링크로 들�
 
 ## About this
 Fix crashes, updates, add features and changes as mystyle.<br>
-이 모드는 기존의 울프허드의 크래쉬 수정 및, 기능을 추가하려 업데이트 한 모드 입니다. 또한 복잡한 기존 허드에서 최소한의 필요한 정보만 보여주도록 기본 옵션을 변경하였습니다.
+이 모드는 기존의 울프허드의 튕김 해결 및, 기능을 추가하여 업데이트 한 모드 입니다. 또한 복잡한 기존 허드에서 최소한의 필요한 정보만 보여주도록 기본 옵션을 변경하였습니다.
 
 간단하게 사용하고 싶지만 이전 울프허드의 설정이 불어와졌다면, (옵션>모드옵션>울프허드 옵션) 으로 들어가서 *설정 초기화*를 눌러주세요.
 
@@ -17,10 +17,21 @@ https://github.com/Kamikaze94/WolfHUD
 Show English [Changelog](https://github.com/Shane1230/WolfHUD-Custom-by-Shane?tab=readme-ov-file#changelog)
 ## 변경사항
 
+### 6.1
+- 에셋 구매, 사전계획창 및 프로필 변경 단축키가 브리핑룸 로딩과 여부와 관련하여 발생하던 여러 문제 해결
+  > 이로 인해 별도의 파일로 BLT 단에서 작동하던 코드를 울프허드 내부 스크립트로 통합(키설정은 이전과 동일한 'BLT모드 키설정')
+- 스팀 활동상태에서 메인메뉴 표시 안함 추가(At the main menu)
+  > 브리핑룸 진입시 잠시동안 메인메뉴로 뜨는 문제를 해결하기 위해 옵션 추가.
+- 브리핑룸에서 플레이타임이 표시되도록 변경
+- 브리핑룸에서 무기 스킨이 제대로 보이지 않던 문제 해결
+- 차량과 상호작용할때 간헐적으로 튕기는 문제 해결
+- 보조 배치장비 갯수가 제대로 표시되지 않던 문제 해결
+- 점사모드 삭제
+---
 ### 6.0
-- **버그 수정:** 플레이 타임 안보이던 문제 해결
+- **버그 수정:** 플레이 타임이 보이지 않던 문제 해결
 - **버그 수정:** 일부 차량에서 DrivingHUD 사용시 튕기는 문제 해결
-- **버그 수정:** 킬카운터이후 작동하는 이름 줄이기 작동시 색상 위치가 밀려서 적용되던 문제 해결
+- **버그 수정:** 킬카운터 이후 작동하는 이름 줄이기 작동시 색상 위치가 밀려서 적용되던 문제 해결
 - **버그 수정:** 최종 스탯창에서 최다 데미지가 제대로 표시되지 않던 문제 해결
 - **버그 수정:** 허드리스트에서 페이저 거리와 방향이 제대로 표시되지 않던 문제 해결
 - 스팀 활동상태
@@ -37,13 +48,15 @@ Show English [Changelog](https://github.com/Shane1230/WolfHUD-Custom-by-Shane?ta
 - 사전계획 구조가 변경되었습니다.(vanillahudplus와 유사한 방식)
   > 에셋 재구매 형식을 이용해 계획을 불러오도록 하여 팀원 수 많큼 투표를 진행합니다. 팀원들은 이후에 언제라도 투표를 변경 할 수 있습니다.<br>
   > 하지만 이 방식을 이용하려면 계획을 새로 저장해야합니다. 오래된 형식이라는 경고 문구가 뜨는 계획은 다시 저장해주세요.
-- 모드리스트에서 본인 모드 목록도 확인 가능하도록 변경
-- 더이상 울프허드에서 존윅 이름을 수정하지 않도록 변경
+- 모드리스트에서 자신의 모드 목록도 확인 가능하도록 변경
+- 더 이상 울프허드에서 존윅 이름을 수정하지 않도록 변경
 - 브리핑룸 로드아웃에서 본인 슬롯에 화살표 표시 추가 (ex > 크루치프)
 - 탭스탯 팀원 장비보기에서 플레이어 이름에 악명 없이 이름만 표시하도록 변경
 - 탭스탯 팀원 스킬 보기 옵션 추가
 - 플레이어 허드의 명중률 아이콘이 찌그러지지 않도록 변경
 - 플레이어 허드의 이름 줄이기 즉시 동기화
+- 스크림 버그 픽스 삭제
+- 시민 옮기기의 길찾기 픽스 삭제
 ---
 ### 5.0
 - **울프허드의 기본 옵션 변경**
@@ -51,13 +64,13 @@ Show English [Changelog](https://github.com/Shane1230/WolfHUD-Custom-by-Shane?ta
   > 이 설정을 원할 시 (옵션>모드옵션>울프허드 옵션) 으로 들어가서 *설정 초기화*를 눌러주세요.
 - 버그 수정:
   - 허드리스트:
-    - 조커 피통이 게스트일 때 제대로 보이지 않던 문제 수정
-	- 카피캣 퍽덱의 무적 쿨타임이 제대로 보이지 않던 문제 수정
-	- 기습공격(Unseen Strike) 스킬 활성화 중 쿨타임이 동작하는 문제 수정
+    - 조커 피통이 게스트일 때 제대로 보이지 않던 문제 해결
+	- 카피캣 퍽덱의 무적 쿨타임이 제대로 보이지 않던 문제 해결
+	- 기습공격(Unseen Strike) 스킬 활성화 중 쿨타임이 동작하는 문제 해결
 	- 시카리오 퍽덱의 회피 버프가 합산되게 수정
-  - DrivingHUD 이미지 표시 안되던 문제 수정
-  - 태그팀 힐이 제대로 작동하지 않던 문제 수정
-  - 프로필 변경 메뉴에서 로드아웃이 제대로 보이지 않던 문제 수정
+  - DrivingHUD 이미지 표시 안되던 문제 해결
+  - 태그팀 힐이 제대로 작동하지 않던 문제 해결
+  - 프로필 변경 메뉴에서 로드아웃이 제대로 보이지 않던 문제 해결
 - 허드 리스트 추가:
   - 시카리오 퍽덱의 회피 디버프 추가
   - 활 차지 시간 옵션 추가
@@ -77,7 +90,7 @@ Show English [Changelog](https://github.com/Shane1230/WolfHUD-Custom-by-Shane?ta
   - 카피캣 장전 킬 수 추가
   - 카피캣 무적 효과음(퍽덱 쿨타임 종료 효과음) 추가
 	> 옵션에서 변경 가능합니다.
-  - **버그 수정:** 일렉션데이 1일차를 라우드로 완료시 투표함 부수기 맵에서 키카드를 표시하던 문제 수정.
+  - **버그 수정:** 일렉션데이 1일차를 라우드로 완료시 투표함 부수기 맵에서 키카드를 표시하던 문제 해결.
 ---
 ### 4.6
 - 허드채팅
@@ -88,7 +101,7 @@ Show English [Changelog](https://github.com/Shane1230/WolfHUD-Custom-by-Shane?ta
 - 허드채팅
   - **버그 수정:** 통계창에서 채팅이 사라지던 문제를 해결했습니다.
   - 통계창에서 ESC를 다시 사용할 수 있게 되돌렸습니다.
-  - 이제 인게임에서 채팅창에서 ***Insert*** 키를 사용하여 텍스트를 붙여넣을 수 있습니다.
+  - 이제 인게임 채팅창에서 ***Insert*** 키를 사용하여 클립보드 텍스트를 붙여넣을 수 있습니다.
 ---
 ### 4.4
 - 허드채팅
@@ -166,7 +179,7 @@ Show English [Changelog](https://github.com/Shane1230/WolfHUD-Custom-by-Shane?ta
   - **버스 오브 스카이:** 반지 아이콘 변경
 ---
 ### 1.2
-- LobbyPlayerInfo 모드와 같이 사용했을때 튕기던 문제 수정.
+- LobbyPlayerInfo 모드와 같이 사용했을때 튕기던 문제 해결.
 > 대신 로비인포를 사용중이라면 로비인포 설정의 "탭스크린에서 스킬보기" 옵션을 수동으로 꺼야합니다. (더 이상 자동으로 꺼지는걸 지원하지 않습니다.)
 ---
 ### 1.1
@@ -204,7 +217,7 @@ Show English [Changelog](https://github.com/Shane1230/WolfHUD-Custom-by-Shane?ta
 - Changed Anarchist invincibility option to armor break invincibility option. (shared with Armorer)
 - Removed Contractor Heat option (feature removed)
 - Removed Fed.NET image option (feature removed)
-- Added feature to disable teammates’ red lasers (configurable option) (https://modworkshop.net/mod/21990)
+- Added feature to disable teammate's red lasers (configurable option) (https://modworkshop.net/mod/21990)
 - Added in-game bug fix features:
   - Add Scream Buf Fix (https://modworkshop.net/mod/41227)
   - Add Civillian Follow Fix (https://modworkshop.net/mod/23732)

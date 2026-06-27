@@ -131,7 +131,7 @@ if string.lower(RequiredScript) == "lib/managers/hudmanager" then
 				self._unit_health_panel:set_visible( false )
 			end )
 		end
-		
+
 		--[[if WolfHUD:getSetting({"EnemyHealthbar", "ENABLED"}, true) then
 		    managers.hud:set_enemy_health_visible(false)
 		end		--]]
@@ -199,14 +199,14 @@ elseif string.lower(RequiredScript) == "lib/units/beings/player/states/playersta
 			if unit:in_slot( 8 ) and alive(unit:parent()) then -- Fix when aiming at shields shield.
 				unit = unit:parent()
 			end
-			
+
 			if not WolfHUD:getSetting({"EnemyHealthbar", "SHOW_CIVILIAN_HEALTH"}, true) and managers.enemy:is_civilian(unit) then
 				return
 			end
 			if not WolfHUD:getSetting({"EnemyHealthbar", "SHOW_TEAM_AI_HEALTH"}, true) and unit:in_slot(16) then
 				return
 			end
-			
+
 			local visible, name, name_id, health, max_health, shield, repair_check
 			if alive( unit ) then
 				if alive( unit ) and unit:in_slot( 25 ) and unit:character_damage() and not unit:character_damage():dead() then

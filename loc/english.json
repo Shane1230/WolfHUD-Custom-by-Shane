@@ -922,6 +922,8 @@
 	"wolfhud_doubletap_nades_stealth_desc" : "When checked, you need to doubletap to throw a nade in stealth. \nOnly to prevent accidents.",
 	"wolfhud_hold_to_pick_title" : "Auto Pickup",
 	"wolfhud_hold_to_pick_desc" : "Small loot will be automatically picked up, while pressing your interaction key.",
+	"wolfhud_hide_bag_value_text_title" : "Show Bag Value",
+	"wolfhud_hide_bag_value_text_desc" : "Show the bag value when looking at a bag",
 
 	"wolfhud_perkdeck_sfx_options_name" : "Perkdeck SFX Option",
 	"wolfhud_perkdeck_sfx_options_help" : "perkdeck sound effect.",
@@ -932,8 +934,10 @@
 	"wolfhud_rich_presence_help" : "Setting Steam Rish Presence.",
 	"wolfhud_custom_rich_presence_title" : "Custom Rich Presence",
 	"wolfhud_custom_rich_presence_desc" : "Enable Custom Rich Presence.\n Display more information with readable, but show up only english for other players.",
-	"wolfhud_real_private_title" : "hide rich prisence in private room",
-	"wolfhud_real_private_desc" : "Do not show up rish presence in private room instead 'private'.",
+	"wolfhud_real_private_title" : "Hide rich presence in private room",
+	"wolfhud_real_private_desc" : "Do not show up rich presence in private room, instead 'private'.",
+	"wolfhud_hidden_main_menu_title" : "Hide rich presence in MAIN MENU",
+	"wolfhud_hidden_main_menu_desc" : "Do not show up ruch presence in main menu, instead 'At the main menu'.\nThis will fix the issue where the main menu appears briefly when restarting from a heist.",
 
 	"wolfhud_inventory_options_name" : "Inventory Tweak Options",
 	"wolfhud_inventory_options_help" : "Options to change the visuals of your Inventory and alter Equipment behavior.",
@@ -1061,5 +1065,5 @@
 	"wolfhud_etc_options_help" : "No category option menu.",
 
 	"lpi_packet_loss" : "packet loss",
-	"menu_lpi_fake_deck" : "Fake deck",
+	"menu_lpi_fake_deck" : "Fake deck"
 }

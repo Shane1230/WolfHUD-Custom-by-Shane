@@ -60,7 +60,6 @@
 					<post :script_path="WaypointsManager.lua"/>
 					<post :script_path="Interaction.lua"/>
 					<post :script_path="Scripts.lua"/>
-					<post :script_path="BurstFire.lua"/>
 					<post :script_path="AdvAssault.lua"/>
 				</group>
 
@@ -77,7 +76,6 @@
 
 				<group :hook_id="playermanager">
 					<post :script_path="GameInfoManager.lua"/>
-					<post :script_path="BurstFire.lua"/>
 				</group>
 
 				<group :hook_id="group_ai_states/groupaistatebase">
@@ -101,7 +99,6 @@
 						<post :script_path="VanillaHUD.lua"/>
 						<post :script_path="KillCounter.lua"/>
 						<post :script_path="DownCounter.lua"/>
-						<post :script_path="BurstFire.lua"/>
 					</group>
 
 					<group :hook_id="hudassaultcorner">
@@ -212,7 +209,6 @@
 							<post :script_path="GameInfoManager.lua"/>
 							<post :script_path="EnemyHealthbar.lua"/>
 							<post :script_path="Interaction.lua"/>
-							<post :script_path="BurstFire.lua"/>
 							<post :script_path="WeaponGadgets.lua"/>
 						</group>
 					</group>
@@ -250,8 +246,6 @@
 				</group>
 
 				<group :hook_id="weapons/">
-					<post :hook_id="akimboweaponbase" :script_path="BurstFire.lua"/>
-					<post :hook_id="akimboshotgunbase" :script_path="BurstFire.lua"/>
 					<post :hook_id="weapongadgetbase" :script_path="WeaponGadgets.lua"/>
 					<post :hook_id="weaponlaser" :script_path="WeaponGadgets.lua"/>
 					<post :hook_id="weaponflashlight" :script_path="WeaponGadgets.lua"/>
@@ -271,7 +265,6 @@
 
 					<group :hook_id="newraycastweaponbase">
 						<post :script_path="WeaponGadgets.lua"/>
-						<post :script_path="BurstFire.lua"/>
 					</group>
 				</group>
 

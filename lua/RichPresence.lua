@@ -1,5 +1,6 @@
 if WolfHUD:getSetting({"ETC", "Rich_Presence", "CUSTOM_RICH_PRESENCE"}, true) then
 	local REAL_PRIVATE_SETTING = WolfHUD:getSetting({"ETC", "Rich_Presence", "REAL_PRIVATE"}, true)
+	local HIDDEN_MAIN_MENU = WolfHUD:getSetting({"ETC", "Rich_Presence", "HIDDEN_MAIN_MENU"}, true)
 
 	if RequiredScript == "lib/managers/platformmanager" then
 		core:module("PlatformManager")
@@ -136,12 +137,13 @@ if WolfHUD:getSetting({"ETC", "Rich_Presence", "CUSTOM_RICH_PRESENCE"}, true) th
 		function WinPlatformManager:build_status_string(display, state, mode, heist, day, peercount, maxpeer, difficulty)
 			local ONE_DOWN_MOD = Global.game_settings.one_down and ", OD" or ""
 			local PLAYER_SEPARATOR = Global.game_settings.single_player and "" or "/"
+			local STATE_MAIN_MENU = HIDDEN_MAIN_MENU and " " or "At the main menu"
 
 			local tokens = {
 				["#raw_status"] =				"{#State_%game:state%}",
 
 				-- Game states
-				["#State_menu"] =				"At the main menu",
+				["#State_menu"] =				STATE_MAIN_MENU,
 				["#State_private"] =			"In a private lobby",
 				["#State_lobby_no_job"] =		"In a lobby %steam_player_group_size%"..PLAYER_SEPARATOR.."%max_peers%",
 				["#State_lobby"] =				"Lobby: {#Mode_%game:mode%}",

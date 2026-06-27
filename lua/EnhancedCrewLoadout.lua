@@ -542,7 +542,7 @@ elseif string.lower(RequiredScript) == "lib/managers/menu/missionbriefinggui" th
 	function TeamLoadoutCustom:set_slot_outfit(slot, criminal_name, outfit)
 		if self._player_slots[slot] then
 			self._player_slots[slot]:set_outfit(outfit)
-			
+
 			local local_peer_id = managers.network:session():local_peer():id()
 			if slot == local_peer_id then
 				local perk_item = self._player_slots[slot]._components.perk
@@ -608,9 +608,9 @@ elseif string.lower(RequiredScript) == "lib/managers/hud/newhudstatsscreen" then
 	HUDStatsScreen._LOADOUT_H = 215
 	function HUDStatsScreen:recreate_left(...)
 		self:_destroy_player_info()
-		
+
 		recreate_left_original(self, ...)
-		
+
 		self:_create_player_info()
 	end
 
@@ -627,7 +627,7 @@ elseif string.lower(RequiredScript) == "lib/managers/hud/newhudstatsscreen" then
 
 				self._peer_loadout = self._peer_loadout or {}
 				self:populate_loadout_panel(self._loadout_data)
-				
+
 				for peer_id = 1, 4  do
 					self:update_loadout_panel(peer_id)
 				end
@@ -656,7 +656,7 @@ elseif string.lower(RequiredScript) == "lib/managers/hud/newhudstatsscreen" then
 				end
 			end
 		end
-		
+
 		return update_original(self, t, dt, ...)
 	end
 

@@ -3678,6 +3678,13 @@ if WolfHUD then
 					},
 					{
 						type = "toggle",
+						name_id = "wolfhud_hide_bag_value_text_title",
+						desc_id = "wolfhud_hide_bag_value_text_desc",
+						value = {"INTERACTION", "SHOWBAGVALUE"},
+						visible_reqs = {}, enabled_reqs = {},
+					},
+					{
+						type = "toggle",
 						name_id = "wolfhud_hold_to_pick_title",
 						desc_id = "wolfhud_hold_to_pick_desc",
 						value = {"INTERACTION", "HOLD2PICK"},
@@ -3954,13 +3961,6 @@ if WolfHUD then
 				options = {
 					{
 						type = "toggle",
-						name_id = "wolfhud_enable_burstmode_title",
-						desc_id = "wolfhud_enable_burstmode_desc",
-						value = {"EQUIPMENT", "ENABLE_BURSTMODE"},
-						visible_reqs = {}, enabled_reqs = {},
-					},
-					{
-						type = "toggle",
 						name_id = "wolfhud_equipment_senty_auto_ap_title",
 						desc_id = "wolfhud_equipment_senty_auto_ap_desc",
 						value = {"EQUIPMENT", "SENTRY_AUTO_AP"},
@@ -4131,23 +4131,7 @@ if WolfHUD then
 				name_id = "wolfhud_etc_options_name",
 				desc_id = "wolfhud_etc_options_help",
 				options = {
-				-- PerkDeck SFX
-					{
-						type = "menu",
-						menu_id = "wolfhud_perkdeck_sfx_options_menu",
-						name_id = "wolfhud_perkdeck_sfx_options_name",
-						desc_id = "wolfhud_perkdeck_sfx_options_help",
-						options = {
-							{
-								type = "toggle",
-								name_id = "wolfhud_copycat_invul_sfx_title",
-								desc_id = "wolfhud_copycat_invul_sfx_desc",
-								value = {"ETC", "PerkDeck_SFX", "COPYCAT_INVUL"},
-								visible_reqs = {}, enabled_reqs = {},
-							},
-						},
-					},
-				-- Custom Rich Presence
+					-- Custom Rich Presence
 					{
 						type = "menu",
 						menu_id = "wolfhud_rich_presence_menu",
@@ -4166,6 +4150,39 @@ if WolfHUD then
 								name_id = "wolfhud_real_private_title",
 								desc_id = "wolfhud_real_private_desc",
 								value = {"ETC", "Rich_Presence", "REAL_PRIVATE"},
+								visible_reqs = {},
+								enabled_reqs = {
+									{ setting = {"ETC", "Rich_Presence", "CUSTOM_RICH_PRESENCE"}, invert = false },
+								},
+							},
+							{
+								type = "toggle",
+								name_id = "wolfhud_hidden_main_menu_title",
+								desc_id = "wolfhud_hidden_main_menu_desc",
+								value = {"ETC", "Rich_Presence", "HIDDEN_MAIN_MENU"},
+								visible_reqs = {},
+								enabled_reqs = {
+									{ setting = {"ETC", "Rich_Presence", "CUSTOM_RICH_PRESENCE"}, invert = false },
+								},
+							},
+						},
+					},
+					{
+						type = "divider",
+						size = 16,
+					},
+					-- PerkDeck SFX
+					{
+						type = "menu",
+						menu_id = "wolfhud_perkdeck_sfx_options_menu",
+						name_id = "wolfhud_perkdeck_sfx_options_name",
+						desc_id = "wolfhud_perkdeck_sfx_options_help",
+						options = {
+							{
+								type = "toggle",
+								name_id = "wolfhud_copycat_invul_sfx_title",
+								desc_id = "wolfhud_copycat_invul_sfx_desc",
+								value = {"ETC", "PerkDeck_SFX", "COPYCAT_INVUL"},
 								visible_reqs = {}, enabled_reqs = {},
 							},
 						},

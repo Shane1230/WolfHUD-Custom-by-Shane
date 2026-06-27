@@ -1030,7 +1030,7 @@
 	"wolfhud_skipit_options_help" : "Настройки автоматического пропуска ненужных меню, для экономии времени.",
 	"wolfhud_assaultbanner_options_name" : "Настройки баннера штурма",
 	"wolfhud_assaultbanner_options_help" : "Настройки для изменений баннера штурма.",
-	
+
 	"wolfhud_hudlist_loot_tea" : "Tea",
     "wolfhud_hudlist_loot_dragon" : "Dragon",
 	"wolfhud_hudlist_loot_scyayo" : "Yayo",
@@ -1043,7 +1043,7 @@
 	"wolfhud_enemy_marshal_shield" : "Marshal Shield",
 	"wolfhud_enemy_marshal_shield_break" : "Marshal Special",
 	"wolfhud_enemy_triad" : "Triads",
-	
+
 	"wolfhud_hudlist_copycat_health_invul_buff_title" : "Health Invulnerability (Copycat)",
 	"wolfhud_hudlist_copycat_health_invul_buff_desc" : "",
 	"wolfhud_hudlist_copycat_health_shot_buff_title" : "Headshot Health Regen (Copycat)",
@@ -1052,13 +1052,13 @@
 	"wolfhud_hudlist_copycat_health_primary_kills_desc" : "Count primary kills for secondary reload.",
 	"wolfhud_hudlist_copycat_health_secondary_kills_title" : "Secondary Kills (Copycat)",
 	"wolfhud_hudlist_copycat_health_secondary_kills_desc" : "Count secondary kills for primary reload.",
-	
+
 	"wolfhud_restore_player_dot_title" : "Restore old Player dot",
 	"wolfhud_restore_player_dot_desc" : "Restoration player dot indicator with down counter",
-	
+
 	"wolfhud_etc_options_name" : "ETC Option Menu",
 	"wolfhud_etc_options_help" : "No category option menu.",
 
 	"lpi_packet_loss" : "packet loss",
-	"menu_lpi_fake_deck" : "Fake deck",
+	"menu_lpi_fake_deck" : "Fake deck"
 }

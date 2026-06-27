@@ -13,11 +13,11 @@ if not _G.WolfHUD then
 	if not BLT.Keybinds:get_keybind("buy_all_asset_keybind"):HasKey() then
 		BLT.Keybinds:get_keybind("buy_all_asset_keybind"):SetKey("e")
 	end
-	if not BLT.Keybinds:get_keybind("next_profile"):HasKey() then
-		BLT.Keybinds:get_keybind("next_profile"):SetKey("right")
-	end
 	if not BLT.Keybinds:get_keybind("prev_profile"):HasKey() then
 		BLT.Keybinds:get_keybind("prev_profile"):SetKey("left")
+	end
+	if not BLT.Keybinds:get_keybind("next_profile"):HasKey() then
+		BLT.Keybinds:get_keybind("next_profile"):SetKey("right")
 	end
 	
 	function WolfHUD:Reset()
@@ -385,6 +385,7 @@ if not _G.WolfHUD then
 				SHOW_MELEE								= false,
 				SUPRESS_NADES_STEALTH					= false,
 				HOLD2PICK								= true,
+				SHOWBAGVALUE							= false,
 			},
 			GADGETS = {
 				LASER_AUTO_ON 							= false,
@@ -466,7 +467,6 @@ if not _G.WolfHUD then
 				ECM_FEEDBACK_STEALTH_DISABLED			= false,
 				SHAPED_CHARGE_STEALTH_DISABLED			= false,
 				KEYCARD_DOORS_DISABLED					= false,
-				ENABLE_BURSTMODE						= false,
 			},
 			INVENTORY = {
 				SHOW_WEAPON_NAMES 						= true,
@@ -492,11 +492,12 @@ if not _G.WolfHUD then
 			},
 			ETC = {
 				PerkDeck_SFX = {
-					COPYCAT_INVUL							= true,
+					COPYCAT_INVUL						= true,
 				},
 				Rich_Presence = {
-					CUSTOM_RICH_PRESENCE					= true,
-					REAL_PRIVATE							= false,
+					CUSTOM_RICH_PRESENCE				= true,
+					REAL_PRIVATE						= false,
+					HIDDEN_MAIN_MENU					= false,
 				},
 			},
 			LOBBY_SETTINGS = {
@@ -1348,7 +1349,9 @@ if not _G.WolfHUD then
 		-- Add macro $VALUE to all interaction strings
 		for interact_id, data in pairs(tweak_data.interaction) do
 			if type(data) == "table" and data.text_id and not data.verify_owner then
-				localized_strings[data.text_id] = loc:text(data.text_id, {BTN_INTERACT = "$BTN_INTERACT"}) .. "$VALUE"
+				if WolfHUD:getSetting({"INTERACTION", "SHOWBAGVALUE"}, true) then
+					localized_strings[data.text_id] = loc:text(data.text_id, {BTN_INTERACT = "$BTN_INTERACT"}) .. "$VALUE"
+				end
 			end
 		end
 		loc:add_localized_strings(localized_strings)

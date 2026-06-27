@@ -26,7 +26,7 @@ if WolfHUD and not WolfHUD.Sync then
 
 		return tbl
 	end
-	
+
 	function WolfHUD.Sync.to_original_type(s)
 		local v = s
 		if type(s) == "string" then

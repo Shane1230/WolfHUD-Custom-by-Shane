@@ -608,7 +608,7 @@ function LoadoutImageItem:set_outfit(outfit)
 	end
 end
 
-function LoadoutImageItem:get_outfit_data(type, id)
+function LoadoutImageItem:get_outfit_data(type, id, weapon_id)
 	local tweak_entry = {
 		weapon_skin = tweak_data.blackmarket.weapon_skins,
 		weapon = tweak_data.weapon,
@@ -630,25 +630,41 @@ function LoadoutImageItem:get_outfit_data(type, id)
 		deployables = "textures/pd2/blackmarket/icons/deployables/",
 	}
 
-	local bundle_folder = tweak_entry[type][id] and tweak_entry[type][id].texture_bundle_folder
-	local guis_catalog = string.format("guis/%s", bundle_folder and string.format("dlcs/%s/", tostring(bundle_folder)) or "")
-	local texture_name = tweak_entry[type][id] and tweak_entry[type][id].texture_name or tostring(id)
+	local entry = tweak_entry[type] and tweak_entry[type][id]
+	local bundle_folder = entry and entry.texture_bundle_folder
+
+	local guis_catalog
+	if type == "weapon_skin" then
+		guis_catalog = "guis/dlcs/cash/safes/" .. tostring(bundle_folder) .. "/"
+	else
+		guis_catalog = string.format("guis/%s", bundle_folder and string.format("dlcs/%s/", tostring(bundle_folder)) or "")
+	end
+
+	local texture_name
+
+	if type == "weapon_skin" then
+		local skin_data = entry
+		local base_weapon_id = skin_data and skin_data.weapon_id
+		local equipped_weapon_id = weapon_id or base_weapon_id
+
+		if skin_data and skin_data.weapon_ids and equipped_weapon_id and table.contains(skin_data.weapon_ids, equipped_weapon_id) and equipped_weapon_id ~= base_weapon_id then
+			texture_name = tostring(id) .. "_" .. tostring(equipped_weapon_id)
+		else
+			texture_name = entry and entry.texture_name or tostring(id)
+		end
+	else
+		texture_name = entry and entry.texture_name or tostring(id)
+	end
+
 	local texture = string.format("%s%s%s", guis_catalog, texture_path[type], texture_name)
 
 	local rarity_texture
 	if type == "weapon_skin" then
-		local skin = tweak_entry.weapon_skin[id]
-		if skin and skin.weapon_id then
-			texture, rarity_texture = managers.blackmarket:get_weapon_icon_path(skin.weapon_id, {id = id})
-			id = skin.weapon_id
-			type = "weapon"
-		else
-			local rarity = tweak_entry[type][id] and tweak_entry[type][id].rarity
-			rarity_texture = tweak_data.economy.rarities[rarity] and tweak_data.economy.rarities[rarity].bg_texture
+		local rarity = entry and entry.rarity
+		rarity_texture = tweak_data.economy.rarities[rarity] and tweak_data.economy.rarities[rarity].bg_texture
 
-			id = tweak_entry[type][id] and tweak_entry[type][id].weapon_id or id
-			type = "weapon"
-		end
+		id = weapon_id or (entry and entry.weapon_id) or id
+		type = "weapon"
 	end
 
 	local name_id = tweak_entry[type][id] and tweak_entry[type][id].name_id or tostring(id)
@@ -1080,7 +1096,7 @@ function LoadoutWeaponItem:update_weapon(outfit)
 			local skin_id = outfit[self._name].cosmetics and outfit[self._name].cosmetics.id
 			local skin_tweak = tweak_data.blackmarket.weapon_skins[skin_id]
 			local weapon_skin = skin_tweak and not skin_tweak.is_a_color_skin and (table.contains(skin_tweak.weapon_ids or {}, weapon_id) or (skin_tweak.weapon_id and skin_tweak.weapon_id == weapon_id) ~= (skin_tweak.use_blacklist or false)) or false
-			local texture, name, rarity = self:get_outfit_data(weapon_skin and "weapon_skin" or "weapon", weapon_skin and skin_id or weapon_id)
+			local texture, name, rarity = self:get_outfit_data(weapon_skin and "weapon_skin" or "weapon", weapon_skin and skin_id or weapon_id, weapon_id)
 
 			self:set_text(name)
 			self:set_image(texture)
@@ -1105,7 +1121,7 @@ function LoadoutWeaponItem:update_perks(outfit)
 			stats = factory[part_id] and factory[part_id].stats or false
 			custom_stats = factory[part_id] and factory[part_id].custom_stats or false
 			has_stat_boost = stats and 1 < table.size(stats) and true or false
-			has_team_boost = custom_stats and (custom_stats.exp_multiplier or custom_stats.money_multiplier) and true or false
+			has_team_boost = custom_stats and (custom_stats.exp_multiplier or custom_stats.money_multiplier and true) or false
 			if has_stat_boost then
 				perks.bonus_stats = stats
 			end
@@ -1315,9 +1331,9 @@ function LoadoutDeployableItem:set_outfit(outfit)
 
 	local amount = outfit[string.format("%s_amount", self._name)]
 	if amount and (not self._loadout_amount or self._loadout_amount ~= amount) then
-		if self._name == "secondary_deployable" then
+		--[[if self._name == "secondary_deployable" then
 			amount = math.ceil(amount / 2)
-		end
+		end--]]
 
 		self:set_amount(amount)
 	end

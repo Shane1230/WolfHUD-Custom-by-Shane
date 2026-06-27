@@ -145,7 +145,6 @@ if string.lower(RequiredScript) == "lib/managers/hud/newhudstatsscreen" then
 						local difficulty_len = utf8.len(difficulty_string)
 						difficulty_text:set_text(difficulty_string .. " " .. one_down_string)
 						--difficulty_text:set_range_color(#difficulty_string + 1, math.huge, tweak_data.screen_colors.one_down)
-						--이따구로 만드니까 안되지 오버킬 놈들아
 						difficulty_text:set_range_color(difficulty_len + 1, math.huge, tweak_data.screen_colors.one_down)
 					end
 

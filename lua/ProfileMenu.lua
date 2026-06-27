@@ -367,6 +367,34 @@ elseif RequiredScript == "lib/managers/menu/missionbriefinggui" then
 		return focus
 	end
 
+	Hooks:PostHook(MissionBriefingGui, "update", "profile_change_hotkey", function(self, ...)
+		if not managers.network:session() then
+			return false
+		end
+
+		if not alive(self._panel) or not alive(self._fullscreen_panel) or not self._enabled then
+			return false
+		end
+
+		if self._displaying_asset then
+			self:close_asset()
+
+			return false
+		end
+
+		if game_state_machine:current_state().blackscreen_started and game_state_machine:current_state():blackscreen_started() then
+			return false
+		end
+
+		local KEY_prev_profile = BLT.Keybinds:get_keybind("prev_profile"):Key()
+		local KEY_next_profile = BLT.Keybinds:get_keybind("next_profile"):Key()
+		if Input:keyboard():pressed(Idstring(KEY_prev_profile)) and managers.multi_profile:has_previous() then
+			managers.multi_profile:previous_profile()
+		elseif Input:keyboard():pressed(Idstring(KEY_next_profile)) and managers.multi_profile:has_next() then
+			managers.multi_profile:next_profile()
+		end
+	end)
+
 	JukeboxItemNew = JukeboxItemNew or class(JukeboxItem)
 	function JukeboxItemNew:select(...)
 		local active_menu = managers.menu:active_menu()

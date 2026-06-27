@@ -3256,17 +3256,6 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		self._icon:set_center(self._panel:center())
 		self._icon:set_top(self._panel:top())
 
-		--[[local long_loot_names = {
-			artifact		 	= "wolfhud_hdlist_loot_long_artifact",
-			meth 				= "wolfhud_hdlist_loot_long_meth",
-			prototype 			= "wolfhud_hdlist_loot_long_prototype",
-			diamond, diamonds	= "wolfhud_hdlist_loot_long_diamond",
-		}
-
-		if loot_data.text then
-			if WolfHUD:getSetting({"LANGUAGE"}) == "korean" and long_loot_names[id] then
-				loot_data.text = long_loot_names[id]
-			end--]]
 		if loot_data.text then
 			local txt = loot_data.no_localize and loot_data.text or managers.localization:text(loot_data.text)
 

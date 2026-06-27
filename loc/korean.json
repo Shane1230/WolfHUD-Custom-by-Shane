@@ -1,5 +1,5 @@
 {
-	"hud_int_hold_grab_the_bag" : "$INTERACT 키 를 눌러서 $BAG 를(을) 들기",
+	"hud_int_hold_grab_the_bag" : "$INTERACT 키 를 눌러서 $BAG 을(를) 들기",
 
 	"wolfhud_dialog_force_start_title" : "강제로 게임을 시작할까요?",
 	"wolfhud_dialog_force_start_desc" : "정말로 강제로 게임을 시작하시겠습니까?\n이 기능을 잠수 플레이어, 버그걸린 로비일때만 사용해주세요.\n그리고 모든 플레이어가 무기를 바꿀 시간도 주시구요.\n\n감사합니다 :)",
@@ -923,6 +923,8 @@
 	"wolfhud_doubletap_nades_stealth_desc" : "스텔스 일 경우 수류탄을 던지려면 2번 연속 키를 눌러야됩니다. \n사고 방지용.",
 	"wolfhud_hold_to_pick_title" : "인스턴트 자동 줍기",
 	"wolfhud_hold_to_pick_desc" : "상호작용 키 를 계속 누르고 있으면 자동으로 인스턴트 캐쉬가 주워집니다.",
+	"wolfhud_hide_bag_value_text_title" : "가방 가치 보기",
+	"wolfhud_hide_bag_value_text_desc" : "가방을 상호작용 할 때 값어치를 표시합니다.",
 
 	"wolfhud_perkdeck_sfx_options_name" : "퍽덱 효과음 옵션",
 	"wolfhud_perkdeck_sfx_options_help" : "퍽덱 효과음을 설정합니다.",
@@ -935,6 +937,8 @@
 	"wolfhud_custom_rich_presence_desc" : "커스텀 활동상태를 사용합니다.\n이는 기존보다 더 많은 정보를 가독성을 높혀 간략히 표시해줍니다. 하지만 모두에게 영어로 표시됩니다.",
 	"wolfhud_real_private_title" : "비공개방에서 활동상태 표시 안함",
 	"wolfhud_real_private_desc" : "활동상태에서 비공개 방을 'Private'으로 표시되는 대신 기존처럼 아무정보도 표시하지 않게 됩니다.",
+	"wolfhud_hidden_main_menu_title" : "메인메뉴에서 활동상태 표시 안함",
+	"wolfhud_hidden_main_menu_desc" : "활동상태에서 메인메뉴에 있을 때 'At the main menu'를 표시하는 대신 기존처럼 아무정보도 표시하지 않게 됩니다.\n이렇게 하면 하이스트를 재시작 할때 잠시동안 At the main menu 라고 뜨는 문제를 해결할 수 있습니다.",
 
 	"wolfhud_inventory_options_name" : "인벤토리 설정",
 	"wolfhud_inventory_options_help" : "인벤토리의 시작적 요소를 바꾸고, 장비의 동작 방식을 변경하는 옵션입니다.",
@@ -1042,10 +1046,10 @@
 	"wolfhud_skipit_options_help" : "자동으로 스킵될지 설정합니다.\n(시작할때 Enter 꾹 누르기, 카드 자동 고르기 등등..)",
 	"wolfhud_assaultbanner_options_name" : "어설트 배너 설정",
 	"wolfhud_assaultbanner_options_help" : "어설트 배너를 설정합니다.",
-	
+
 	"wolfhud_hudlist_copr_buff_title" : "리치 약병 (리치)",
 	"wolfhud_hudlist_copr_buff_desc" : "",
-	
+
 	"wolfhud_hudlist_copycat_health_invul_buff_title" : "체력 무적시간 (카피캣)",
 	"wolfhud_hudlist_copycat_health_invul_buff_desc" : "",
 	"wolfhud_hudlist_copycat_health_shot_buff_title" : "헤드샷 체력 회복 (카피캣)",
@@ -1054,15 +1058,17 @@
 	"wolfhud_hudlist_copycat_health_primary_kills_desc" : "보조무기 장전까지 남은 주무기 킬 수 표시.",
 	"wolfhud_hudlist_copycat_health_secondary_kills_title" : "보조무기 킬 수 (카피캣)",
 	"wolfhud_hudlist_copycat_health_secondary_kills_desc" : "주무기 장전까지 남은 보조무기 킬 수 표시.",
-	
+
 	"wolfhud_restore_player_dot_title" : "이전버전의 팀원 도트 되돌리기",
 	"wolfhud_restore_player_dot_desc" : "다운횟수 표시와 함께 팀원 도트(dot)를 되돌립니다.",
-	
+
 	"wolfhud_etc_options_name" : "기타 옵션 설정",
 	"wolfhud_etc_options_help" : "항목이 따로 없는 설정 메뉴들이 모여있는 곳입니다.",
 
 	"lpi_packet_loss" : "packet loss",
 	"menu_lpi_fake_deck" : "Fake deck",
-	
-	"Tarti" : "Tarti"
+
+	"Tarti" : "Tarti",
+
+	"hud_int_dispose_corpse" : "$BTN_INTERACT; 키를 길게 눌러 시체 처리"
 }
