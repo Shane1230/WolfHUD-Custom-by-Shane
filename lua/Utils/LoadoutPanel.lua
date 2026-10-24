@@ -563,14 +563,24 @@ function LoadoutImageItem:set_color(color)
 end
 
 function LoadoutImageItem:set_image(texture, text_rect)
+	if alive(self._icon) then
+		self._panel:remove(self._icon)
+		self._icon = nil
+	end
+
 	if texture then
+		local fix = {
+			name = self._name .. "_icon",
+			visible = true
+		}
+
 		if text_rect then
-			self._icon:set_image(texture, unpack(text_rect))
+			fix.texture_rect = text_rect
 		else
-			self._icon:set_image(texture)
+			fix.texture = texture
 		end
 
-		self._icon:set_visible(true)
+		self._icon = self._panel:bitmap(fix)
 	else
 		self._icon:set_visible(false)
 	end
@@ -1055,7 +1065,7 @@ function LoadoutWeaponItem:arrange()
 		self._rarity:set_center_y(self._panel:h() / 2 + ((self._text:visible() and self._text:h() or 0) * 0.5))
 	end
 
-	for i, perk in ipairs(self._perks or {}) do
+		for i, perk in ipairs(self._perks or {}) do
 		if alive(perk) and perk:visible() then
 			local size = math.min(self._panel:h() / 4, self._panel:w() / #self._perks, 16)
 			perk:set_w(size)
@@ -1102,7 +1112,7 @@ function LoadoutWeaponItem:update_weapon(outfit)
 			self:set_image(texture)
 			self:set_rarity(rarity)
 
-			return true
+				return true
 		end
 	else
 		self:set_enabled("outfit", false)
@@ -1159,12 +1169,12 @@ function LoadoutWeaponItem:update_perks(outfit)
 		self._perks = {}
 		local perk_size = math.min(self._panel:h() / 4, self._panel:w() / #self._perks, 16)
 
-		for perk in pairs(perks or {}) do
-			if perk ~= "bonus" then
-				local texture = "guis/textures/pd2/blackmarket/inv_mod_" .. perk
+		for perk_ext in pairs(perks or {}) do
+			if type(perk_ext) == "string" and perk_ext ~= "bonus" then
+				local texture = "guis/textures/pd2/blackmarket/inv_mod_" .. perk_ext
 				if DB:has(Idstring("texture"), texture) then
 					local perk_object = self._panel:bitmap({
-						name = "perk_" .. tostring(perk),
+						name = "perk_" .. perk_ext,
 						texture = texture,
 						align = "center",
 						valign = "scale",

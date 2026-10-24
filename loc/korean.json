@@ -124,6 +124,8 @@
 	"wolfhud_hudlist_loot_meth" : "메스암",
 	"wolfhud_hudlist_loot_prototype" : "프로토",
 	"wolfhud_hudlist_loot_diamonds" : "다이아",
+	"wolfhud_hudlist_loot_auc_item" : "경매품"
+	"wolfhud_hudlist_loot_auc_special" : "예술품",
 
 	"wolfhud_hudlist_buff_basic" : "베이직",
 	"wolfhud_hudlist_buff_aced" : "에이스",
@@ -1070,5 +1072,7 @@
 
 	"Tarti" : "Tarti",
 
-	"hud_int_dispose_corpse" : "$BTN_INTERACT; 키를 길게 눌러 시체 처리"
+	"hud_int_dispose_corpse" : "$BTN_INTERACT; 키를 길게 눌러 시체 처리",
+
+	"heist_contact_custom" : " 커스텀 하이스트"
 }

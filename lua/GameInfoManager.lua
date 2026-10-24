@@ -1905,7 +1905,9 @@ if string.lower(RequiredScript) == "lib/units/props/timergui" then
 
 	function TimerGui:update(unit, t, dt, ...)
 		update_original(self, unit, t, dt, ...)
-		managers.gameinfo:event("timer", "update", self._info_key, t, self._time_left, self._current_timer / self._timer)
+		if self._current_timer then
+			managers.gameinfo:event("timer", "update", self._info_key, t, self._time_left, self._current_timer / self._timer)
+		end
 	end
 
 	function TimerGui:_start(...)

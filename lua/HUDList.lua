@@ -504,6 +504,12 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		corp_prototype = 			"neo2",
 		breaching_charges = 		"door_breaker",
 		hydraulic_opener = 			"door_breaker",
+		auc_auction_item = 			"auc_item",
+		auc_statue_special_01 = 	"auc_special",
+		auc_statue_special_02 = 	"auc_special",
+		auc_statue_special_03 = 	"auc_special",
+		auc_statue_special_04 = 	"auc_special",
+		auc_cutter_part = 			"cutter_part",
 	}
 
 	HUDListManager.POTENTIAL_LOOT_TYPES = {
@@ -3242,7 +3248,11 @@ if string.lower(RequiredScript) == "lib/managers/hudmanagerpd2" then
 		papers = 		{ text = "wolfhud_hudlist_loot_papers",	 	priority = 1 }, -- Hostile Takeover Reserch Documents
 		neo2 = 			{ text = "wolfhud_hudlist_loot_neo2",		priority = 1 }, -- Hostile Takeover NEO-2
 		door_breaker = 	{ text = "wolfhud_hudlist_loot_dbreaker",	priority = 1 }, -- Border Crossing, Breakfast in Tijuana
+		auc_item =		{ text = "wolfhud_hudlist_loot_auc_item",	priority = 1 }, -- Under the Hammer Auction Item
+		auc_special = 	{ text = "wolfhud_hudlist_loot_auc_special",priority = 1 }, -- Under the Hammer Object bag
+		cutter_part = 	{ text = "hud_carry_auc_cutter_part",		priority = 1 }, -- Under the Hammer Drill part
 	}
+
 	function HUDList.LootItem:init(parent, name, id, members)
 		local loot_data = HUDList.LootItem.MAP[id]
 		HUDList.LootItem.super.init(self, parent, name, loot_data.icon_data or { hudtabs = { 32, 33, 32, 32 }, alpha = 0.75, w_ratio = 1.2 }, loot_data)

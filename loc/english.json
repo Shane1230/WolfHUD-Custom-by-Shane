@@ -123,6 +123,8 @@
 	"wolfhud_hudlist_loot_meth" : "Meth",
 	"wolfhud_hudlist_loot_prototype" : "Prototype",
 	"wolfhud_hudlist_loot_diamonds" : "Diamonds",
+	"wolfhud_hudlist_loot_auc_item" : "Auction"
+	"wolfhud_hudlist_loot_auc_special" : "Statue",
 
 	"wolfhud_hudlist_buff_basic" : "Basic",
 	"wolfhud_hudlist_buff_aced" : "Aced",

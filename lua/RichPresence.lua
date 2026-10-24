@@ -138,18 +138,19 @@ if WolfHUD:getSetting({"ETC", "Rich_Presence", "CUSTOM_RICH_PRESENCE"}, true) th
 			local ONE_DOWN_MOD = Global.game_settings.one_down and ", OD" or ""
 			local PLAYER_SEPARATOR = Global.game_settings.single_player and "" or "/"
 			local STATE_MAIN_MENU = HIDDEN_MAIN_MENU and " " or "At the main menu"
+			local VERSION = Application:version() == "1.152.269" and "[Legacy] " or ""
 
 			local tokens = {
 				["#raw_status"] =				"{#State_%game:state%}",
 
 				-- Game states
-				["#State_menu"] =				STATE_MAIN_MENU,
-				["#State_private"] =			"In a private lobby",
-				["#State_lobby_no_job"] =		"In a lobby %steam_player_group_size%"..PLAYER_SEPARATOR.."%max_peers%",
-				["#State_lobby"] =				"Lobby: {#Mode_%game:mode%}",
-				["#State_playing"] =			"Playing: {#Mode_%game:mode%}",
-				["#State_preplanning"] =		"Briefing: {#Mode_%game:mode%}",
-				["#State_payday"] =				"Payday: {#Mode_%game:mode%}",
+				["#State_menu"] =				VERSION..STATE_MAIN_MENU,
+				["#State_private"] =			VERSION.."In a private lobby",
+				["#State_lobby_no_job"] =		VERSION.."In a lobby %steam_player_group_size%"..PLAYER_SEPARATOR.."%max_peers%",
+				["#State_lobby"] =				VERSION.."Lobby: {#Mode_%game:mode%}",
+				["#State_playing"] =			VERSION.."Playing: {#Mode_%game:mode%}",
+				["#State_preplanning"] =		VERSION.."Briefing: {#Mode_%game:mode%}",
+				["#State_payday"] =				VERSION.."Payday: {#Mode_%game:mode%}",
 
 				-- Game modes
 				["#Mode_crime_spree"] =			"[CS] {#Level_%game:heist%} %steam_player_group_size%"..PLAYER_SEPARATOR.."%max_peers% (Lvl. %game:difficulty%)",
@@ -367,6 +368,8 @@ if WolfHUD:getSetting({"ETC", "Rich_Presence", "CUSTOM_RICH_PRESENCE"}, true) th
 				["#Level_corp"] = 				"Hostile Takeover",
 				["#Job_deep"] = 				"Crude Awakening",
 				["#Level_deep"] = 				"Crude Awakening",
+				["#Job_auc"] = 					"Under the Hammer",
+				["#Level_auc"] = 				"Under the Hammer",
 
 				--Custom Heists
 				["#Job_zm_kino"] =					"Kino Der Minetoten",

@@ -168,7 +168,7 @@ if string.lower(RequiredScript) == "lib/managers/hudmanager" then
 		self._unit_health_enemy_text:set_left( self._unit_bar_bg:left() )
 		self._unit_health_enemy_text:set_bottom( self._unit_bar_bg:top() )
 
-		self._unit_health_text:set_color( _r <= 0.1 and Color.red or _r <= 0.25 and Color.yellow or Color.white )
+		self._unit_health_text:set_color( _r <= 0 and Color.red or _r <= 0.25 and Color.yellow or Color.white )
 
 		self._unit_bar:stop()
 

@@ -1,11 +1,10 @@
 # WolfHUD-Custom-by-Shane
 You need update to latest [SuperBLT](https://superblt.znix.xyz/)<br>
-https://superblt.znix.xyz/<br>
-Super BLT를 최신버전으로 업데이트 해야합니다. 위 링크로 들어가서 [Latest Release DLL](https://sblt-update.znix.xyz/pd2update/download/get.php?src=homepage&id=payday2bltwsockdll)버튼을 누르면 됩니다.
+[SuperBLT](https://superblt.znix.xyz/)를 최신버전으로 업데이트 해야합니다.
 
 ## About this
-Fix crashes, updates, add features and changes as mystyle.<br>
-이 모드는 기존의 울프허드의 튕김 해결 및, 기능을 추가하여 업데이트 한 모드 입니다. 또한 복잡한 기존 허드에서 최소한의 필요한 정보만 보여주도록 기본 옵션을 변경하였습니다.
+Fixes crashes, updates, add features and changes as mystyle.<br>
+이 모드는 기존의 울프허드의 튕김 및 버그 해결, 기능들을 추가하여 업데이트 한 모드 입니다. 또한 복잡한 기존 허드에서 최소한의 필요한 정보만 보여주도록 기본 옵션을 변경하였습니다.
 
 간단하게 사용하고 싶지만 이전 울프허드의 설정이 불어와졌다면, (옵션>모드옵션>울프허드 옵션) 으로 들어가서 *설정 초기화*를 눌러주세요.
 
@@ -17,6 +16,12 @@ https://github.com/Kamikaze94/WolfHUD
 Show English [Changelog](https://github.com/Shane1230/WolfHUD-Custom-by-Shane?tab=readme-ov-file#changelog)
 ## 변경사항
 
+### 7.0.1 (Diesel 3.0)
+- 64비트 패치 이후 팀원 로드아웃에서 무기 스킨이 제대로 보이지 않던 문제 해결
+- 낙찰 활동상태 추가 및 허드리스트 정보 추가
+- 레거시 버전 플레이 시 활동상태 추가
+- 체력바: 이제 적 체력이 완전히 0이 될때만 빨간색으로 표시합니다
+---
 ### 6.1
 - 에셋 구매, 사전계획창 및 프로필 변경 단축키가 브리핑룸 로딩과 여부와 관련하여 발생하던 여러 문제 해결
   > 이로 인해 별도의 파일로 BLT 단에서 작동하던 코드를 울프허드 내부 스크립트로 통합(키설정은 이전과 동일한 'BLT모드 키설정')
@@ -196,6 +201,8 @@ Show English [Changelog](https://github.com/Shane1230/WolfHUD-Custom-by-Shane?ta
 
 ## Changelog
 
+###
+- English translations within the mod will continue to be added, but patch notes will no longer be provided. Please use a translator.
 ### 5.0
 - **Default WolfHUD options changed**
   > Most options are now disabled and simplified by default.<br> 
